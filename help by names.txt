@@ -1,0 +1,6 @@
+Buttons:
+b_m_1 (51, 255, 255) => button 'Start' in menu stage
+b_m_2 (51, 204, 204) => button 'Settings' in menu stage
+b_g_1 (0, 102, 51) => button 'Stop' in game process
+b_e (204, 153, 102) => color expansion button
+back (255, 102, 0) => exit from anywhere
