@@ -1,183 +1,184 @@
 import random
-import pygame
+
+import pygame.display
 
 import map_generation
 
-pygame.init()
-
+from supportiveDrawMenuStage import *
+"""import settings"""
+#TODO переделать генерацию карты. Сделать основу на 'for _ in' и рандомно выбирать допустимые участки.
 with open('parameter.txt') as f:
     file = f.readlines()
+
     window = file[3].rstrip().lstrip('@').split('.')
-    x_my, y_my = int(window[0]), int(window[1])
-    map_new = file[5].rstrip().lstrip('@').split('.')
-    map_x, map_y = int(map_new[0]), int(map_new[1])
-    sector = map_new = file[7].rstrip().lstrip('@').split('.')
+    window_x_size, window_y_size = int(window[0]), int(window[1])
+
+    game_map = file[5].rstrip().lstrip('@').split('.')
+    map_x_size, map_y_size = int(game_map[0]), int(game_map[1])
+
+    sector = file[7].rstrip().lstrip('@').split('.')
     sector_x, sector_y = int(sector[0]), int(sector[1])
 
-pygame.font.init()
-x_camera, y_camera, x_post, y_post = 0, 0, 500, 500
-screen = pygame.display.set_mode((x_my, y_my))
-color = (255, 100, 80)
-level = map_generation.MapGeneration(map_x, map_y, [2, 4 ,8]).map_create()
-individual_list = {}
-end_point = False
-for i in level:
-    for j in i:
-        if j not in individual_list:
-            individual_list[j] = (random.randint(0, 255), random.randint(0, 255),
-                                                                   random.randint(0, 255))
-f1 = pygame.font.SysFont('Insight Sans SSi', 18)
-fps = pygame.font.Font('fonts/Samson.ttf', 50)
 
-def menu(pause):
-    global end_point
-    done = True
-    color_1 = (255, 0, 0)
-    color_2 = (0, 255, 0)
-    while done:
-        for event in pygame.event.get():
+class GameProcess:
+    def __init__(self, window_size, map_size, sector_size, quantity_of_points):
+        pygame.font.init()
+        pygame.display.init()
+        pygame.init()
+        self.window_size = window_size
+        self.map_size = map_size
+        self.sector_size = sector_size
+        self.camera_x_position = self.window_size[0] // 2
+        self.camera_y_position = self.window_size[1] // 2
+        self.game_map = map_generation.MapGeneration(self.map_size[0], self.map_size[1],
+                                                     quantity_of_points).map_create()
+        self.dictionary_of_colors = {'background': (255, 255, 255), 'menu_background': (102, 102, 255),
+                                     'setting_background': (255, 51, 255),
+                                     'red': (255, 0, 0), 'blue': (0, 0, 255), 'b_g_1': (0, 102, 51),
+                                     'back': (255, 102, 0)}
+        for n in range(3):
+            self.dictionary_of_colors[f'b_m_{n}'] = (51, 255, 255)
+        for n in range(8):
+            self.dictionary_of_colors[f'b_e{n}'] = (204, 153, 102)
+        for m in self.game_map:
+            for n in m:
+                if n not in self.dictionary_of_colors:
+                    self.dictionary_of_colors[n] = (random.randint(0, 255), random.randint(0, 255),
+                                                    random.randint(0, 255))
+
+        self.screen = pygame.display.set_mode((self.window_size[0], self.window_size[1]))
+        self.pygame_icon = pygame.image.load('icon.bmp')
+        pygame.display.set_icon(self.pygame_icon)
+        pygame.display.set_caption('.   by Valeriy Alekseev 9A')
+        self.process_flag = True
+        self.menu_process_flag = None
+        self.setting_process_flag = None
+        self.dictionary_of_fonts = {'standart_font': pygame.font.SysFont('Insight Sans SSi', 18),
+                                    'FPS_font': pygame.font.Font('fonts/Samson.ttf', 50)}
+        self.clock = pygame.time.Clock()
+        self.FPS = 24
+        self.power_of_move_gorizontal = 0
+        self.power_of_move_vertical = 0
+        self.entity_x_position = 0
+        self.entity_y_position = 0
+        self.step_of_move_entity = 10
+        self.full_screen_toggle = False
+
+    def check_position(self, pygame_event, mobject, sufferer, begin_x, end_x, begin_y, end_y):
+        if mobject == 'mouse_position':
+            position = pygame_event.pos
+            if sufferer == 'game_button_menu':
+                if begin_x <= position[0] <= end_x and begin_y <= position[1] <= end_y:
+                    return True
+                return False
+        elif mobject == 'mouse_position + click':
+            position = pygame_event.pos
+            if sufferer == 'game_button_menu':
+                if begin_x <= position[0] <= end_x and begin_y <= position[1] <= end_y and pygame_event.button == 1:
+                    return True
+                return False
+
+    def action_check(self, pygame_event):
+        for event in pygame_event:
+            """exit click check"""
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                self.process_flag = False
+            if event.type == pygame.MOUSEMOTION:
+                if self.check_position(event, 'mouse_position', 'game_button_menu', self.window_size[0] * 0.1,
+                                       self.window_size[0] * 0.1 + 70, self.window_size[1] * 0.05,
+                                       self.window_size[1] * 0.05 + 40):
+                    self.dictionary_of_colors['b_g_1'] = (0, 152, 51)
+                else:
+                    self.dictionary_of_colors['b_g_1'] = (0, 102, 51)
             if event.type == pygame.MOUSEBUTTONDOWN:
-                position = event.pos
-                if event.button == 1 and 200 <= position[0] <= 300 and 125 <= position[1] <= 175:
-                    done = False
-                elif (event.button == 1 and 200 <= position[0] <= 300 and 250 <= position[1] <= 300) or (
-                        event.type == pygame.QUIT):
-                    done = False
-                    pygame.quit()
-                    end_point = True
-                    break
+                if self.check_position(event, 'mouse_position + click', 'game_button_menu', self.window_size[0] * 0.1,
+                                       self.window_size[0] * 0.1 + 70, self.window_size[1] * 0.05,
+                                       self.window_size[1] * 0.05 + 40):
+                    self.dictionary_of_colors['b_g_1'] = (0, 102, 51)
+                    draw_menu_stage(self, True)
+        if self.process_flag:
+            keys = pygame.key.get_pressed()
+            """entity motions check (pressed)"""
+            if keys[pygame.K_a]:
+                self.entity_x_position -= self.step_of_move_entity
+            if keys[pygame.K_d]:
+                self.entity_x_position += self.step_of_move_entity
+            if keys[pygame.K_w]:
+                self.entity_y_position -= self.step_of_move_entity
+            if keys[pygame.K_s]:
+                self.entity_y_position += self.step_of_move_entity
 
-            elif event.type == pygame.MOUSEMOTION:
-                position = event.pos
-                if 200 <= position[0] <= 300 and 125 <= position[1] <= 175:
-                    color_1 = (255, 100, 0)
-                else:
-                    color_1 = (255, 0, 0)
+    def physics(self):
+        """entity motion calculate"""
 
-                if 200 <= position[0] <= 300 and 250 <= position[1] <= 300:
-                    color_2 = (100, 255, 100)
-                else:
-                    color_2 = (0, 255, 0)
-        if end_point:
-            break
+        self.entity_x_position += self.power_of_move_gorizontal
+        self.entity_y_position += self.power_of_move_vertical
 
-        if pause:
-            screen.fill((((255 + 150) // 2), ((255 + 150) // 2), ((255 + 150) // 2)))
-            x = y = 0
-            for row in level:
-                for col in row:
-                    color = individual_list[col]
-                    new_color = ((individual_list[col][0] + 150) // 2,
-                                 (individual_list[col][1] + 150) // 2,
-                                 (individual_list[col][2] + 150) // 2)
-                    pygame.draw.rect(screen, new_color, (x + x_camera, y + y_camera, 32, 48))
-                    x += 32
-                y += 48
-                x = 0
-            color = ((255 + 150) // 2, 150, 150)
-            pygame.draw.rect(screen, color, (x_post * 0.8, y_post * 0.05, 70, 40))
-            pygame.draw.rect(screen, ((255 + 150) // 2, 150, 150), (x_my // 2 + x_camera, y_my // 2 + y_camera, 10, 20))
-        else:
-            screen.fill((150, 150, 150))
-        pygame.draw.rect(screen, color_1, (x_post // 2.5, y_post // 4, x_post * 0.2, y_post * 0.1))
-        pygame.draw.rect(screen, color_2, (x_post // 2.5, y_post // 2, x_post * 0.2, y_post * 0.1))
-        text1 = f1.render('Exit', True, (180, 0, 0))
-        screen.blit(text1, (x_post // 2, y_post // 2))
-        f2 = pygame.font.SysFont('Insight Sans SSi', 18)
-        text2 = f2.render('Enter', True, (180, 0, 255))
-        screen.blit(text2, (x_post // 2, y_post // 4))
-        pygame.display.update()
+        if self.power_of_move_gorizontal < 0:
+            self.power_of_move_gorizontal += 0.1
+        elif self.power_of_move_gorizontal > 0:
+            self.power_of_move_gorizontal -= 0.1
 
+        if self.power_of_move_vertical < 0:
+            self.power_of_move_vertical += 0.1
+        elif self.power_of_move_vertical > 0:
+            self.power_of_move_vertical -= 0.1
 
+    def draw_button(self, text, x_button, y_button, wieght, hight, color_button, font, x_font, y_font, color_font):
+        if color_button != '_':
+            pygame.draw.rect(self.screen, self.dictionary_of_colors[color_button], (x_button, y_button, wieght, hight))
+        button_text = self.dictionary_of_fonts[font].render(text, True, self.dictionary_of_colors[color_font])
+        self.screen.blit(button_text, (x_font, y_font))
 
-clock = pygame.time.Clock()
-game = True
-speed_gorizontal = 0
-speed_vertical = 0
+    def draw_entity(self):
+        """entity draw"""
 
-FPS = 60
-menu(False)
-while game and not end_point:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            game = False
-            end_point = True
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            position = event.pos
-            if event.button == 1 and (x_post * 0.8 <= position[0] <= x_post * 0.8 + 70 and y_post * 0.05 <= position[
-                1] <= y_post * 0.05 + 40):
-                menu(True)
-        elif event.type == pygame.MOUSEMOTION:
-            position = event.pos
-            if x_post * 0.8 <= position[0] <= x_post * 0.8 + 70 and y_post * 0.05 <= position[1] <= y_post * 0.05 + 40:
-                color = (255, 100, 0)
-            else:
-                color = (255, 100, 80)
-    if end_point:
-        break
-    keys = pygame.key.get_pressed()
+        pygame.draw.rect(self.screen, self.dictionary_of_colors['red'], (self.camera_x_position, self.camera_y_position,
+                                                                         10, 10))
 
-    """move"""
-    if keys[pygame.K_LEFT]:
-        if speed_gorizontal != -3:
-            speed_gorizontal -= 0.4
-    if keys[pygame.K_RIGHT]:
-        if speed_gorizontal != 3:
-            speed_gorizontal += 0.4
+    def draw_game_map(self, fill):
+        """game map draw"""
 
-    if keys[pygame.K_UP]:
-        if speed_vertical != -3:
-            speed_vertical -= 0.4
-    if keys[pygame.K_DOWN]:
-        if speed_vertical != 3:
-            speed_vertical += 0.4
-
-    """camera"""
-    if keys[pygame.K_a]:
-        x_camera += 5
-    if keys[pygame.K_d]:
-        x_camera -= 5
-
-    if keys[pygame.K_w]:
-        y_camera += 5
-    if keys[pygame.K_s]:
-        y_camera -= 5
-
-    """exit"""
-    if keys[pygame.K_x]:
-        pygame.quit()
-        game = False
-        break
-
-    """calculations"""
-    x_my += speed_gorizontal
-    y_my += speed_vertical
-    if speed_gorizontal < 0:
-        speed_gorizontal += 0.1
-    elif speed_gorizontal > 0:
-        speed_gorizontal -= 0.1
-
-    if speed_vertical < 0:
-        speed_vertical += 0.1
-    elif speed_vertical > 0:
-        speed_vertical -= 0.1
-
-    """create"""
-    screen.fill((255, 255, 255))
-    x = y = 0
-    for row in level:
-        for col in row:
-            pygame.draw.rect(screen, individual_list[col], (x + x_camera, y + y_camera, sector_x, sector_y))
-            x += sector_x
-        y += sector_y
+        self.screen.fill((255, 255, 255))
         x = 0
-    pygame.draw.rect(screen, color, (x_post * 0.8, y_post * 0.05, 70, 40))
-    pygame.draw.rect(screen, (255, 0, 0), (x_my // 2 + x_camera, y_my // 2 + y_camera, 10, 20))
+        y = 0
+        for row in self.game_map:
+            for col in row:
+                pygame.draw.rect(self.screen, tuple([i + fill if i + fill <= 255 else 255 for i in self.dictionary_of_colors[col]]), (
+                    x - self.entity_x_position + self.camera_x_position,
+                    y - self.entity_y_position + self.camera_y_position, self.sector_size[0], self.sector_size[1]))
+                x += self.sector_size[0]
+            y += self.sector_size[1]
+            x = 0
 
-    text2 = fps.render(str(int(clock.get_fps())), True, (255, 0, 100))
-    screen.blit(text2, (50, 50))
+    def draw_decor(self):
+        """menu button draw"""
 
-    pygame.display.update()
+        pygame.draw.rect(self.screen, self.dictionary_of_colors['b_g_1'], (self.window_size[0] * 0.1,
+                                                                                      self.window_size[1] * 0.05, 70,
+                                                                                      40))
+        """counter of fps draw"""
 
-    clock.tick(FPS)
+        text2 = self.dictionary_of_fonts['FPS_font'].render(str(int(self.clock.get_fps())), True,
+                                                            self.dictionary_of_colors['blue'])
+        self.screen.blit(text2, (50, 50))
+
+
+    def core_process(self):
+        """connection of all"""
+        draw_menu_stage(self, False)
+        while self.process_flag:
+            self.action_check(pygame.event.get())
+            if not self.process_flag:
+                break
+            # self.physics()
+            self.draw_game_map(0)
+            self.draw_entity()
+            self.draw_decor()
+            pygame.display.update()
+            self.clock.tick(self.FPS)
+
+
+game = GameProcess([window_x_size, window_y_size], [map_x_size, map_y_size], [sector_x, sector_y], [2, 5, 8])
+game.core_process()
