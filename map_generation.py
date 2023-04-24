@@ -11,6 +11,9 @@ class MapGeneration:
         self.game_map = list()
         self.counter_names = 1
         self.last_position = []
+        self.cache = []
+        self.cache_temporary = []
+        self.cache_temporary_temporary = []
 
     def clear_map_create(self):
         self.game_map = [[0 for _ in range(self.wieght)] for _ in range(self.hight)]
@@ -39,9 +42,11 @@ class MapGeneration:
                 if r in range(hight - counter, sum([hight, counter, 1])):
                     for c in range(len(self.game_map[0])):
                         if c in range(wieght - counter, sum([wieght, counter, 1])):
+                            self.cache_temporary_temporary.append([r, c])
                             if status == 'real':
                                 if self.game_map[r][c] == 0:
                                     self.game_map[r][c] = self.counter_names
+
                             elif status == 'fake':
                                 if self.game_map[r][c] != 0:
                                     break_point = True
@@ -53,20 +58,36 @@ class MapGeneration:
             return True
 
     def the_chopper(self):
-        prove_list = []
-        for y in enumerate(self.game_map):
-            for x in enumerate(y[1]):
-                prove = self.completion('fake', x[0], y[0])
-                if prove:
-                    prove_list.append([x[0], y[0]])
-        if prove_list:
-            print(prove_list)
-            random_proved_point = random.choice(prove_list)
-            self.completion('real', random_proved_point[0], random_proved_point[1])
-        self.fake_point_sizes.pop(0)
-        self.counter_names += 1
-        return
-
+        def optimization(axis, value):
+            true_axis = {'wieght': self.wieght, 'hight': self.hight}
+            if value < 0:
+                value *= -1
+            if true_axis[axis] == self.wieght and value >= self.wieght:
+                value = value % self.wieght
+            if true_axis[axis] == self.hight and value >= self.hight:
+                value = value % self.hight
+            return value
+        break_point = 0
+        while break_point != 500:
+            break_point += 1
+            random_point = (random.randint(0, self.wieght), random.randint(0, self.hight))
+            true_gorizontal, true_vertical = optimization('wieght', random_point[0]), optimization('hight', random_point[1])
+            if self.point_sizes:
+                prove_collision = self.completion('fake', true_gorizontal, true_vertical)
+                if ([true_gorizontal, true_vertical] not in self.cache) and \
+                    ((true_vertical + self.point_sizes[0] + 1) <= self.wieght) and (
+                    (true_gorizontal + self.point_sizes[0] + 1) <= self.hight) and (
+                    true_vertical - self.point_sizes[0] >= 0) and (true_gorizontal - self.point_sizes[0] >= 0) and \
+                    prove_collision:
+                    self.game_map[true_vertical][true_gorizontal] = self.counter_names
+                    self.completion('real', true_gorizontal, true_vertical)
+                    # line(desired_point[0], true_gorizontal, desired_point[1], true_vertical, game_map, counter + 1)
+                    self.fake_point_sizes.pop(0)
+                    self.counter_names += 1
+                    self.cache_temporary.append(self.cache_temporary_temporary)
+                    self.cache.append(self.cache_temporary)
+                else:
+                    self.cache_temporary_temporary = []
     def map_create(self):
         self.calculate_points()
         self.clear_map_create()
@@ -76,7 +97,7 @@ class MapGeneration:
         return self.game_map
 
 
-new_map = MapGeneration(100, 100, [3, 3, 15])
+new_map = MapGeneration(100, 100, [5, 5, 15])
 create = new_map.map_create()
 
 
