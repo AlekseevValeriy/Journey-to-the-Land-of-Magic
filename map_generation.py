@@ -1,117 +1,79 @@
 import random
 from drawer import draw_map
+import numpy
 
 class MapGeneration:
-    def __init__(self, wieght, hight, quantity_of_points):
-        self.wieght = wieght
+    def __init__(self, wieght, hight, quantity_of_points):  # quantity_of_points = [(50, 6)]  50 == %, 6 == quality
+        self.width = wieght
         self.hight = hight
         self.quantity_of_points = quantity_of_points
-        self.fake_point_sizes = []
-        self.point_sizes = []
+        self.point_sizes = list()
         self.game_map = list()
+        self.array_of_true = numpy.array([True] * (self.hight * self.width)).reshape(self.hight, self.width)
+        self.array_of_false = numpy.array([False] * (self.hight * self.width)).reshape(self.hight, self.width)
+        self.layout_basic_map = list()  # [[x, y, scale]...]
         self.counter_names = 1
-        self.last_position = []
-        self.cache = []
-        self.cache_temporary = []
-        self.cache_temporary_temporary = []
+
+    def cor_coor(self, status, coords, scale, point=0):
+        if status == 'y':
+            min_y = coords - scale - point if coords - scale - point >= 0 else 0
+            max_y = coords + scale + point if coords + scale + point < self.hight else (self.hight - 1)
+            return (min_y, max_y)
+        elif status == 'x':
+            min_x = coords - scale - point if coords - scale - point >= 0 else 0
+            max_x = coords + scale + point if coords + scale + point < self.width else (self.width - 1)
+            return (min_x, max_x)
 
     def clear_map_create(self):
-        self.game_map = [[0 for _ in range(self.wieght)] for _ in range(self.hight)]
-
-    def random_point_create(self):
-        point = random.randint(0, (self.wieght * self.hight))
-        self.game_map[point // len(self.game_map)][point % len(self.game_map)] = self.counter_names
-        self.counter_names += 1
-        self.last_position = [point // self.hight, point % self.hight - 1]
+        self.game_map = numpy.zeros(self.hight * self.width).reshape(self.hight, self.width)
 
     def calculate_points(self):
-        def create_point(size, wieght, hight):
-            return (((wieght // size) + (hight // size)) // 2) // 2
+        def create_point(percent, width, hight):
+            return ((width * hight * (percent / 100)) ** 0.5) // 2
 
-        created_points = [create_point(4, self.wieght, self.hight)] * self.quantity_of_points[0]\
-                     + [create_point(6, self.wieght, self.hight)] * self.quantity_of_points[1]\
-                     + [create_point(8, self.wieght, self.hight)] * self.quantity_of_points[2]
-        self.point_sizes = created_points
-        self.fake_point_sizes = created_points
+        created_points = [[int(create_point(point[0], self.width, self.hight))] * point[1] for point in self.quantity_of_points]
+        [[self.point_sizes.append(point_2_level) if point_2_level else False for point_2_level in point_1_level] for point_1_level in created_points]
 
-    def completion(self, status, wieght, hight, counter=1):
-        break_point = False
-        whi_le = self.point_sizes[0] if status == 'real' else self.fake_point_sizes[0]
-        while whi_le != 0:
-            for r in range(len(self.game_map)):
-                if r in range(hight - counter, sum([hight, counter, 1])):
-                    for c in range(len(self.game_map[0])):
-                        if c in range(wieght - counter, sum([wieght, counter, 1])):
-                            self.cache_temporary_temporary.append([r, c])
-                            if status == 'real':
-                                if self.game_map[r][c] == 0:
-                                    self.game_map[r][c] = self.counter_names
+    def completion(self, width, hight, scale, name):
+        xs = self.cor_coor('x', width, scale)
+        ys = self.cor_coor('y', hight, scale)
+        self.game_map[ys[0]: ys[1], xs[0]: xs[1]] = numpy.array([name] * ((xs[1] - xs[0]) * (ys[1] - ys[0]))).reshape((ys[1] - ys[0]), (xs[1] - xs[0]))
 
-                            elif status == 'fake':
-                                if self.game_map[r][c] != 0:
-                                    break_point = True
-            whi_le -= 1
-            counter += 1
-        if status == 'fake':
-            if break_point:
-                return False
-            return True
+    def arrangement(self):
+        point = self.point_sizes[0]
+        layout_basic = numpy.array([False] * (self.hight * self.width)).reshape(self.hight, self.width)
+        layout_basic[point: - point, point: - point] = numpy.array([True] * ((self.hight - point * 2) * (self.width - point * 2))).reshape((self.hight - point * 2), (self.width - point * 2))
+        for x, y, s in self.layout_basic_map:
+            xs = self.cor_coor('x', x, s, point=point)
+            ys = self.cor_coor('y', y, s, point=point)
+            layout_basic[ys[0]: ys[1], xs[0]: xs[1]] = self.array_of_false[ys[0]: ys[1], xs[0]: xs[1]]
+        for_choice_list = []
+        for y, h in enumerate(layout_basic):
+            for x, w in enumerate(h):
+                for_choice_list.append((x, y)) if layout_basic[y][x] else False
+        if for_choice_list:
+            random_choice = random.choice(for_choice_list)
+            self.completion(random_choice[0], random_choice[1], point, self.counter_names)
+            self.layout_basic_map.append([random_choice[0], random_choice[1], point])
+        self.point_sizes.pop(0)
+        self.counter_names += 1
 
-    def the_chopper(self):
-        def optimization(axis, value):
-            true_axis = {'wieght': self.wieght, 'hight': self.hight}
-            if value < 0:
-                value *= -1
-            if true_axis[axis] == self.wieght and value >= self.wieght:
-                value = value % self.wieght
-            if true_axis[axis] == self.hight and value >= self.hight:
-                value = value % self.hight
-            return value
-        break_point = 0
-        while break_point != 500:
-            break_point += 1
-            random_point = (random.randint(0, self.wieght), random.randint(0, self.hight))
-            true_gorizontal, true_vertical = optimization('wieght', random_point[0]), optimization('hight', random_point[1])
-            if self.point_sizes:
-                prove_collision = self.completion('fake', true_gorizontal, true_vertical)
-                if ([true_gorizontal, true_vertical] not in self.cache) and \
-                    ((true_vertical + self.point_sizes[0] + 1) <= self.wieght) and (
-                    (true_gorizontal + self.point_sizes[0] + 1) <= self.hight) and (
-                    true_vertical - self.point_sizes[0] >= 0) and (true_gorizontal - self.point_sizes[0] >= 0) and \
-                    prove_collision:
-                    self.game_map[true_vertical][true_gorizontal] = self.counter_names
-                    self.completion('real', true_gorizontal, true_vertical)
-                    # line(desired_point[0], true_gorizontal, desired_point[1], true_vertical, game_map, counter + 1)
-                    self.fake_point_sizes.pop(0)
-                    self.counter_names += 1
-                    self.cache_temporary.append(self.cache_temporary_temporary)
-                    self.cache.append(self.cache_temporary)
-                else:
-                    self.cache_temporary_temporary = []
-    def map_create(self):
+
+    def main(self):
         self.calculate_points()
         self.clear_map_create()
-        self.random_point_create()
         for _ in range(len(self.point_sizes)):
-            self.the_chopper()
+            self.arrangement()
         return self.game_map
 
 
-new_map = MapGeneration(100, 100, [5, 5, 15])
-create = new_map.map_create()
+if __name__ == '__main__':
+    new_map = MapGeneration(200, 200, [(10, 4), (5, 3), (3, 1)])
+    create = new_map.main()
 
-
-
-colors = []
-[[colors.append(j) if j not in colors else False for j in i] for i in create]
-colors_dict = {}
-for i in colors:
-    if i not in colors_dict:
-        colors_dict[i] = (random.randint(1, 255), random.randint(1, 255), random.randint(1, 255))
-
-draw_map(colors_dict, create, 100, 100)
-#
-
-
-
-
+    colors = []
+    [[colors.append(j) if j not in colors else False for j in i] for i in create]
+    colors_dict = {}
+    for i in colors:
+        if i not in colors_dict:
+            colors_dict[i] = (random.randint(1, 255), random.randint(1, 255), random.randint(1, 255))
