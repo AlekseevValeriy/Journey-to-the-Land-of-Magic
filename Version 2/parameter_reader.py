@@ -13,7 +13,7 @@ class ParameterReaderRead:
 
 
 class ParameterReaderWrite:
-    def __init__(self, file_name, file_path='', *parameters):
+    def __init__(self, file_name, *parameters, file_path=''):
         self.file_name = file_name
         self.file_path = file_path
         # параметры поступают в формате ['название параметра', изменение]

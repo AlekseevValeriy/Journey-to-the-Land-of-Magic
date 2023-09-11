@@ -18,11 +18,12 @@ def create_buttons(file_name, times):
     #     font_color_2 = [int(i) for i in input('font color 2  ').split()]
     #     font_size = int(input('font size  '))
     #     print()
-    #     data = {"texture": texture, "font": "fonts\\Book Antiqua.ttf", "text": text, "coordinate": coordinate, "font_color_1": font_color_1, "font_color_2": font_color_2, "font_size": font_size, "status": "passive"}
+    #     data = {"texture": f"textures\\title menu\\buttons\\{texture}", "font": "fonts\\Book Antiqua.ttf", "text": text, "coordinate": coordinate, "font_color_1": font_color_1, "font_color_2": font_color_2, "font_size": font_size, "status": "passive"}
     #     buttons[name] = data
 
     for button in buttons:
-        print(buttons[button]['text'])
+        buttons[button]['game_process'] = {'Menu': 'Меню', '00': '00'}
+        # print(buttons[button]['text'])
         # buttons[button]['texture'] = os.path.join('textures', 'title menu', 'buttons', 'button.png')
         # buttons[button]['font_color_1'] = [48, 48, 48]
         # buttons[button]['font_color_2'] = [96, 96, 96]
@@ -31,8 +32,7 @@ def create_buttons(file_name, times):
         # buttons[button]['coordinate'] = [777, 540]
         # buttons[button]['status'] = 'passive'
         # buttons[button]['font'] = "fonts\\Book Antiqua.ttf"
-
     with open(file_name, 'w') as file:
         json.dump(buttons, file)
 
-create_buttons('../settings/buttons_start_menu.json', 11)
+create_buttons('../settings/list_of_translations.json', 2)
