@@ -1,70 +1,76 @@
+from random import choice
+
+"""
+Класс, который работает над заполнением матрицы от координат [x1, y1] до [x2, y2] "линией"
+"""
+
+
 class LineDrawer:
+    def __init__(self):
+        self.add_length = 0
 
-    def ant_line(self, dict, start, finish, side, inverse=False, door_step=2, sign=1):
-        from random import choice
-        # sign = 1
-
-        def line(counter_of_side, times_on_edge_real, step_back, door_step, times_on_edge_all=3, step_back_times=3):
-            if step_back:
-                pass
-                # if counter_of_side > 0:
-                #     counter_of_side -= 1
-                # elif counter_of_side < 0:
-                #     counter_of_side += 1
-                # else:
-                #     counter_of_side += choice([1, -1])
-                # step_back -= 1
+    def bresenham_line(self, x1=0, y1=0, x2=0, y2=0):
+        coordinates = []
+        dx = x2 - x1
+        dy = y2 - y1
+        sign_x = 1 if dx > 0 else -1 if dx < 0 else 0
+        sign_y = 1 if dy > 0 else -1 if dy < 0 else 0
+        if dx < 0:
+            dx = -dx
+        if dy < 0:
+            dy = -dy
+        if dx > dy:
+            pdx, pdy = sign_x, 0
+            es, el = dy, dx
+        else:
+            pdx, pdy = 0, sign_y
+            es, el = dx, dy
+        x, y = x1, y1
+        error, t = el / 2, 0
+        coordinates.append([x, y])
+        while t < el:
+            error -= es
+            if error < 0:
+                error += el
+                x += sign_x
+                y += sign_y
             else:
-                counter_of_side += choice([1, -1])
-            if counter_of_side > door_step:
-                counter_of_side = door_step
-            if counter_of_side < - door_step:
-                counter_of_side = - door_step
+                x += pdx
+                y += pdy
+            t += 1
+            coordinates.append([x, y])
+        return coordinates
 
-            # if counter_of_side == door_step:
-            #     times_on_edge_real += 1
-            # else:
-            #     times_on_edge_real = 0
-            #
-            # if times_on_edge_real == times_on_edge_all:
-            #     step_back = step_back_times
-            return counter_of_side, times_on_edge_real, step_back
+    def mandatory_cleaning(func):
+        def fun(self, *args, **kwargs):
+            self.add_length = 0
+            func(self, *args, **kwargs)
+            self.add_length = 0
+        return fun
 
-        counter_of_side, times_on_edge, step_back = 0, 0, 0
-        for i in range(abs(start[1] - finish[1]) if side == 'v' else abs(start[0] - finish[0])):
-            counter_of_side, times_on_edge, step_back = line(counter_of_side, times_on_edge, step_back, door_step)
+    @mandatory_cleaning
+    def ant_line(self, matrix, start, finish, side, inverse=False, to_edge=2, symbol=1, markup_symbol=-1):
+        def line_change():
+            self.add_length += choice([-1, 1])
+            self.add_length = to_edge if self.add_length > to_edge else self.add_length
+            self.add_length = - to_edge if self.add_length < - to_edge else self.add_length
 
-            for j in range(abs(counter_of_side)):
-                j = j if counter_of_side >= 0 else - j
-                if side == 'v':
-                    dict[start[1] + i][start[0] + j] = 3
+        for i in range(abs(start[1] - finish[1] if side == 'v' else start[0] - finish[0])):
+            line_change()
+
+            for j in range(abs(self.add_length)):
+                j = j if self.add_length >= 0 else - j
+                if not inverse:
+                    temporary_symbol = symbol if self.add_length < 0 else 0
                 else:
-                    dict[start[1] + j][start[0] + i] = 3
-
-            for j in range(abs(counter_of_side)):
-                j = j if counter_of_side >= 0 else - j
+                    temporary_symbol = symbol if self.add_length >= 0 else 0
                 if side == 'v':
-                    if inverse:
-                        number = sign if start[0] + j >= start[0] and dict[start[1] + i][start[0] + j - 1] in [sign, 0] else 0
-                    else:
-                        number = sign if start[0] + j <= start[0] and dict[start[1] + i][start[0] + j + 1] in [sign, 0] else 0
-                    dict[start[1] + i][start[0] + j] = number
+                    matrix[start[1] + i][start[0] + j] = temporary_symbol
                 else:
-                    if inverse:
-                        number = sign if start[1] + j >= start[1] and dict[start[1] + j - 1][start[0] + i] in [sign, 0] else 0
-                    else:
-                        number = sign if start[1] + j <= start[1] and dict[start[1] + j + 1][start[0] + i] in [sign, 0] else 0
-                    dict[start[1] + j][start[0] + i] = number
-
+                    matrix[start[1] + j][start[0] + i] = temporary_symbol
 
 if __name__ == '__main__':
-    from numpy import zeros, ones
+    b = []
+    line_dr = LineDrawer(b)
+    line_dr.ant_line()
 
-    dict = zeros((24, 24), dtype='int32')
-    dict[4:19, 5: 20] = ones((15, 15), dtype='int32')
-    # dict = [[(str(j[1]), j[0], i[0]) for j in enumerate(i[1])] for i in enumerate(dict)]
-    LineDrawer().ant_line(dict, [5, 4], [19, 4], 'g', inverse=False)
-    LineDrawer().ant_line(dict, [19, 4], [19, 18], 'v', inverse=True)
-    LineDrawer().ant_line(dict, [5, 18], [19, 18], 'g', inverse=True)
-    LineDrawer().ant_line(dict, [5, 4], [5, 18], 'v', inverse=False)
-    [print(*line) for line in dict]

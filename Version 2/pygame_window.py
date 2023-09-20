@@ -1,8 +1,13 @@
 import pygame
+
+from game_process import GameProcess
 from parameter_reader import ParameterReaderRead
 from start_menu import StartMenu
-from game_process import GameProcess
-from world_generator_2 import WorldGenerator
+from world_generator import WorldGenerator
+
+""""
+Класс, который обобщает все остальные классы и показывает результат в окне pygame
+"""
 
 
 class PygameWindow:
@@ -26,13 +31,13 @@ class PygameWindow:
             menu.menu_process()
             self.fps, self.global_language, self.selected_world = menu.return_data()
             if self.selected_world:
-                # TODO сделать игровой процесс
-                world = WorldGenerator(100, 100, sector_size=16)
-                world.create_world_layout()
+                world = WorldGenerator(400, 400)
+                world.create_world_layout(regions=[2, 3, 4, 5])
+                player_coordinate = world.make_player_coordinate()
                 world.create_world()
                 world = world.return_world_layout()
-                game = GameProcess(self.screen, self.fps, self.clock, self.global_language, world, [0, 0])
-                game.game_process()
+                gaming_process = GameProcess(self.screen, self.fps, self.clock, self.global_language, world, player_coordinate)
+                gaming_process.game_process()
                 menu.process_flag = True
             else:
                 break

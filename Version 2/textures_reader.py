@@ -1,5 +1,10 @@
 from os import listdir, path
+
 from pygame.image import load
+
+"""
+Класс, который обрабатывает текстуры
+"""
 
 
 class TexturesReader:

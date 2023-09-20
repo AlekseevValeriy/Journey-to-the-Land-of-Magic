@@ -1,6 +1,10 @@
 import json
 from os import path
 
+"""
+Класс, который считывает и записывает параметры с файлов .json
+"""
+
 
 class ParameterReaderRead:
     def __init__(self, file_name, file_path=''):
