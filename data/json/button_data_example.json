@@ -1,0 +1,67 @@
+{
+  "example_menu_name": {
+    "example_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "path",
+        "active": "path"
+      },
+      "status": "status",
+      "position": [
+        0,
+        0
+      ]
+    },
+    "example_text": {
+      "button_class": "text",
+      "text": "example_text",
+      "font_family": "font_path",
+      "font_size": 0,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "status",
+      "position": [
+        0,
+        0
+      ]
+    },
+    "example_button_+_text": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "path",
+        "active": "path"
+      },
+      "text": "example_text",
+      "font_family": "font_path",
+      "font_size": 0,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "status",
+      "position": [
+        0,
+        0
+      ]
+    }
+  },
+  "example_other_menu_name": {}
+}

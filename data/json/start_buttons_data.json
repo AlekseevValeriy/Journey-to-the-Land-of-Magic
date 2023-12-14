@@ -1,0 +1,727 @@
+{
+  "start_menu": {
+    "exit_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Выход",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        777,
+        882
+      ]
+    },
+    "credits_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Заслуги",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        777,
+        734
+      ]
+    },
+    "settings_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Настройки",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        777,
+        586
+      ]
+    },
+    "worlds_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Миры",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        777,
+        438
+      ]
+    },
+    "Game_logo": {
+      "button_class": "text",
+      "text": "Путешествие в Страну волшебства",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 100,
+      "font_color": {
+        "passive": [
+          255,
+          215,
+          0
+        ],
+        "active": [
+          255,
+          215,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        130,
+        100
+      ]
+    }
+  },
+  "settings_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    },
+    "volume_table": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Громкость",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        200
+      ]
+    },
+    "volume": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button.png"
+      },
+      "status": "passive",
+      "position": [
+        475,
+        200
+      ]
+    },
+    "volume_trigger": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//volume.png",
+        "active": "..//..//data//textures//buttons//volume_active.png"
+      },
+      "status": "passive",
+      "position": [
+        495,
+        229
+      ]
+    },
+    "fps_table": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Смена кадров",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        350
+      ]
+    },
+    "fps_60_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button_setting.png",
+        "active": "..//..//data//textures//buttons//button_setting_active.png"
+      },
+      "text": "60",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        475,
+        350
+      ]
+    },
+    "fps_30_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button_setting.png",
+        "active": "..//..//data//textures//buttons//button_setting_active.png"
+      },
+      "text": "30",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        700,
+        350
+      ]
+    }
+  },
+  "credits": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    },
+    "workers": {
+      "button_class": "text",
+      "text": "Работали над игрой:",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 50,
+      "font_color": {
+        "passive": [
+          255,
+          215,
+          0
+        ],
+        "active": [
+          255,
+          215,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        800,
+        50
+      ]
+    },
+    "coding": {
+      "button_class": "text",
+      "text": "Программирование:",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 40,
+      "font_color": {
+        "passive": [
+          255,
+          215,
+          0
+        ],
+        "active": [
+          255,
+          215,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        400,
+        200
+      ]
+    },
+    "coding_name": {
+      "button_class": "text",
+      "text": "Валерий Алексеев",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          255,
+          215,
+          0
+        ],
+        "active": [
+          255,
+          215,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        475,
+        300
+      ]
+    },
+    "design": {
+      "button_class": "text",
+      "text": "Дизайн:",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 40,
+      "font_color": {
+        "passive": [
+          255,
+          215,
+          0
+        ],
+        "active": [
+          255,
+          215,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1300,
+        200
+      ]
+    },
+    "design_name": {
+      "button_class": "text",
+      "text": "Тимур Ишкин",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          255,
+          215,
+          0
+        ],
+        "active": [
+          255,
+          215,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1275,
+        300
+      ]
+    }
+  },
+  "worlds": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    },
+    "world_title_1": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Мир 1",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        200
+      ]
+    },
+    "world_button_1": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png",
+        "unactive": "..//..//data//textures//buttons//button.png"
+      },
+      "text": "Статус ?",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ],
+        "unactive": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        475,
+        200
+      ]
+    },
+    "world_create_1": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//create.png",
+        "active": "..//..//data//textures//buttons//create_active.png",
+        "unactive": "..//..//data//textures//buttons//create_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        865,
+        215
+      ]
+    },
+    "world_delete_1": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//delete.png",
+        "active": "..//..//data//textures//buttons//delete_active.png",
+        "unactive": "..//..//data//textures//buttons//delete_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        960,
+        220
+      ]
+    },
+    "world_title_2": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Мир 2",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        350
+      ]
+    },
+    "world_button_2": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png",
+        "unactive": "..//..//data//textures//buttons//button.png"
+      },
+      "text": "Статус ?",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ],
+        "unactive": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        475,
+        350
+      ]
+    },
+    "world_create_2": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//create.png",
+        "active": "..//..//data//textures//buttons//create_active.png",
+        "unactive": "..//..//data//textures//buttons//create_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        865,
+        365
+      ]
+    },
+    "world_delete_2": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//delete.png",
+        "active": "..//..//data//textures//buttons//delete_active.png",
+        "unactive": "..//..//data//textures//buttons//delete_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        960,
+        370
+      ]
+    },
+    "world_title_3": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Мир 3",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        500
+      ]
+    },
+    "world_button_3": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png",
+        "unactive": "..//..//data//textures//buttons//button.png"
+      },
+      "text": "Статус ?",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ],
+        "unactive": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        475,
+        500
+      ]
+    },
+    "world_create_3": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//create.png",
+        "active": "..//..//data//textures//buttons//create_active.png",
+        "unactive": "..//..//data//textures//buttons//create_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        865,
+        515
+      ]
+    },
+    "world_delete_3": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//delete.png",
+        "active": "..//..//data//textures//buttons//delete_active.png",
+        "unactive": "..//..//data//textures//buttons//delete_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        960,
+        520
+      ]
+    }
+  }
+}

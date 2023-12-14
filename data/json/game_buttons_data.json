@@ -1,0 +1,176 @@
+{
+  "game_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    }
+  },
+  "pause_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    }
+  },
+  "persons_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    }
+  },
+  "inventory_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    }
+  },
+  "map_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    }
+  },
+  "person_upgrade_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    }
+  }
+}
