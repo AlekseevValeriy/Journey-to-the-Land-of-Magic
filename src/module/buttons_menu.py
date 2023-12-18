@@ -1,4 +1,4 @@
-from typing import TypeVar, Callable
+from typing import TypeVar, Callable, Any
 
 from pygame import Surface, time, MOUSEBUTTONDOWN, MOUSEBUTTONUP, QUIT
 from pygame.display import update
@@ -17,11 +17,11 @@ class ButtonsMenu:
         self.screen_size = self.screen.get_size()
         self.clock = clock
         self.frame_rate = frame_rate
-        self.buttons_data = self.create_buttons(JsonReader.read_file(buttons_file_path))
+        self.buttons_data, self.objects_data = self.create_buttons(JsonReader.read_file(buttons_file_path))
         self.other_data = {}
         self.buttons_binds = {}
         self.menu_process_flag = True
-        self.present_menu = ''
+        self.present_menu: str = ''
 
     def add_other_data(self, **data: {T: T}) -> None:
         self.other_data = {**self.other_data, **data}
@@ -55,6 +55,10 @@ class ButtonsMenu:
 
         tuple(map(draw_button, self.buttons_data[menu_name]))
 
+    def draw_objects(self, menu_name):
+        tuple(map(lambda object: self.objects_data[menu_name][object].draw(), self.objects_data[menu_name]))
+
+
     def cursor_reader(self) -> None:
         """Функция для обработки действий курсора: перемещение, нажатия"""
         for event in get():
@@ -73,30 +77,51 @@ class ButtonsMenu:
             elif event.type == MOUSEBUTTONUP:
                 pass
 
-    def create_buttons(self, data: dict) -> dict:
+    def create_buttons(self, data: dict[Any]) -> tuple[dict[dict[str, dict]], dict[dict[dict[str, dict]]]]:
         """Функция для создания классов кнопок из информации json файла"""
         buttons = {}
+        objects = {}
         for menu_name in data:
             for button_name in data[menu_name]:
-                b_d = data[menu_name][button_name]
-                button_class = b_d['button_class']
-                if menu_name not in buttons:
-                    buttons[menu_name] = {}
-                if button_class == 'button':
-                    buttons[menu_name][button_name] = ButtonIcp(self.screen, texture=b_d['texture'],
-                                                                status=b_d['status'], position=b_d['position'])
-                elif button_class == 'text':
-                    buttons[menu_name][button_name] = TextIcp(self.screen, text=b_d['text'],
-                                                              font_family=b_d['font_family'],
-                                                              font_size=b_d['font_size'], font_color=b_d['font_color'],
-                                                              status=b_d['status'], position=b_d['position'])
-                elif button_class == 'button + text':
-                    buttons[menu_name][button_name] = ButtonCp(self.screen, texture=b_d['texture'], text=b_d['text'],
-                                                               font_family=b_d['font_family'],
-                                                               font_size=b_d['font_size'],
-                                                               font_color=b_d['font_color'], status=b_d['status'],
-                                                               position=b_d['position'])
-        return buttons
+                button_data = data[menu_name][button_name]
+                button_class_name = button_data['button_class']
+                button_class_instance = None
+
+                if button_class_name == 'button':
+                    button_class_instance = ButtonIcp(self.screen, texture=button_data['texture'],
+                                              status=button_data['status'],
+                                              position=button_data['position'])
+                elif button_class_name == 'text':
+                    button_class_instance = TextIcp(self.screen, text=button_data['text'],
+                                            font_family=button_data['font_family'],
+                                            font_size=button_data['font_size'],
+                                            font_color=button_data['font_color'],
+                                            status=button_data['status'],
+                                            position=button_data['position'])
+                elif button_class_name == 'button + text':
+                    button_class_instance = ButtonCp(self.screen, texture=button_data['texture'],
+                                             text=button_data['text'],
+                                             font_family=button_data['font_family'],
+                                             font_size=button_data['font_size'],
+                                             font_color=button_data['font_color'],
+                                             status=button_data['status'],
+                                             position=button_data['position'])
+                if 'object' in button_name:
+                    group = button_name.split('_')[1]
+                    if menu_name not in objects:
+                        objects[menu_name] = {}
+                    if group not in objects[menu_name]:
+                        objects[menu_name][group] = {}
+                    objects[menu_name][group][button_name] = button_class_instance
+                else:
+                    if menu_name not in buttons:
+                        buttons[menu_name] = {}
+                    buttons[menu_name][button_name] = button_class_instance
+        print(objects)
+        return buttons, objects
+
+    def create_objects(self) -> None:
+        pass
 
     def end_menu(self) -> None:
         print('program registered end')

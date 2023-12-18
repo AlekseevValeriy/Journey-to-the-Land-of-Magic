@@ -26,6 +26,182 @@
         50,
         50
       ]
+    },
+    "object_sb_status_bat_frame_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//test_status_bar_frame.png",
+        "active": "..//..//data//textures//buttons//test_status_bar_frame.png"
+      },
+      "status": "passive",
+      "position": [
+        360,
+        680
+      ]
+    },
+    "object_sb_image_frame_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//player//test//frame_face.png",
+        "active": "..//..//data//textures//player//test//frame_face.png"
+      },
+      "status": "passive",
+      "position": [
+        375,
+        690
+      ]
+    },
+    "object_sb_person_name_text": {
+      "button_class": "text",
+      "text": "Персона",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        360,
+        890
+      ]
+    },
+    "object_sb_person_exp_text": {
+      "button_class": "text",
+      "text": "Опыт:",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        570,
+        680
+      ]
+    },
+    "object_sb_person_hp_text": {
+      "button_class": "text",
+      "text": "Здоровье:",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        570,
+        740
+      ]
+    },
+    "object_sb_person_mp_text": {
+      "button_class": "text",
+      "text": "Мана:",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        570,
+        800
+      ]
+    },
+    "object_sb_exp_bar_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//exp_line_bar.png",
+        "active": "..//..//data//textures//buttons//exp_line_bar.png"
+      },
+      "status": "passive",
+      "position": [
+        700,
+        680
+      ]
+    },
+    "object_sb_hp_bar_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//hp_line_bar.png",
+        "active": "..//..//data//textures//buttons//hp_line_bar.png"
+      },
+      "status": "passive",
+      "position": [
+        700,
+        740
+      ]
+    },
+    "object_sb_mp_bar_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//mp_line_bar.png",
+        "active": "..//..//data//textures//buttons//mp_line_bar.png"
+      },
+      "status": "passive",
+      "position": [
+        700,
+        800
+      ]
+    },
+    "object_sb_person_frame_dead_frame": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//player//test//dead_frame_face.png",
+        "active": "..//..//data//textures//player//test//dead_frame_face.png"
+      },
+      "status": "passive",
+      "position": [
+        375,
+        690
+      ]
+    },
+    "object_mp_map_frame": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//test_map_frame.png",
+        "active": "..//..//data//textures//buttons//test_map_frame.png"
+      },
+      "status": "passive",
+      "position": [
+        1595,
+        25
+      ]
     }
   },
   "pause_menu": {

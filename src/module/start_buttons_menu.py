@@ -127,10 +127,18 @@ class StartButtonsMenu(ButtonsMenu):
     def set_30_frame_rate(self):
         self.frame_rate = 30
 
-    def start_game_process(self, world_layout):
-        generator = WorldGenerator()
-        world_layout = generator.texturing(world_layout)
+    def create_game_process(self):
         game = GameButtonsMenu(self.screen, self.clock, self.frame_rate,
-                               '../../data/json/game_buttons_data.json',
-                               world_layout, 'test', [0, 0])
-        game.start_menu()
+                               '../../data/json/game_buttons_data.json')
+        self.add_other_data(game_process=game, game_flag=False)
+
+    def start_game_process(self, world_layout):
+        if 'game_flag' not in self.other_data:
+            self.create_game_process()
+        if 'game_flag' in self.other_data and not self.other_data['game_flag']:
+            generator = WorldGenerator()
+            world_layout = generator.texturing(world_layout)
+            self.other_data['game_process'].create_world(world_layout)
+            self.other_data['game_process'].create_player('test', [0, 0])
+        self.other_data['game_process'].start_menu()
+        self.other_data['game_flag'] = False

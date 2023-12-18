@@ -1,5 +1,5 @@
-from pygame.font import Font # pygame.font.Font imported and bound as Font
-from pygame.image import load # pygame.image.load imported and bound as load
+from pygame.font import Font  # pygame.font.Font imported and bound as Font
+from pygame.image import load  # pygame.image.load imported and bound as load
 
 
 class ButtonMethods:
@@ -9,8 +9,8 @@ class ButtonMethods:
         """Функция отрисовывающая классы кнопок и текста"""
         class_name = self.__class__.__name__
         if class_name == 'ButtonIcp':  # отрисовка кнопки
-            self.game_screen.blit(self.texture[self.status], self.position)
-        elif class_name == 'TextIcp':  # отрисовка текста
+            self.game_screen.blit(self.texture[self.status], dest=self.position, area=(0, 0, *self.size))
+        elif class_name == 'TextIcp':  # отрисовка текста*
             text = self.font_family.render(self.text, True, self.font_color[self.status])
             self.game_screen.blit(text, self.position)
         elif class_name == 'ButtonCp':  # отрисовка кнопки с текстом
@@ -40,7 +40,7 @@ class ButtonIcp(ButtonMethods):
             self.texture[texture] = load(self.texture[texture]).convert_alpha()
         self.status: str = kwargs['status']
         self.position: list = kwargs['position']
-        self.size: list = self.texture[self.status].get_size()
+        self.size: list = list(self.texture[self.status].get_size())
 
 
 class TextIcp(ButtonMethods):
@@ -71,13 +71,20 @@ class ButtonCp(ButtonMethods):
         self.font_color: dict = kwargs['font_color']
         self.status: str = kwargs['status']
         self.position: list = kwargs['position']
-        self.size: list = self.texture[self.status].get_size()
+        self.size: list = list(self.texture[self.status].get_size())
+
 
 class ButtonObject:
     def __init__(self, screen, *buttons, **data):
         self.screen = screen
         self.buttons = list(buttons)
         self.data = data
+
+    def add_data(self, **data):
+        self.data = {**self.data, **data}
+
+    def add_buttons(self, *buttons):
+        self.buttons = {*self.buttons, *buttons}
 
     def draw(self):
         for button in self.buttons:

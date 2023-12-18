@@ -1,33 +1,40 @@
 from sys import exit
 
-from pygame import MOUSEMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP, QUIT, KEYDOWN, KEYUP
+from pygame import MOUSEMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP, QUIT, KEYDOWN, KEYUP, K_x
 from pygame.display import update
 from pygame.event import get
 
 from buttons_menu import ButtonsMenu
 from player import Player
 from world import World
-from button import ButtonObject
+from custom_object_buttons import StatusBar
 
 
 class GameButtonsMenu(ButtonsMenu):
-    def __init__(self, screen, clock, frame_rate, buttons_file_path, world, person: str, position: list):
+    def __init__(self, screen, clock, frame_rate, buttons_file_path):
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
         self.add_other_data(move=False)
         self.add_button_bind(back_button=self.end_menu)
         self.keys_dict = {1073741903: 'right', 1073741904: 'left', 1073741906: 'up', 1073741905: 'down'}
-        self.world = World(screen, world)
-        self.player = Player(screen, position, person)
-        self.player.change_step_under_frame_rate(self.frame_rate)
-        self.button_objects = {}
+        self.world = None
+        self.player = None
         self.create_button_objects()
 
     def create_button_objects(self):
-        # процесс сбора нужных objects в ButtonObject и настройка данных
-        # написать в json gAMES BUTTONS кнопки и составить из них объекты, возможно новые отдельные классы
-        pass
+        objects = self.objects_data['game_menu']['sb']
+        self.objects_data['game_menu']['sb'] = StatusBar(self.screen,
+                                                            *tuple(map(lambda name: objects[name], objects)))
+
+    def create_world(self, world):
+        self.world = World(self.screen, world)
+
+    def create_player(self, person, position):
+        self.player =  Player(self.screen, position, person)
 
     def start_menu(self) -> None:
+        self.objects_data['game_menu']['sb'].born()
+        self.player.change_step_under_frame_rate(self.frame_rate)
+        self.menu_process_flag = True
         self.present_menu = 'game_menu'
         self.menu_process()
 
@@ -36,6 +43,8 @@ class GameButtonsMenu(ButtonsMenu):
             self.draw_background()
             self.game_unit()
             self.draw_buttons(self.present_menu)
+            self.draw_objects(self.present_menu)
+            self.objects_data['game_menu']['sb'].dead_check()
             if self.menu_process_flag:
                 update()
                 self.clock.tick(self.frame_rate)
@@ -51,9 +60,12 @@ class GameButtonsMenu(ButtonsMenu):
             if event.type == QUIT:
                 self.menu_process_flag = False
                 exit()
-            elif event.type == KEYDOWN:
+            elif event.type == KEYDOWN and self.objects_data['game_menu']['sb'].get_persona_status():
                 if self.keys_dict.get(event.key, False):
                     self.run_action(self.keys_dict[event.key])
+                if event.key == K_x:
+                    print('x')
+                    self.objects_data['game_menu']['sb'].reduce_parameter('hp', 10)
             elif event.type == KEYUP:
                 if self.keys_dict.get(event.key, False):
                     self.stand_action()
@@ -90,3 +102,4 @@ class GameButtonsMenu(ButtonsMenu):
 
     def end_menu(self) -> None:
         self.menu_process_flag = False
+        self.other_data['move'] = False
