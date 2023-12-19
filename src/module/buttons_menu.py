@@ -56,7 +56,8 @@ class ButtonsMenu:
         tuple(map(draw_button, self.buttons_data[menu_name]))
 
     def draw_objects(self, menu_name):
-        tuple(map(lambda object: self.objects_data[menu_name][object].draw(), self.objects_data[menu_name]))
+        # tuple(map(lambda object: self.objects_data[menu_name][object].draw(), self.objects_data[menu_name]))
+        tuple(map(lambda object: self.objects_data[menu_name][object].draw() if type(self.objects_data[menu_name][object]) != dict else False, self.objects_data[menu_name]))
 
 
     def cursor_reader(self) -> None:

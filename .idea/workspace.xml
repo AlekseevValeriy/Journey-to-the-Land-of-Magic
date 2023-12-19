@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfda3d3c-de4e-4e73-89ba-bbb710aa115b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/textures/player/test/frame_face.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/module/custom_object_buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/json/game_buttons_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/game_buttons_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/units_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/units_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/empty.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/empty.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/grass_place.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/grass_place.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/sand_place.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/sand_place.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/Брифинг.docx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/Брифинг.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/buttons_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/custom_object_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/custom_object_buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/game_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/game_buttons_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/get_lines.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/get_lines_quality.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/start_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/start_buttons_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/world.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/world_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tests/test_for.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/test_for.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,9 +202,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.test_for" />
         <item itemvalue="Python.get_lines_quality" />
         <item itemvalue="Python.game_buttons_menu" />
-        <item itemvalue="Python.test_for" />
         <item itemvalue="Python.custom_object_buttons" />
       </list>
     </recent_temporary>

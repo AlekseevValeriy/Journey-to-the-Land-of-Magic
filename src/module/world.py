@@ -26,9 +26,13 @@ class World:
             for line in range(*draw_setting[1]):
                 for element in range(*draw_setting[0]):
                     if 100 > line >= 0 and 100 > element >= 0:
-                        self.screen.blit(layer[line][element], (element * self.world_sector_size[0] - player_position[0],
+                        if layer[line][element]:
+                            self.screen.blit(layer[line][element], (element * self.world_sector_size[0] - player_position[0],
                                                                 line * self.world_sector_size[1] - player_position[1]))
                     else:
                         self.screen.blit(self.empty,
                                          (element * self.world_sector_size[0] - player_position[0],
                                           line * self.world_sector_size[1] - player_position[1]))
+
+    def get_world(self):
+        return self.world

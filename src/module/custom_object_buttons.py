@@ -1,3 +1,5 @@
+import pygame
+
 from button import ButtonObject
 
 
@@ -19,7 +21,6 @@ class StatusBar(ButtonObject):
         self.buttons[8].size[0] = self.buttons[8].texture[self.buttons[8].status].get_width() * mp_percent
         self.change_dead_frame_alpha(hp_percent)
 
-
     def add_parameter(self, parameter, number):
         if parameter in ['exp', 'hp', 'mp']:
             self.data[parameter] += number
@@ -39,13 +40,13 @@ class StatusBar(ButtonObject):
                 alpha = (4 * 0.5 // hp_percent * 8)
                 self.buttons[9].texture[self.buttons[9].status].set_alpha(alpha)
 
-
     def max_characteristic(self, characteristic: str, **characteristic_data) -> int:
         if characteristic in ['exp', 'hp', 'mp']:
             return self.data[f'min_{characteristic}'] * (
-                        self.data[f'{characteristic}_multiplier'] ** self.data['level'])
+                    self.data[f'{characteristic}_multiplier'] ** self.data['level'])
         elif characteristic == 'm_exp':
-            return characteristic_data['m_exp'] * (characteristic_data[f'{characteristic}_multiplier'] ** self.data['level'])
+            return characteristic_data['m_exp'] * (
+                    characteristic_data[f'{characteristic}_multiplier'] ** self.data['level'])
         return 0
 
     def born(self):
@@ -84,14 +85,41 @@ class StatusBar(ButtonObject):
         for button in self.buttons:
             button.draw()
 
+
 class WorldMap(ButtonObject):
     def __init__(self, screen, *buttons, **data):
         super().__init__(screen, *buttons, **data)
-        self.add_data(player_position=(0, 0), world_map=[[]])
+        self.add_data(player_position=(0, 0), world_map=[[]], map_sector=100, map_surface=pygame.Surface((260, 260)),
+                      colors={0: False, 1: 'green', 2: 'orange'})
+
+    def set_world_map(self, world_map):
+        self.data['world_map'] = world_map
+
+    def set_player_position(self, player_position):
+        self.data['player_position'] = player_position
 
     def draw(self):
-        #         TODO сделать прорисовку карты
-        pass
+        for button in self.buttons:
+            button.draw()
+
+            # TODO дальше сделать остальные кнопки для перехода по меню игры
+        x_index = (self.data['player_position'][0] + 960) // self.data['map_sector']
+        y_index = (self.data['player_position'][1] + 540) // self.data['map_sector']
+        for z in range(len(self.data['world_map'])):
+            for y in range(-14, 12):
+                for x in range(-14, 12):
+                    if 0 <= (x_index + x) < len(self.data['world_map'][0]) and 0 <= y_index + y < len(
+                            self.data['world_map'][0][0]):
+                        color = self.data['colors'][int(self.data['world_map'][z][y_index + y][x_index + x])]
+                        if color:
+                            pygame.draw.rect(surface=self.data['map_surface'], color=color,
+                                             rect=(140 + 10 * x, 140 + 10 * y, 10, 10))
+                    else:
+                        pygame.draw.rect(surface=self.data['map_surface'], color='blue',
+                                         rect=(140 + 10 * x, 140 + 10 * y, 10, 10))
+        pygame.draw.rect(surface=self.data['map_surface'], color='red',
+                         rect=(140, 140, 10, 10))
+        self.screen.blit(self.data['map_surface'], (1615, 45))
 
 
 if __name__ == '__main__':

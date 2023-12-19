@@ -137,8 +137,9 @@ class StartButtonsMenu(ButtonsMenu):
             self.create_game_process()
         if 'game_flag' in self.other_data and not self.other_data['game_flag']:
             generator = WorldGenerator()
+            self.other_data['game_process'].sample_world = world_layout
             world_layout = generator.texturing(world_layout)
             self.other_data['game_process'].create_world(world_layout)
-            self.other_data['game_process'].create_player('test', [0, 0])
+            self.other_data['game_process'].create_player('test', [-self.screen.get_width() // 2, -self.screen.get_height() // 2])
         self.other_data['game_process'].start_menu()
         self.other_data['game_flag'] = False
