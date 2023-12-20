@@ -1,5 +1,6 @@
 from sys import exit
 
+import pygame.image
 from pygame import MOUSEMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP, QUIT, KEYDOWN, KEYUP, K_x
 from pygame.display import update
 from pygame.event import get
@@ -13,8 +14,12 @@ from custom_object_buttons import StatusBar, WorldMap
 class GameButtonsMenu(ButtonsMenu):
     def __init__(self, screen, clock, frame_rate, buttons_file_path, sample_world=None):
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
-        self.add_other_data(move=False)
-        self.add_button_bind(back_button=self.end_menu)
+        self.add_other_data(move=False, background = pygame.image.load('..//..//data//textures//backgrounds//backgorund.png').convert())
+        self.add_button_bind(back_button=self.end_menu,
+                             person_menu_enter_button=self.to_person_menu,
+                             bag_menu_enter_button=self.to_bag_menu,
+                             map_menu_enter_button=self.to_map_menu,
+                             back_to_game=self.to_game_menu)
         self.keys_dict = {1073741903: 'right', 1073741904: 'left', 1073741906: 'up', 1073741905: 'down'}
         self.world = None
         self.player = None
@@ -24,17 +29,16 @@ class GameButtonsMenu(ButtonsMenu):
     def create_button_objects(self):
         objects_sb = self.objects_data['game_menu']['sb']
         self.objects_data['game_menu']['sb'] = StatusBar(self.screen,
-                                                            *tuple(map(lambda name: objects_sb[name], objects_sb)))
+                                                         *tuple(map(lambda name: objects_sb[name], objects_sb)))
         objects_mp = self.objects_data['game_menu']['mp']
         self.objects_data['game_menu']['mp'] = WorldMap(self.screen,
-                                                         *tuple(map(lambda name: objects_mp[name], objects_mp)))
-
+                                                        *tuple(map(lambda name: objects_mp[name], objects_mp)))
 
     def create_world(self, world):
         self.world = World(self.screen, world)
 
     def create_player(self, person, position):
-        self.player =  Player(self.screen, position, person)
+        self.player = Player(self.screen, position, person)
 
     def start_menu(self) -> None:
         self.objects_data['game_menu']['mp'].set_world_map(self.sample_world)
@@ -46,39 +50,47 @@ class GameButtonsMenu(ButtonsMenu):
 
     def menu_process(self) -> None:
         while self.menu_process_flag:
-            self.draw_background()
-            self.game_unit()
+            if self.present_menu == 'game_menu':
+                self.game_unit()
+                self.objects_data['game_menu']['sb'].dead_check()
+            else:
+                self.draw_background()
             self.draw_buttons(self.present_menu)
             self.draw_objects(self.present_menu)
-            self.objects_data['game_menu']['sb'].dead_check()
+            self.cursor_reader()
+
             if self.menu_process_flag:
                 update()
                 self.clock.tick(self.frame_rate)
+
+    def draw_background(self) -> None:
+        self.screen.blit(self.other_data['background'], (0, 0))
 
     def game_unit(self) -> None:
         self.screen.fill('white')
         self.world.draw_world(self.player.get_position())
         self.player.draw_player()
-        self.cursor_reader()
 
     def cursor_reader(self) -> None:
         for event in get():
             if event.type == QUIT:
                 self.menu_process_flag = False
                 exit()
-            elif event.type == KEYDOWN and self.objects_data['game_menu']['sb'].get_persona_status():
-                if self.keys_dict.get(event.key, False):
-                    self.objects_data['game_menu']['mp'].set_player_position(self.player.get_position())
-                    self.run_action(self.keys_dict[event.key])
-                if event.key == K_x:
-                    print('x')
-                    self.objects_data['game_menu']['sb'].reduce_parameter('hp', 10)
-            elif event.type == KEYUP:
-                if self.keys_dict.get(event.key, False) or not self.objects_data['game_menu']['sb'].get_persona_status():
-                    self.stand_action()
+            if self.present_menu == 'game_menu':
+                if event.type == KEYDOWN and self.objects_data['game_menu']['sb'].get_persona_status():
+                    if self.keys_dict.get(event.key, False):
+                        self.objects_data['game_menu']['mp'].set_player_position(self.player.get_position())
+                        self.run_action(self.keys_dict[event.key])
+                    if event.key == K_x:
+                        print('x')
+                        self.objects_data['game_menu']['sb'].reduce_parameter('hp', 10)
+                elif event.type == KEYUP:
+                    if self.keys_dict.get(event.key, False) or not self.objects_data['game_menu'][
+                        'sb'].get_persona_status():
+                        self.stand_action()
 
 
-            elif event.type == MOUSEMOTION:
+            if event.type == MOUSEMOTION:
                 buttons = self.buttons_data[self.present_menu]
                 for button in buttons:
                     if event.pos in buttons[button] and not buttons[button].status == 'unactive':
@@ -107,6 +119,20 @@ class GameButtonsMenu(ButtonsMenu):
     def stand_action(self):
         self.other_data['move'] = False
 
+    # ---------сектор действий кнопок меню---------
+
     def end_menu(self) -> None:
         self.menu_process_flag = False
         self.other_data['move'] = False
+
+    def to_person_menu(self):
+        self.present_menu = 'persons_menu'
+
+    def to_bag_menu(self):
+        self.present_menu = 'inventory_menu'
+
+    def to_map_menu(self):
+        self.present_menu = 'map_menu'
+
+    def to_game_menu(self):
+        self.present_menu = 'game_menu'

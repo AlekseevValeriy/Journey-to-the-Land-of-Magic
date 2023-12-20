@@ -27,6 +27,42 @@
         50
       ]
     },
+    "person_menu_enter_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//enter_person_menu_button.png",
+        "active": "..//..//data//textures//buttons//enter_person_menu_button_active.png"
+      },
+      "status": "passive",
+      "position": [
+        50,
+        200
+      ]
+    },
+    "bag_menu_enter_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//enter_bag_menu_button.png",
+        "active": "..//..//data//textures//buttons//enter_bag_menu_button_active.png"
+      },
+      "status": "passive",
+      "position": [
+        50,
+        300
+      ]
+    },
+    "map_menu_enter_button": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//enter_map_menu_button.png",
+        "active": "..//..//data//textures//buttons//enter_map_menu_button_active.png"
+      },
+      "status": "passive",
+      "position": [
+        50,
+        400
+      ]
+    },
     "object_sb_status_bat_frame_button": {
       "button_class": "button",
       "texture": {
@@ -234,7 +270,7 @@
     }
   },
   "persons_menu": {
-    "back_button": {
+    "back_to_game": {
       "button_class": "button + text",
       "texture": {
         "passive": "..//..//data//textures//buttons//button.png",
@@ -263,7 +299,7 @@
     }
   },
   "inventory_menu": {
-    "back_button": {
+    "back_to_game": {
       "button_class": "button + text",
       "texture": {
         "passive": "..//..//data//textures//buttons//button.png",
@@ -292,7 +328,7 @@
     }
   },
   "map_menu": {
-    "back_button": {
+    "back_to_game": {
       "button_class": "button + text",
       "texture": {
         "passive": "..//..//data//textures//buttons//button.png",
