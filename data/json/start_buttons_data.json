@@ -291,6 +291,87 @@
         700,
         350
       ]
+    },
+    "fps_counter_table": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Счётчик смены кадров",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        500
+      ]
+    },
+    "fps_counter_yes_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button_setting.png",
+        "active": "..//..//data//textures//buttons//button_setting_active.png"
+      },
+      "text": "включен",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        475,
+        500
+      ]
+    },
+    "fps_counter_no_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button_setting.png",
+        "active": "..//..//data//textures//buttons//button_setting_active.png"
+      },
+      "text": "Выключен",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        700,
+        500
+      ]
     }
   },
   "credits": {

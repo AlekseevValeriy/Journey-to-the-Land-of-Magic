@@ -29,6 +29,9 @@ class ButtonsMenu:
     def add_button_bind(self, **data: {str: Callable}) -> None:
         self.buttons_binds = {**self.buttons_binds, **data}
 
+    def draw_fps(self):
+        pass
+
     def start_menu(self) -> None:
         """Функция для запуска процесса меню"""
         # self.present_menu = 'start_menu' # set_present_menu_name
@@ -40,6 +43,7 @@ class ButtonsMenu:
             self.draw_background()
             self.draw_buttons(self.present_menu)
             self.cursor_reader()
+            self.draw_fps()
             if self.menu_process_flag:
                 update()
                 self.clock.tick(self.frame_rate)
@@ -119,7 +123,6 @@ class ButtonsMenu:
                     if menu_name not in buttons:
                         buttons[menu_name] = {}
                     buttons[menu_name][button_name] = button_class_instance
-        print(objects)
         return buttons, objects
 
     def create_objects(self) -> None:

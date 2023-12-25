@@ -39,18 +39,6 @@
         200
       ]
     },
-    "bag_menu_enter_button": {
-      "button_class": "button",
-      "texture": {
-        "passive": "..//..//data//textures//buttons//enter_bag_menu_button.png",
-        "active": "..//..//data//textures//buttons//enter_bag_menu_button_active.png"
-      },
-      "status": "passive",
-      "position": [
-        50,
-        300
-      ]
-    },
     "map_menu_enter_button": {
       "button_class": "button",
       "texture": {
@@ -296,10 +284,76 @@
         50,
         50
       ]
+    },
+    "person_image": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//player//test//person_full_size.png",
+        "active": "..//..//data//textures//player//test//person_full_size.png"
+      },
+      "status": "passive",
+      "position": [
+        790,
+        290
+      ]
+    },
+    "to_upgrade_characteristics": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Характеристики",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        200
+      ]
+    },
+    "to_upgrade_magic": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Магия",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        350
+      ]
     }
   },
-  "inventory_menu": {
-    "back_to_game": {
+  "characteristic_menu": {
+    "person_menu_enter_button": {
       "button_class": "button + text",
       "texture": {
         "passive": "..//..//data//textures//buttons//button.png",
@@ -324,40 +378,392 @@
       "position": [
         50,
         50
+      ]
+    },
+    "str_title": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Сила",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        200
+      ]
+    },
+    "dex_title": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Ловкость",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        350
+      ]
+    },
+    "int_title": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Интеллект",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        500
+      ]
+    },
+    "object_cu_str_counter": {
+      "button_class": "text",
+      "text": "0",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 50,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        450,
+        212
+      ]
+    },
+    "object_cu_dex_counter": {
+      "button_class": "text",
+      "text": "0",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 50,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        450,
+        362
+      ]
+    },
+    "object_cu_int_counter": {
+      "button_class": "text",
+      "text": "0",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 50,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        450,
+        512
+      ]
+    },
+    "add_str": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//create.png",
+        "active": "..//..//data//textures//buttons//create_active.png",
+        "unactive": "..//..//data//textures//buttons//create_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        500,
+        210
+      ]
+    },
+    "add_dex": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//create.png",
+        "active": "..//..//data//textures//buttons//create_active.png",
+        "unactive": "..//..//data//textures//buttons//create_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        500,
+        360
+      ]
+    },
+    "add_int": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//create.png",
+        "active": "..//..//data//textures//buttons//create_active.png",
+        "unactive": "..//..//data//textures//buttons//create_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        500,
+        510
+      ]
+    },
+    "points_title": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Свободные очки",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        650
+      ]
+    },
+    "object_cu_points_counter": {
+      "button_class": "text",
+      "text": "0",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 50,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        450,
+        662
+      ]
+    }
+  },
+  "magic_menu": {
+    "person_menu_enter_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    },
+    "fb_title": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Огненный шар",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        200
+      ]
+    },
+    "object_mu_fb_counter": {
+      "button_class": "text",
+      "text": "0",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 50,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        450,
+        212
+      ]
+    },
+    "add_fb": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//create.png",
+        "active": "..//..//data//textures//buttons//create_active.png",
+        "unactive": "..//..//data//textures//buttons//create_passive.png"
+      },
+      "status": "passive",
+      "position": [
+        500,
+        210
+      ]
+    },
+    "points_title": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//title.png",
+        "active": "..//..//data//textures//buttons//title.png"
+      },
+      "text": "Свободные очки",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        350
+      ]
+    },
+    "object_mu_points_counter": {
+      "button_class": "text",
+      "text": "0",
+      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_size": 50,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        450,
+        362
       ]
     }
   },
   "map_menu": {
     "back_to_game": {
-      "button_class": "button + text",
-      "texture": {
-        "passive": "..//..//data//textures//buttons//button.png",
-        "active": "..//..//data//textures//buttons//button_active.png"
-      },
-      "text": "Назад",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
-      "font_size": 30,
-      "font_color": {
-        "passive": [
-          144,
-          144,
-          144
-        ],
-        "active": [
-          168,
-          168,
-          168
-        ]
-      },
-      "status": "passive",
-      "position": [
-        50,
-        50
-      ]
-    }
-  },
-  "person_upgrade_menu": {
-    "back_button": {
       "button_class": "button + text",
       "texture": {
         "passive": "..//..//data//textures//buttons//button.png",

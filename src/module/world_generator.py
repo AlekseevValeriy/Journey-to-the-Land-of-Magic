@@ -29,7 +29,6 @@ class WorldGenerator:
             for x in range(size[1]):
                 if choice([0 ,1]):
                     field[y][x] = value
-        print(field)
         return field
 
 

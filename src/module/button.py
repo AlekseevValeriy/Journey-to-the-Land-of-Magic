@@ -101,3 +101,6 @@ class ButtonObject:
 
     def get_data(self, data_name):
         return self.data[data_name]
+
+    def get_all_data(self):
+        return self.data

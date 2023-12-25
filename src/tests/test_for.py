@@ -1,3 +1,3 @@
-from random import randint
-
-print(randint(0, 1))
+a = {1: 'a', 2: "b"}
+for n, w in a.items():
+    print(n, w)
