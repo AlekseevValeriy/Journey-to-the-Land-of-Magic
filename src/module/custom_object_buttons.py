@@ -107,11 +107,16 @@ class WorldMap(ButtonObject):
         super().__init__(screen, *buttons, **data)
         self.add_data(player_position=(0, 0), world_map=[[]], frame=(0, 0), map_sector=100,
                       map_surface=pygame.Surface((260, 260)),
-                      colors={0: False, 1: 'green', 2: 'orange'}, sector_size=10, map_start=(1615, 45), frame_size=140,
-                      render_frame_x=(-14, 12), render_frame_y=(-14, 12), camera_position=(0, 0), black=False)
+                      colors={0: False, 1: 'white', 2: (211, 211, 211)}, sector_size=10, map_start=(1615, 45),
+                      frame_size=140,
+                      render_frame_x=(-14, 12), render_frame_y=(-14, 12), camera_position=(0, 0), black=False,
+                      other_positions=())
 
     def set_world_map(self, world_map):
         self.data['world_map'] = world_map
+
+    def set_other_positions(self, other_positions):
+        self.data['other_positions'] = other_positions
 
     def set_player_position(self, player_position):
         self.data['player_position'] = player_position
@@ -139,14 +144,28 @@ class WorldMap(ButtonObject):
                         color = self.data['colors'][int(self.data['world_map'][z][y_index + y][x_index + x])]
                         if color:
                             pygame.draw.rect(surface=self.data['map_surface'], color=color,
-                                             rect=(frame_size + se_si * x + self.data['camera_position'][0], frame_size + se_si * y + self.data['camera_position'][1], se_si, se_si))
+                                             rect=(frame_size + se_si * x + self.data['camera_position'][0],
+                                                   frame_size + se_si * y + self.data['camera_position'][1], se_si,
+                                                   se_si))
                     else:
-                        pygame.draw.rect(surface=self.data['map_surface'], color='blue',
-                                         rect=(frame_size + se_si * x + self.data['camera_position'][0], frame_size + se_si * y + self.data['camera_position'][1], se_si, se_si))
+                        pygame.draw.rect(surface=self.data['map_surface'], color='black',
+                                         rect=(frame_size + se_si * x + self.data['camera_position'][0],
+                                               frame_size + se_si * y + self.data['camera_position'][1], se_si, se_si))
 
-        pygame.draw.rect(surface=self.data['map_surface'], color='red',
-                         rect=(frame_size + self.data['camera_position'][0], frame_size + self.data['camera_position'][1], se_si,
-                               se_si))
+        pygame.draw.rect(surface=self.data['map_surface'], color=(128, 128, 128),
+                         rect=(
+                         frame_size + self.data['camera_position'][0], frame_size + self.data['camera_position'][1],
+                         se_si,
+                         se_si))
+        # TODO улучшить точность карты и добавить врагов на мини-карту
+        if self.data['other_positions']:
+            for x, y in self.data['other_positions']:
+                pygame.draw.rect(surface=self.data['map_surface'], color=(128, 128, 128),
+                                 rect=(frame_size + se_si * (
+                                             (x - self.data['player_position'][0]) // self.data['map_sector']) +
+                                       self.data['camera_position'][0], frame_size + se_si * (
+                                                   (y - self.data['player_position'][1]) // self.data['map_sector']) +
+                                       self.data['camera_position'][1], se_si, se_si))
 
         self.screen.blit(self.data['map_surface'], self.data['map_start'])
 
@@ -175,6 +194,7 @@ class SkillUpgrade(ButtonObject):
         self.buttons[1].text = str(self.data['dex_points'])
         self.buttons[2].text = str(self.data['int_points'])
         self.buttons[3].text = str(self.data['free_points'])
+
 
 class MagicUpgrade(ButtonObject):
     def __init__(self, screen, *buttons, **data):
@@ -206,11 +226,12 @@ class MagicUpgrade(ButtonObject):
         self.buttons[0].text = str(self.data['fb_level'])
         self.buttons[1].text = str(self.data['free_points'])
 
+
 class BigMap(WorldMap):
     def __init__(self, screen, *buttons, **data):
         super().__init__(screen, *buttons, **data)
         self.add_data(start_sector_size=10, sector_size=10, camera_position=(0, 0), sector_size_multiplier=1,
-                      map_start=(500, 100), frame_size=400, map_surface=pygame.Surface((800, 800)),
+                      map_start=(500, 90), frame_size=400, map_surface=pygame.Surface((900, 900)),
                       black=True)
         self.change_render_frame()
 
@@ -224,16 +245,22 @@ class BigMap(WorldMap):
         self.change_render_frame()
 
     def change_render_frame(self):
-        nfxs = int((self.data['map_surface'].get_width() // self.data['sector_size']) // 2) + 2 + int(self.data['camera_position'][0] // self.data['sector_size'])
-        nfxe = int((self.data['map_surface'].get_width() // self.data['sector_size']) // 2) + 2 - int(self.data['camera_position'][0] // self.data['sector_size'])
-        self.data['render_frame_x'] = (-nfxs, nfxe)
-        nfys = int((self.data['map_surface'].get_height() // self.data['sector_size']) // 2) + 2 + int(self.data['camera_position'][1] // self.data['sector_size'])
-        nfye = int((self.data['map_surface'].get_height() // self.data['sector_size']) // 2) + 2 - int(self.data['camera_position'][1] // self.data['sector_size'])
-        self.data['render_frame_y'] = (-nfys, nfye)
+        nfxs = int((self.data['map_surface'].get_width() // self.data['sector_size']) // 2) + 2 + int(
+            self.data['camera_position'][0] // self.data['sector_size'])
+        nfxe = int((self.data['map_surface'].get_width() // self.data['sector_size']) // 2) + 2 - int(
+            self.data['camera_position'][0] // self.data['sector_size'])
+        self.data['render_frame_x'] = (-nfxs, nfxe + 10)
+        nfys = int((self.data['map_surface'].get_height() // self.data['sector_size']) // 2) + 2 + int(
+            self.data['camera_position'][1] // self.data['sector_size'])
+        nfye = int((self.data['map_surface'].get_height() // self.data['sector_size']) // 2) + 2 - int(
+            self.data['camera_position'][1] // self.data['sector_size'])
+        self.data['render_frame_y'] = (-nfys, nfye + 10)
 
     def in_map(self, mouse_position):
-        if ((self.data['map_start'][0] < mouse_position[0] < (self.data['map_start'][0] + self.data['map_surface'].get_width())) and
-            (self.data['map_start'][1] < mouse_position[1] < (self.data['map_start'][1] + self.data['map_surface'].get_height()))):
+        if ((self.data['map_start'][0] < mouse_position[0] < (
+                self.data['map_start'][0] + self.data['map_surface'].get_width())) and
+                (self.data['map_start'][1] < mouse_position[1] < (
+                        self.data['map_start'][1] + self.data['map_surface'].get_height()))):
             return True
         return False
 
@@ -241,4 +268,3 @@ class BigMap(WorldMap):
         self.data['camera_position'] = (self.data['camera_position'][0] + position[0],
                                         self.data['camera_position'][1] + position[1])
         self.change_render_frame()
-

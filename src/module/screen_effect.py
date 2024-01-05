@@ -11,7 +11,8 @@ class ScreenEffect:
     def game_intro(self):
         logo = EffectElement(self.screen, pygame.image.load("../../data/textures/Game_Logo.png").convert_alpha(),
                              (960, 540), -70)
-        text = pygame.font.Font('..//..//data//fonts//Book Antiqua.ttf', 18).render('Команда VaTi представляет', True, 'white')
+        text = pygame.font.Font('..//..//data//fonts//Book Antiqua.ttf', 18).render('Команда VaTi представляет', True,
+                                                                                    'white')
         text = EffectElement(self.screen, text,
                              (960, 650), 0)
         effects_flags = [False, False]
@@ -37,6 +38,7 @@ class ScreenEffect:
             text.draw()
             pygame.display.update()
             self.clock.tick(self.frame_rate)
+
 
 class EffectElement:
     def __init__(self, screen, surface, position, alpha):

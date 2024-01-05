@@ -1,30 +1,15 @@
 {
   "game_menu": {
     "back_button": {
-      "button_class": "button + text",
+      "button_class": "button",
       "texture": {
-        "passive": "..//..//data//textures//buttons//button.png",
-        "active": "..//..//data//textures//buttons//button_active.png"
-      },
-      "text": "Назад",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
-      "font_size": 30,
-      "font_color": {
-        "passive": [
-          144,
-          144,
-          144
-        ],
-        "active": [
-          168,
-          168,
-          168
-        ]
+        "passive": "..//..//data//textures//buttons//menu.png",
+        "active": "..//..//data//textures//buttons//menu_active.png"
       },
       "status": "passive",
       "position": [
-        50,
-        50
+        1380,
+        830
       ]
     },
     "person_menu_enter_button": {
@@ -35,8 +20,8 @@
       },
       "status": "passive",
       "position": [
-        50,
-        200
+        1380,
+        922
       ]
     },
     "map_menu_enter_button": {
@@ -47,8 +32,8 @@
       },
       "status": "passive",
       "position": [
-        50,
-        400
+        1380,
+        1020
       ]
     },
     "object_sb_status_bat_frame_button": {
@@ -59,8 +44,8 @@
       },
       "status": "passive",
       "position": [
-        360,
-        680
+        560,
+        830
       ]
     },
     "object_sb_image_frame_button": {
@@ -71,14 +56,14 @@
       },
       "status": "passive",
       "position": [
-        375,
-        690
+        585,
+        855
       ]
     },
     "object_sb_person_name_text": {
       "button_class": "text",
-      "text": "Персона",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "text": "",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -101,7 +86,7 @@
     "object_sb_person_exp_text": {
       "button_class": "text",
       "text": "Опыт:",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -117,14 +102,14 @@
       },
       "status": "passive",
       "position": [
-        570,
-        680
+        805,
+        855
       ]
     },
     "object_sb_person_hp_text": {
       "button_class": "text",
       "text": "Здоровье:",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -140,14 +125,14 @@
       },
       "status": "passive",
       "position": [
-        570,
-        740
+        805,
+        940
       ]
     },
     "object_sb_person_mp_text": {
       "button_class": "text",
       "text": "Мана:",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -163,8 +148,8 @@
       },
       "status": "passive",
       "position": [
-        570,
-        800
+        805,
+        1025
       ]
     },
     "object_sb_exp_bar_button": {
@@ -175,8 +160,8 @@
       },
       "status": "passive",
       "position": [
-        700,
-        680
+        934,
+        855
       ]
     },
     "object_sb_hp_bar_button": {
@@ -187,8 +172,8 @@
       },
       "status": "passive",
       "position": [
-        700,
-        740
+        934,
+        940
       ]
     },
     "object_sb_mp_bar_button": {
@@ -199,8 +184,8 @@
       },
       "status": "passive",
       "position": [
-        700,
-        800
+        934,
+        1025
       ]
     },
     "object_sb_person_frame_dead_frame": {
@@ -211,8 +196,8 @@
       },
       "status": "passive",
       "position": [
-        375,
-        690
+        585,
+        855
       ]
     },
     "object_mp_map_frame": {
@@ -236,7 +221,7 @@
         "active": "..//..//data//textures//buttons//button_active.png"
       },
       "text": "Назад",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -265,7 +250,7 @@
         "active": "..//..//data//textures//buttons//button_active.png"
       },
       "text": "Назад",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -304,7 +289,7 @@
         "active": "..//..//data//textures//buttons//button_active.png"
       },
       "text": "Характеристики",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -331,7 +316,7 @@
         "active": "..//..//data//textures//buttons//button_active.png"
       },
       "text": "Магия",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -360,7 +345,7 @@
         "active": "..//..//data//textures//buttons//button_active.png"
       },
       "text": "Назад",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -387,7 +372,7 @@
         "active": "..//..//data//textures//buttons//title.png"
       },
       "text": "Сила",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -414,7 +399,7 @@
         "active": "..//..//data//textures//buttons//title.png"
       },
       "text": "Ловкость",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -441,7 +426,7 @@
         "active": "..//..//data//textures//buttons//title.png"
       },
       "text": "Интеллект",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -464,7 +449,7 @@
     "object_cu_str_counter": {
       "button_class": "text",
       "text": "0",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 50,
       "font_color": {
         "passive": [
@@ -487,7 +472,7 @@
     "object_cu_dex_counter": {
       "button_class": "text",
       "text": "0",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 50,
       "font_color": {
         "passive": [
@@ -510,7 +495,7 @@
     "object_cu_int_counter": {
       "button_class": "text",
       "text": "0",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 50,
       "font_color": {
         "passive": [
@@ -576,7 +561,7 @@
         "active": "..//..//data//textures//buttons//title.png"
       },
       "text": "Свободные очки",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -599,7 +584,7 @@
     "object_cu_points_counter": {
       "button_class": "text",
       "text": "0",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 50,
       "font_color": {
         "passive": [
@@ -628,7 +613,7 @@
         "active": "..//..//data//textures//buttons//button_active.png"
       },
       "text": "Назад",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -655,7 +640,7 @@
         "active": "..//..//data//textures//buttons//title.png"
       },
       "text": "Огненный шар",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -678,7 +663,7 @@
     "object_mu_fb_counter": {
       "button_class": "text",
       "text": "0",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 50,
       "font_color": {
         "passive": [
@@ -718,7 +703,7 @@
         "active": "..//..//data//textures//buttons//title.png"
       },
       "text": "Свободные очки",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [
@@ -741,7 +726,7 @@
     "object_mu_points_counter": {
       "button_class": "text",
       "text": "0",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 50,
       "font_color": {
         "passive": [
@@ -770,7 +755,7 @@
         "active": "..//..//data//textures//buttons//button_active.png"
       },
       "text": "Назад",
-      "font_family": "..//..//data//fonts//Book Antiqua.ttf",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
         "passive": [

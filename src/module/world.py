@@ -10,7 +10,6 @@ class World:
         self.present_world: numpy.ndarray = numpy.array([])
         self.empty = load(f"../../data/textures/world/empty.png").convert_alpha()
 
-
     def screen_world_cut(self, player_position: list) -> tuple:
         screen_size = self.screen.get_size()
         row = player_position[0] // self.world_sector_size[0]
@@ -27,8 +26,9 @@ class World:
                 for element in range(*draw_setting[0]):
                     if 100 > line >= 0 and 100 > element >= 0:
                         if layer[line][element]:
-                            self.screen.blit(layer[line][element], (element * self.world_sector_size[0] - player_position[0],
-                                                                line * self.world_sector_size[1] - player_position[1]))
+                            self.screen.blit(layer[line][element],
+                                             (element * self.world_sector_size[0] - player_position[0],
+                                              line * self.world_sector_size[1] - player_position[1]))
                     else:
                         self.screen.blit(self.empty,
                                          (element * self.world_sector_size[0] - player_position[0],

@@ -1,3 +1,2 @@
-a = {1: 'a', 2: "b"}
-for n, w in a.items():
-    print(n, w)
+a = [1, 2, 3]
+print(len(filter(int, a)))

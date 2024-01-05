@@ -27,11 +27,9 @@ class WorldGenerator:
         field = numpy.zeros(size, dtype=int)
         for y in range(size[0]):
             for x in range(size[1]):
-                if choice([0 ,1]):
+                if choice([0, 1]):
                     field[y][x] = value
         return field
-
-
 
     def test_create_world(self) -> None:
         grass_list = numpy.full(shape=(100, 100), fill_value=1, dtype=int)

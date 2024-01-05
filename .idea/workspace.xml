@@ -5,19 +5,74 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfda3d3c-de4e-4e73-89ba-bbb710aa115b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/textures/player/test/person_full_size.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/json/battle_buttons.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/textures/backgrounds/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/module/battle.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/module/enemies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/game_buttons_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/game_buttons_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/start_buttons_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/start_buttons_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/units_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/units_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/ТЗ - None.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/backgrounds/backgorund.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/button.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/button_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/button_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/button_setting.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/button_setting.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/button_setting_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/button_setting_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/create.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/create.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/create_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/create_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/create_passive.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/create_passive.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/delete.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/delete.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/delete_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/delete_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/delete_passive.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/delete_passive.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/enter_bag_menu_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/enter_bag_menu_button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/enter_bag_menu_button_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/enter_bag_menu_button_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/enter_map_menu_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/enter_map_menu_button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/enter_map_menu_button_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/enter_map_menu_button_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/enter_person_menu_button.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/enter_person_menu_button.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/enter_person_menu_button_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/enter_person_menu_button_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/exp_line_bar.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/exp_line_bar.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/hp_line_bar.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/hp_line_bar.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/menu.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/menu_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/menu_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/mp_line_bar.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/mp_line_bar.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/test_items_list.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/test_map_frame.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/test_map_frame.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/test_status_bar_frame.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/test_status_bar_frame.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/title.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/title.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/volume.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/volume.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/buttons/volume_active.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/buttons/volume_active.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/dead_frame_face.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/dead_frame_face.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/down_run_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/down_run_0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/down_run_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/down_run_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/down_run_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/down_run_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/down_run_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/down_run_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/frame_face.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/frame_face.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/left_run_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/left_run_0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/left_run_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/left_run_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/left_run_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/left_run_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/left_run_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/left_run_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/person_full_size.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/person_full_size.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/right_run_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/right_run_0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/right_run_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/right_run_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/right_run_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/right_run_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/right_run_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/right_run_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/up_run_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/up_run_0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/up_run_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/up_run_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/up_run_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/up_run_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/player/test/up_run_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/player/test/up_run_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/empty.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/empty.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/grass_place.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/grass_place.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/sand_place.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/sand_place.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/ТЗ.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/ТЗ.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/buttons_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/custom_object_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/custom_object_buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/game_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/game_buttons_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/get_lines_quality.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/get_lines_quality.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/screen_effect.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/screen_effect.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/start_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/start_buttons_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/world.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/world_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tests/test_for.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/test_for.py" afterDir="false" />
     </list>

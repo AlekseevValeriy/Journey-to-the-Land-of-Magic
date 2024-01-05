@@ -62,8 +62,8 @@ class ButtonsMenu:
     def draw_objects(self, menu_name):
         # tuple(map(lambda object: self.objects_data[menu_name][object].draw(), self.objects_data[menu_name]))
         if menu_name in self.objects_data:
-            tuple(map(lambda object: self.objects_data[menu_name][object].draw() if type(self.objects_data[menu_name][object]) != dict else False, self.objects_data[menu_name]))
-
+            tuple(map(lambda object: self.objects_data[menu_name][object].draw() if type(
+                self.objects_data[menu_name][object]) != dict else False, self.objects_data[menu_name]))
 
     def cursor_reader(self) -> None:
         """Функция для обработки действий курсора: перемещение, нажатия"""
@@ -95,23 +95,23 @@ class ButtonsMenu:
 
                 if button_class_name == 'button':
                     button_class_instance = ButtonIcp(self.screen, texture=button_data['texture'],
-                                              status=button_data['status'],
-                                              position=button_data['position'])
+                                                      status=button_data['status'],
+                                                      position=button_data['position'])
                 elif button_class_name == 'text':
                     button_class_instance = TextIcp(self.screen, text=button_data['text'],
-                                            font_family=button_data['font_family'],
-                                            font_size=button_data['font_size'],
-                                            font_color=button_data['font_color'],
-                                            status=button_data['status'],
-                                            position=button_data['position'])
+                                                    font_family=button_data['font_family'],
+                                                    font_size=button_data['font_size'],
+                                                    font_color=button_data['font_color'],
+                                                    status=button_data['status'],
+                                                    position=button_data['position'])
                 elif button_class_name == 'button + text':
                     button_class_instance = ButtonCp(self.screen, texture=button_data['texture'],
-                                             text=button_data['text'],
-                                             font_family=button_data['font_family'],
-                                             font_size=button_data['font_size'],
-                                             font_color=button_data['font_color'],
-                                             status=button_data['status'],
-                                             position=button_data['position'])
+                                                     text=button_data['text'],
+                                                     font_family=button_data['font_family'],
+                                                     font_size=button_data['font_size'],
+                                                     font_color=button_data['font_color'],
+                                                     status=button_data['status'],
+                                                     position=button_data['position'])
                 if 'object' in button_name:
                     group = button_name.split('_')[1]
                     if menu_name not in objects:

@@ -4,7 +4,6 @@ from pygame.event import get
 from pygame.image import load
 from sys import exit
 
-
 from buttons_menu import ButtonsMenu
 from game_buttons_menu import GameButtonsMenu
 from json_reader import JsonReader
@@ -14,7 +13,7 @@ from world_generator import WorldGenerator
 class StartButtonsMenu(ButtonsMenu):
     def __init__(self, screen, clock, frame_rate, buttons_file_path):
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
-        self.add_other_data(background=load("../../data/textures/backgrounds/backgorund.png").convert_alpha(),
+        self.add_other_data(background=load("../../data/textures/backgrounds/background.png").convert_alpha(),
                             volume_flag=False, fps_counter=True, fps_font=SysFont('Comic Sans MS', 30))
         self.add_button_bind(exit_button=self.end_program,
                              credits_button=self.change_menu_credits,
@@ -35,8 +34,8 @@ class StartButtonsMenu(ButtonsMenu):
 
     def draw_fps(self):
         if self.other_data['fps_counter']:
-            text = self.other_data['fps_font'].render(str(int(self.clock.get_fps())),True, 'red')
-            self.screen.blit(text, (960, 10))
+            text = self.other_data['fps_font'].render(str(int(self.clock.get_fps())), True, 'gray')
+            self.screen.blit(text, (1879, 5))
 
     def cursor_reader(self) -> None:
         for event in get():
@@ -52,10 +51,10 @@ class StartButtonsMenu(ButtonsMenu):
                             buttons[button].status = 'passive'
                 if self.other_data['volume_flag']:
                     x = event.pos[0]
-                    if x <= 495:
-                        self.buttons_data['settings_menu']['volume_trigger'].position[0] = 495
-                    elif x >= 775:
-                        self.buttons_data['settings_menu']['volume_trigger'].position[0] = 775
+                    if x < 797:
+                        self.buttons_data['settings_menu']['volume_trigger'].position[0] = 797
+                    elif x >= 1080:
+                        self.buttons_data['settings_menu']['volume_trigger'].position[0] = 1080
                     else:
                         self.buttons_data['settings_menu']['volume_trigger'].position[0] = x
             elif event.type == MOUSEBUTTONDOWN:
@@ -121,9 +120,11 @@ class StartButtonsMenu(ButtonsMenu):
             data[f'unit_{name[-1]}']['world'] = []
             data[f'unit_{name[-1]}']['position'] = [0, 0]
             data[f'unit_{name[-1]}']['player'] = {"alive": 0, "level": 1, "max_level": 20, "exp": 0,
-                                "exp_multiplier": 1.3, "min_hp": 100, "hp": 140,  "hp_multiplier": 1.4, "min_mp": 10,
+                                                  "exp_multiplier": 1.3, "min_hp": 100, "hp": 140, "hp_multiplier": 1.4,
+                                                  "min_mp": 10,
                                                   "mp": 11, "mp_multiplier": 1.1, "str": 1, "dex": 1, "int": 1,
-                                                  "free_points": 0, "fb_get": False, "fb_level": 0, "magic_free_points": 0}
+                                                  "free_points": 0, "fb_get": False, "fb_level": 0,
+                                                  "magic_free_points": 0}
 
             JsonReader.write_file(data, '../../data/json/units_data.json')
         elif 'create' in name:

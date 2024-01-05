@@ -1,0 +1,31 @@
+{
+  "battle_menu": {
+    "back_to_game": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Назад",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    }
+  }
+}
