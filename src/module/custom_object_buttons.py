@@ -69,6 +69,8 @@ class StatusBar(ButtonObject):
         self.data['exp'] = 0
         self.data['hp'] = self.max_characteristic('hp')
         self.data['mp'] = self.max_characteristic('mp')
+        self.data['free_points'] += 2
+        self.data['magic_free_points'] += 1
 
     def dead_check(self):
         if self.data['hp'] <= 0:
@@ -100,6 +102,13 @@ class StatusBar(ButtonObject):
         self.update_lines()
         for button in self.buttons:
             button.draw()
+
+    def get_points(self):
+        return self.data['magic_free_points'], self.data['free_points']
+
+    def clear_points(self):
+        self.data['magic_free_points'] = 0
+        self.data['free_points'] = 0
 
 
 class WorldMap(ButtonObject):
@@ -225,6 +234,8 @@ class MagicUpgrade(ButtonObject):
     def update_points(self):
         self.buttons[0].text = str(self.data['fb_level'])
         self.buttons[1].text = str(self.data['free_points'])
+
+
 
 
 class BigMap(WorldMap):

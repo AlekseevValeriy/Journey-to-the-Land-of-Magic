@@ -1,12 +1,37 @@
 {
   "battle_menu": {
-    "back_to_game": {
+    "battle_statusbar_left": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//battle_status_bar_left.png",
+        "active": "..//..//data//textures//buttons//battle_status_bar_left.png"
+      },
+      "status": "passive",
+      "position": [
+        0,
+        659
+      ]
+    },
+    "battle_statusbar_right": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//battle_status_bar_right.png",
+        "active": "..//..//data//textures//buttons//battle_status_bar_right.png"
+      },
+      "status": "passive",
+      "position": [
+        854,
+        0
+      ]
+    },
+    "attack_button_left": {
       "button_class": "button + text",
       "texture": {
-        "passive": "..//..//data//textures//buttons//button.png",
-        "active": "..//..//data//textures//buttons//button_active.png"
+        "passive": "..//..//data//textures//buttons//attack_button_l.png",
+        "active": "..//..//data//textures//buttons//attack_button_l_active.png",
+        "unactive": "..//..//data//textures//buttons//attack_button_l_active.png"
       },
-      "text": "Назад",
+      "text": "Атака",
       "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
       "font_size": 30,
       "font_color": {
@@ -19,12 +44,381 @@
           168,
           168,
           168
+        ],
+        "unactive": [
+          190,
+          190,
+          190
         ]
       },
       "status": "passive",
       "position": [
-        50,
-        50
+        13,
+        748
+      ]
+    },
+    "magic_button_left": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//magic_button_left.png",
+        "active": "..//..//data//textures//buttons//magic_button_left_active.png",
+        "unactive": "..//..//data//textures//buttons//magic_button_left_active.png"
+      },
+      "text": "Магия",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ],
+        "unactive": [
+          190,
+          190,
+          190
+        ]
+      },
+      "status": "passive",
+      "position": [
+        13,
+        858
+      ]
+    },
+    "run_button_left": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//run_button_left.png",
+        "active": "..//..//data//textures//buttons//run_button_left_active.png",
+        "unactive": "..//..//data//textures//buttons//run_button_left_active.png"
+      },
+      "text": "Побег",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ],
+        "unactive": [
+          190,
+          190,
+          190
+        ]
+      },
+      "status": "passive",
+      "position": [
+        13,
+        968
+      ]
+    },
+    "turn": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//player_turn.png",
+        "active": "..//..//data//textures//buttons//enemy_turn.png",
+        "unactive": "..//..//data//textures//buttons//enemy_turn.png"
+      },
+      "status": "passive",
+      "position": [
+        384,
+        236
+      ]
+    },
+    "attack_button_right": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//attack_button_r.png",
+        "active": "..//..//data//textures//buttons//attack_button_r_active.png",
+        "unactive": "..//..//data//textures//buttons//attack_button_r_active.png"
+      },
+      "text": "Атака",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ],
+        "unactive": [
+          190,
+          190,
+          190
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1548,
+        233
+      ]
+    },
+    "magic_button_right": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//magic_button_right.png",
+        "active": "..//..//data//textures//buttons//magic_button_right_active.png",
+        "unactive": "..//..//data//textures//buttons//magic_button_right_active.png"
+      },
+      "text": "Магия",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ],
+        "unactive": [
+          190,
+          190,
+          190
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1536,
+        123
+      ]
+    },
+    "run_button_right": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//run_button_right.png",
+        "active": "..//..//data//textures//buttons//run_button_right_active.png",
+        "unactive": "..//..//data//textures//buttons//run_button_right_active.png"
+      },
+      "text": "Побег",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ],
+        "unactive": [
+          190,
+          190,
+          190
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1525,
+        13
+      ]
+    },
+    "player_text": {
+      "button_class": "text",
+      "text": "Игрок",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        120,
+        685
+      ]
+    },
+    "enemy_text": {
+      "button_class": "text",
+      "text": "Противник",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1640,
+        370
+      ]
+    },
+    "hp_text_left": {
+      "button_class": "text",
+      "text": "Здоровье",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        400,
+        892
+      ]
+    },
+    "mp_text_left": {
+      "button_class": "text",
+      "text": "Мана",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        415,
+        1004
+      ]
+    },
+    "hp_bar_left": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//hp_line_bar.png",
+        "active": "..//..//data//textures//buttons//hp_line_bar.png"
+      },
+      "status": "passive",
+      "position": [
+        615,
+        892
+      ]
+    },
+    "mp_bar_left": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//mp_line_bar.png",
+        "active": "..//..//data//textures//buttons//mp_line_bar.png"
+      },
+      "status": "passive",
+      "position": [
+        615,
+        1004
+      ]
+    },
+    "hp_text_right": {
+      "button_class": "text",
+      "text": "Здоровье",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1322,
+        34
+      ]
+    },
+    "mp_text_right": {
+      "button_class": "text",
+      "text": "Мана",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          0,
+          0,
+          0
+        ],
+        "active": [
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "passive",
+      "position": [
+        1417,
+        144
+      ]
+    },
+    "hp_bar_right": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//hp_line_bar.png",
+        "active": "..//..//data//textures//buttons//hp_line_bar.png"
+      },
+      "status": "passive",
+      "position": [
+        907,
+        34
+      ]
+    },
+    "mp_bar_right": {
+      "button_class": "button",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//mp_line_bar.png",
+        "active": "..//..//data//textures//buttons//mp_line_bar.png"
+      },
+      "status": "passive",
+      "position": [
+        907,
+        144
       ]
     }
   }

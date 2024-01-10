@@ -39,6 +39,18 @@ class ScreenEffect:
             pygame.display.update()
             self.clock.tick(self.frame_rate)
 
+    def battle_end_animation(self, exodus):
+        font = pygame.font.Font('..//..//data//fonts//better-vcr-5.2(for eng).ttf', 100)
+        text = font.render(exodus, 'white')
+        black_surface = pygame.Surface((1920, 1080))
+        pygame.draw.rect(surface=black_surface, color=(0, 0, 0, 250), rect=(0, 0, 1920, 1080))
+        counter = 0
+        while counter <= 129:
+            self.screen.blit(black_surface)
+            sleep(0.1)
+            pygame.display.update()
+            self.clock.tick(self.frame_rate)
+
 
 class EffectElement:
     def __init__(self, screen, surface, position, alpha):

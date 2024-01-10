@@ -143,11 +143,13 @@ class GameButtonsMenu(ButtonsMenu):
                     if event.key == K_x:
                         self.objects_data['game_menu']['sb'].reduce_parameter('hp', 10)
                     if event.key == K_u:
-                        self.objects_data['characteristic_menu']['cu'].data['free_points'] = 1
+                        self.objects_data['characteristic_menu']['cu'].data['free_points'] += 1
                         self.objects_data['characteristic_menu']['cu'].update_points()
+                        self.objects_data['game_menu']['sb'].data['magic_free_points'] += 1
                     if event.key == K_i:
                         self.objects_data['magic_menu']['mu'].data['free_points'] += 1
                         self.objects_data['magic_menu']['mu'].update_points()
+                        self.objects_data['game_menu']['sb'].data['free_points'] += 1
                     if event.key == K_m:
                         self.to_map_menu()
                     if event.key == K_s:
@@ -303,6 +305,31 @@ class GameButtonsMenu(ButtonsMenu):
 
     def start_battle(self, enemy):
         if enemy:
+            self.other_data['move'] = False
             del self.enemies_generator[enemy]
-            self.battle_thing.start_menu({'texture': '../../data/textures/player/test/right_run_0.png', 'side': 'left'},
+            self.battle_thing.start_menu({'texture': '../../data/textures/player/test/right_run_0.png', 'side': 'left',
+                                          "hp": self.objects_data['game_menu']['sb'].data['hp'],
+                                          "mp": self.objects_data['game_menu']['sb'].data['mp'],
+                                          "level": self.objects_data['game_menu']['sb'].data['level'],
+                                          "str": self.objects_data['characteristic_menu']['cu'].data['str_points'],
+                                          "dex": self.objects_data['characteristic_menu']['cu'].data['dex_points'],
+                                          "int": self.objects_data['characteristic_menu']['cu'].data['int_points'],
+                                          "fb_level": self.objects_data['magic_menu']['mu'].data['fb_level'],
+                                          'max_hp': self.objects_data['game_menu']['sb'].max_characteristic('hp'),
+                                          'max_mp': self.objects_data['game_menu']['sb'].max_characteristic('mp')},
                                          enemy.battle_preparing())
+            characteristics = self.battle_thing.get_ending_data()
+            self.objects_data['game_menu']['sb'].data['hp'] = characteristics['hp']
+            self.objects_data['game_menu']['sb'].data['mp'] = characteristics['mp']
+            self.objects_data['game_menu']['sb'].data['exp'] += characteristics['exp']
+            self.objects_data['game_menu']['sb'].dead_check()
+            if self.objects_data['game_menu']['sb'].data['persona_status']:
+                self.objects_data['game_menu']['sb'].level_up_check()
+                mp, sp = self.objects_data['game_menu']['sb'].get_points()
+                self.objects_data['game_menu']['sb'].clear_points()
+
+                self.objects_data['magic_menu']['mu'].data['free_points'] = mp
+                self.objects_data['magic_menu']['mu'].update_points()
+
+                self.objects_data['characteristic_menu']['cu'].data['free_points'] = sp
+                self.objects_data['characteristic_menu']['cu'].update_points()

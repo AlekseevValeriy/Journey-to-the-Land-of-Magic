@@ -1,2 +1,6 @@
-a = [1, 2, 3]
-print(len(filter(int, a)))
+def a(b, c):
+    c += 1
+    c+= 1
+    print(b, c)
+
+a(1, 2)
