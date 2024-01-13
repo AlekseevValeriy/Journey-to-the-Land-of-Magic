@@ -116,13 +116,14 @@ class WorldMap(ButtonObject):
         super().__init__(screen, *buttons, **data)
         self.add_data(player_position=(0, 0), world_map=[[]], frame=(0, 0), map_sector=100,
                       map_surface=pygame.Surface((260, 260)),
-                      colors={0: False, 1: 'white', 2: (211, 211, 211)}, sector_size=10, map_start=(1615, 45),
+                      colors={0: 'black', False: 'black', 1: (51, 51, 51), 2: (102, 102, 102), 3: (128, 128, 128), 4: (153, 153, 153), 5: (179, 179, 179), 6:(204, 204, 204)}, sector_size=10, map_start=(1615, 45),
                       frame_size=140,
                       render_frame_x=(-14, 12), render_frame_y=(-14, 12), camera_position=(0, 0), black=False,
-                      other_positions=())
+                      other_positions=(), world_size=None)
 
     def set_world_map(self, world_map):
         self.data['world_map'] = world_map
+        self.data['world_size'] = (len(self.data['world_map'][0]), len(self.data['world_map'][0][0]))
 
     def set_other_positions(self, other_positions):
         self.data['other_positions'] = other_positions
@@ -148,8 +149,7 @@ class WorldMap(ButtonObject):
         for z in range(len(self.data['world_map'])):
             for y in range(*self.data['render_frame_y']):
                 for x in range(*self.data['render_frame_x']):
-                    if 0 <= (x_index + x) < len(self.data['world_map'][0]) and 0 <= y_index + y < len(
-                            self.data['world_map'][0][0]):
+                    if 0 <= (x_index + x) < self.data['world_size'][0] and 0 <= y_index + y < self.data['world_size'][1]:
                         color = self.data['colors'][int(self.data['world_map'][z][y_index + y][x_index + x])]
                         if color:
                             pygame.draw.rect(surface=self.data['map_surface'], color=color,

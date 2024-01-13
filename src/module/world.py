@@ -7,6 +7,7 @@ class World:
         self.screen = screen
         self.world: numpy.ndarray = world  # first layer is flagman, second layer is another..., last layer maybe objects
         self.world_sector_size = (100, 100)  # maybe a different size, I'll have more ideas in the final
+        self.world_size = (len(self.world[0]), len(self.world[0][0]))
         self.present_world: numpy.ndarray = numpy.array([])
         self.empty = load(f"../../data/textures/world/empty.png").convert_alpha()
 
@@ -24,7 +25,7 @@ class World:
         for layer in self.world:
             for line in range(*draw_setting[1]):
                 for element in range(*draw_setting[0]):
-                    if 100 > line >= 0 and 100 > element >= 0:
+                    if self.world_size[1] > line >= 0 and self.world_size[0] > element >= 0:
                         if layer[line][element]:
                             self.screen.blit(layer[line][element],
                                              (element * self.world_sector_size[0] - player_position[0],

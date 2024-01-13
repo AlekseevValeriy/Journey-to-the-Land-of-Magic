@@ -39,7 +39,7 @@ class Enemies:
 
         if position_sector == 1:
             enemies_list = [TestEnemy]
-        elif position_sector == 2:
+        else:
             enemies_list = [TestEnemy]
         enemy_class = choice(enemies_list)
         enemy = enemy_class(self.screen, tuple(i * self.world_sector_size for i in position), 'test_enemy',

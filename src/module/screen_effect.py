@@ -41,13 +41,26 @@ class ScreenEffect:
 
     def battle_end_animation(self, exodus):
         font = pygame.font.Font('..//..//data//fonts//better-vcr-5.2(for eng).ttf', 100)
-        text = font.render(exodus, 'white')
-        black_surface = pygame.Surface((1920, 1080))
-        pygame.draw.rect(surface=black_surface, color=(0, 0, 0, 250), rect=(0, 0, 1920, 1080))
+        text = font.render(exodus, True, 'white')
+        text.set_alpha(6)
+
+        pelena = pygame.Surface((1920, 1080))
+        pelena.set_alpha(6)
+        pelena.fill((0, 0, 0))
+
         counter = 0
+
         while counter <= 129:
-            self.screen.blit(black_surface)
-            sleep(0.1)
+            counter += 1
+            self.screen.blit(pelena, (0, 0))
+            pygame.display.update()
+            self.clock.tick(self.frame_rate)
+
+        counter = 0
+        dest = (1920 // 2 - text.get_width() // 2, 1080 // 2 - text.get_height() // 2)
+        while counter <= 129:
+            counter += 1
+            self.screen.blit(text, dest)
             pygame.display.update()
             self.clock.tick(self.frame_rate)
 

@@ -7,7 +7,7 @@ from sys import exit
 from buttons_menu import ButtonsMenu
 from game_buttons_menu import GameButtonsMenu
 from json_reader import JsonReader
-from world_generator import WorldGenerator
+from complite_world_generator import WorldGenerator
 
 
 class StartButtonsMenu(ButtonsMenu):
@@ -130,7 +130,7 @@ class StartButtonsMenu(ButtonsMenu):
         elif 'create' in name:
             data = JsonReader.read_file('../../data/json/units_data.json')
             world = WorldGenerator()
-            world.test_create_world()
+            world.create_world()
             data[f'unit_{name[-1]}']['world'] = world.get_world()
             JsonReader.write_file(data, '../../data/json/units_data.json')
         self.unactive_inspector()
@@ -154,11 +154,10 @@ class StartButtonsMenu(ButtonsMenu):
             self.create_game_process()
         if 'game_flag' in self.other_data and not self.other_data['game_flag']:
             generator = WorldGenerator()
-            self.other_data['game_process'].sample_world = world_layout
+            self.other_data['game_process'].sample_world = JsonReader.read_file('../../data/json/units_data.json')[f'unit_{world_number}']['world']
             self.other_data['game_process'].player_data = player_data
             self.other_data['game_process'].world_number = world_number
-            world_layout = generator.texturing(world_layout)
-            self.other_data['game_process'].create_world(world_layout)
+            self.other_data['game_process'].create_world(generator.texturing(world_layout[:]))
             position = JsonReader.read_file('../../data/json/units_data.json')[f'unit_{world_number}']['position']
             if position[0] == 0 and position[1] == 0:
                 position = [-self.screen.get_width() // 2, -self.screen.get_height() // 2]

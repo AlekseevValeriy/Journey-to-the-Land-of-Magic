@@ -98,6 +98,8 @@ class Battle(ButtonsMenu):
     def end_battle_process(self):
         print('battle registered end')
         self.menu_process_flag = False
+        self.reduce_exp(self.player.characteristics['level'])
+        self.ending_characteristics()
 
     def not_found_function(self):
         print('Not found')
@@ -148,11 +150,10 @@ class Battle(ButtonsMenu):
         self.player.move_animation(move)
         self.enemy.get_damage(self.player.set_damage(move))
         if not self.enemy.is_alive():
-            # animation -> YOU WIN!
             self.add_exp(self.player.characteristics['level'])
             self.ending_characteristics()
-            self.other_data['screen_effect'].battle_end_animation('win')
             Thread(target=self.long_end_battle_process, daemon=True).start()
+            self.other_data['screen_effect'].battle_end_animation('win')
         else:
             self.other_data['queue'].change_queue()
             self.update_visual_queue()
@@ -167,7 +168,6 @@ class Battle(ButtonsMenu):
         self.enemy.move_animation(move)
         self.player.get_damage(self.enemy.set_damage(move))
         if not self.player.is_alive():
-            # animation -> YOU LOSE!
             self.reduce_exp(self.player.characteristics['level'])
             self.ending_characteristics()
             self.other_data['screen_effect'].battle_end_animation('Lose')
@@ -194,6 +194,9 @@ class Battle(ButtonsMenu):
         return 10 * level
 
     def ending_characteristics(self):
+        print(self.player.characteristics['hp'])
+        print(self.player.characteristics['mp'])
+        print(self.other_data['battle_exp'])
         self.other_data['ending_data'] = {'hp': self.player.characteristics['hp'],
                 'mp': self.player.characteristics['mp'],
                 'exp': self.other_data['battle_exp']}

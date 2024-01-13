@@ -79,6 +79,7 @@ class GameButtonsMenu(ButtonsMenu):
         self.objects_data['game_menu']['mp'].set_player_position(self.player.get_position())
         self.objects_data['map_menu']['bmp'].data['world_map'] = (
         self.objects_data['game_menu']['mp'].data['world_map'])
+        self.objects_data['map_menu']['bmp'].data['world_size'] = self.objects_data['game_menu']['mp'].data['world_size']
         self.player.change_animation_under_fps(self.frame_rate)
         self.objects_data['game_menu']['sb'].add_data(**self.player_data)
         self.objects_data['characteristic_menu']['cu'].add_data(
