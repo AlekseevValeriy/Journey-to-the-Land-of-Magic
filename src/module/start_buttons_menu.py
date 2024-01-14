@@ -7,7 +7,7 @@ from sys import exit
 from buttons_menu import ButtonsMenu
 from game_buttons_menu import GameButtonsMenu
 from json_reader import JsonReader
-from complite_world_generator import WorldGenerator
+from world_generator import WorldGenerator
 
 
 class StartButtonsMenu(ButtonsMenu):

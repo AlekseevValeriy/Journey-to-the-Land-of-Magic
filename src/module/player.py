@@ -26,15 +26,24 @@ class Player:
         FRAME = 150
         self.run_frame_size = [FRAME, FRAME]
         self.run_frame_move = [0, 0]
+        self.last_move = [0, 0]
+        self.fake_pos = None
+
 
     def get_personal_data(self):
         return self.personal_data
 
-    def change_position(self, sign: int, axis: int):
-        self.position[axis] = self.position[axis] + self.frame_inspector(axis, self.present_step * sign)
+    def change_position(self, sign: int, axis: int, where=None):
+        if where:
+            self.fake_pos = list(self.get_position_sp())
+            self.fake_pos[axis] = self.position[axis] + self.frame_inspector(axis, self.present_step * sign)
+        else:
+            self.position[axis] = self.position[axis] + self.frame_inspector(axis, self.present_step * sign)
+            self.set_last_move(axis=axis, step=self.position[axis] + self.present_step * sign)
 
     def sample_change_position(self, sign: int, axis: int):
         self.position[axis] = self.position[axis] + self.present_step * sign
+
 
     def change_animation_under_fps(self, frame_rate):
         self.present_step = (self.step_on_30_frame_rate * 30) // frame_rate
@@ -91,17 +100,29 @@ class Player:
             return 0
         return step
 
-    def player_move(self, status):
+    def player_move(self, status, where=None):
         self.move_status = status
         if self.move_status == 'run':
             if self.face_side == 'up':
-                self.change_position(-1, 1)
+                if where:
+                    self.change_position(-1, 1, where)
+                else:
+                    self.change_position(-1, 1)
             elif self.face_side == 'down':
-                self.change_position(1, 1)
+                if where:
+                    self.change_position(1, 1, where)
+                else:
+                    self.change_position(1, 1)
             elif self.face_side == 'left':
-                self.change_position(-1, 0)
+                if where:
+                    self.change_position(-1, 0, where)
+                else:
+                    self.change_position(-1, 0)
             elif self.face_side == 'right':
-                self.change_position(1, 0)
+                if where:
+                    self.change_position(1, 0, where)
+                else:
+                    self.change_position(1, 0)
 
     def sample_move(self, status):
         self.move_status = status
@@ -115,6 +136,23 @@ class Player:
             elif self.face_side == 'right':
                 self.sample_change_position(1, 0)
 
+    def set_last_move(self, move=None, axis=None, step=None):
+        if move:
+            self.last_move = move
+        else:
+            if axis:
+                self.last_move = (0, step)
+            else:
+                self.last_move = (step, 0)
+
+    def replace_last_move(self):
+        self.position = [self.position[0] - self.last_move[0], self.position[1] - self.last_move[1]]
+
+    def fake_move(self):
+        self.player_move('run', True)
+        return self.fake_pos
+
+        return
     def __str__(self):
         return self.position
 

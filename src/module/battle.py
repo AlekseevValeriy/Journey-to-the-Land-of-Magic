@@ -8,9 +8,18 @@ from pygame.font import SysFont
 from pygame import QUIT, MOUSEMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP
 from pygame.event import get
 
-from threading import Thread
+from threading import Thread, Semaphore
 from sys import exit
 from random import choice, randint
+
+general_semaphore = Semaphore(1)
+
+def order_for_queue(function):
+    def order(self, *args, **kwargs):
+        general_semaphore.acquire()
+        function(self, *args, **kwargs)
+        general_semaphore.release()
+    return order
 
 
 class Battle(ButtonsMenu):
@@ -25,6 +34,7 @@ class Battle(ButtonsMenu):
                              magic_button_left=self.player_magic_move)
         self.player: Attendee
         self.enemy: Attendee
+
 
     def start_battle(self, player_data, enemy_data):
         self.player = Attendee(player_data, self.screen, self.clock, self.frame_rate)
@@ -150,6 +160,7 @@ class Battle(ButtonsMenu):
         self.player.move_animation(move)
         self.enemy.get_damage(self.player.set_damage(move))
         if not self.enemy.is_alive():
+            print('level', self.player.characteristics['level'])
             self.add_exp(self.player.characteristics['level'])
             self.ending_characteristics()
             Thread(target=self.long_end_battle_process, daemon=True).start()
@@ -159,6 +170,7 @@ class Battle(ButtonsMenu):
             self.update_visual_queue()
             Thread(target=self.enemy_turn).start()
 
+    @order_for_queue
     def enemy_turn(self):
         self.my_sleep()
         if self.enemy.characteristics['fb_level'] > 0:
@@ -177,8 +189,9 @@ class Battle(ButtonsMenu):
             self.update_visual_queue()
 
     def my_sleep(self):
-        pygame.time.delay(1500)
+        pygame.time.delay(1000)
 
+    @order_for_queue
     def long_end_battle_process(self):
         self.update_visual_queue()
         self.my_sleep()
@@ -194,9 +207,6 @@ class Battle(ButtonsMenu):
         return 10 * level
 
     def ending_characteristics(self):
-        print(self.player.characteristics['hp'])
-        print(self.player.characteristics['mp'])
-        print(self.other_data['battle_exp'])
         self.other_data['ending_data'] = {'hp': self.player.characteristics['hp'],
                 'mp': self.player.characteristics['mp'],
                 'exp': self.other_data['battle_exp']}
@@ -258,6 +268,7 @@ class Attendee:
         elif move == 'magic':
             Thread(target=self.magic_animation, daemon=True).start()
 
+    @order_for_queue
     def attack_animation(self):
         if self.side == 'left':
             while self.position[0] <= self.ends[0]:
@@ -313,6 +324,7 @@ class Attendee:
                 return self.magic()
         return 0
 
+    @order_for_queue
     def magic_animation(self):
         if self.side == 'left':
             position = 150

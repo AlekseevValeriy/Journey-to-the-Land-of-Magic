@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfda3d3c-de4e-4e73-89ba-bbb710aa115b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/module/complite_world_generator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/module/line_drawer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/module/collision.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/units_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/units_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/textures/world/sand_place.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/battle.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/battle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/custom_object_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/custom_object_buttons.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/enemies.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/complite_world_generator.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/game_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/game_buttons_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/screen_effect.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/screen_effect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/start_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/start_buttons_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/world.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/world_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/test_for.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/test_for.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,15 +47,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Zver/Documents/GitHub/Journey-to-the-Land-of-Magic/src/module",
-    "settings.editor.selected.configurable": "cn.yiiguxing.plugin.translate"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Zver/Documents/GitHub/Journey-to-the-Land-of-Magic/src/module&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;cn.yiiguxing.plugin.translate&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\src\module" />

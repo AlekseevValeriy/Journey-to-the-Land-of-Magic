@@ -15,7 +15,7 @@ from world import World
 from custom_object_buttons import StatusBar, WorldMap, SkillUpgrade, MagicUpgrade, BigMap
 from enemies import Enemies
 from battle import Battle
-
+from collision import Collision
 
 class GameButtonsMenu(ButtonsMenu):
     def __init__(self, screen, clock, frame_rate, buttons_file_path, sample_world=None, player_data=None,
@@ -43,6 +43,15 @@ class GameButtonsMenu(ButtonsMenu):
         self.world_number = world_number
         self.battle_thing = Battle(self.screen, self.clock, self.frame_rate, '../../data/json/battle_buttons.json')
         self.create_button_objects()
+        self.collision = Collision()
+
+    def add_collision_blocks(self):
+        world_sector = (100, 100)
+        for n, y in enumerate(self.sample_world[0]):
+            for m, x in enumerate(y):
+                if x == 0:
+                    self.collision.add_block(position=(m * world_sector[0], n * world_sector[1]),
+                                             sprite_size=world_sector)
 
     def create_button_objects(self):
         objects_sb = self.objects_data['game_menu']['sb']
@@ -91,6 +100,9 @@ class GameButtonsMenu(ButtonsMenu):
             **self.objects_data['game_menu']['sb'].get_magic_data())
         self.objects_data['magic_menu']['mu'].update_points()
         self.enemies_generator = Enemies(self.screen, self.sample_world, enemy_limit=3)
+
+        self.add_collision_blocks()
+        self.collision.set_player_sprite(self.player.get_position(), (34, 52))
 
         self.menu_process_flag = True
         self.present_menu = 'game_menu'
@@ -216,9 +228,14 @@ class GameButtonsMenu(ButtonsMenu):
                 pass
 
         if self.other_data['move']:
-            self.player.player_move('run')
+            print(self.player.get_position_sp())
+            if self.collision.co_co_in(self.player.fake_move()):
+                pass
+            else:
+                self.player.player_move('run')
         else:
             self.player.player_move('stand')
+
 
     def run_action(self, side):
         self.other_data['move'] = True
@@ -245,6 +262,7 @@ class GameButtonsMenu(ButtonsMenu):
         JsonReader.write_file(data, '../../data/json/units_data.json')
         self.menu_process_flag = False
         self.other_data['move'] = False
+        self.collision.clear()
 
     def to_person_menu(self):
         self.other_data['move'] = False
@@ -322,6 +340,7 @@ class GameButtonsMenu(ButtonsMenu):
             characteristics = self.battle_thing.get_ending_data()
             self.objects_data['game_menu']['sb'].data['hp'] = characteristics['hp']
             self.objects_data['game_menu']['sb'].data['mp'] = characteristics['mp']
+            print(characteristics['exp'])
             self.objects_data['game_menu']['sb'].data['exp'] += characteristics['exp']
             self.objects_data['game_menu']['sb'].dead_check()
             if self.objects_data['game_menu']['sb'].data['persona_status']:
