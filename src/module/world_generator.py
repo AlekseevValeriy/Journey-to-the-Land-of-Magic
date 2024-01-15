@@ -31,7 +31,7 @@ class WorldGenerator:
 
     def create_field(self, world_frame=10, external_frame=8,
                      regions=[2, 3, 4, 5]) -> numpy.ndarray:
-
+        regions = [2, 3, 4, 5]
         door_step_ocean = 3
         world_layout = numpy.zeros((world_frame * 2 + self.height, world_frame * 2 + self.width), dtype='int32')
         island_layout = numpy.ones((self.height, self.width), dtype='int32')
@@ -182,6 +182,44 @@ class WorldGenerator:
                         grass[y][x] = value
         return grass
 
+    def set_random_player_position(self):
+        world_max = (len(self.world_layout[0][0]) - 1, len(self.world_layout[0]) - 1)
+        side = random.choice(('vertical', 'gorizontal'))
+        if side == 'left':
+            position = (0, random.randint(0, len(self.world_layout[0]) - 1))
+        elif side == 'right':
+            position = (len(self.world_layout[0][0]) - 1, random.randint(0, len(self.world_layout[0]) - 1))
+        elif side == 'up':
+            position = (random.randint(0, len(self.world_layout[0][0]) - 1), 0)
+        elif side == 'down':
+            position = (random.randint(0, len(self.world_layout[0][0]) - 1), len(self.world_layout[0]) - 1)
+
+        if side == 'gorizontal':
+            position = (0, random.randint(30, len(self.world_layout[0]) - 30))
+        elif side == 'vertical':
+            position = (random.randint(30, len(self.world_layout[0][0]) - 30), 0)
+        position = list(position)
+        points = []
+        if side == 'gorizontal':
+            while True:
+                position[0] += 1
+                if position[0] < world_max[0]:
+                    if self.world_layout[0][position[1]][position[0]] != 0:
+                        points.append((position[0], position[1]))
+                else:
+                    break
+        if side  == 'vertical':
+            while True:
+                position[1] += 1
+                if position[1] < world_max[1]:
+                    if self.world_layout[0][position[1]][position[0]] != 0:
+                        points.append((position[0], position[1]))
+                else:
+                    break
+        sector_size = 100
+        position = random.choice(points)
+        position = (n * sector_size for n in position)
+        return list(position)
 
     def create_world(self) -> None:
         self.create_field()

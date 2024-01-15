@@ -8,6 +8,7 @@ from buttons_menu import ButtonsMenu
 from game_buttons_menu import GameButtonsMenu
 from json_reader import JsonReader
 from world_generator import WorldGenerator
+from player import Player
 
 
 class StartButtonsMenu(ButtonsMenu):
@@ -132,6 +133,7 @@ class StartButtonsMenu(ButtonsMenu):
             world = WorldGenerator()
             world.create_world()
             data[f'unit_{name[-1]}']['world'] = world.get_world()
+            data[f'unit_{name[-1]}']['position'] = Player.position_as_sp(world.set_random_player_position())
             JsonReader.write_file(data, '../../data/json/units_data.json')
         self.unactive_inspector()
 

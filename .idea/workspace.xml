@@ -5,16 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfda3d3c-de4e-4e73-89ba-bbb710aa115b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/module/collision.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/units_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/units_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/battle.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/battle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/complite_world_generator.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/game_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/game_buttons_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/start_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/start_buttons_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/world_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/test_for.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/test_for.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

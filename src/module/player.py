@@ -61,6 +61,10 @@ class Player:
     def get_position_sp(self):
         return self.position[0] + 960 + self.run_frame_move[0], self.position[1] + 540 + self.run_frame_move[1]
 
+    @staticmethod
+    def position_as_sp(position):
+        return position[0] + 960, position[1] + 540
+
     def get_fr_pos(self):
         return tuple(i - j for i, j in zip(self.get_position(), self.get_frame()))
 

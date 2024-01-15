@@ -1,3 +1,4 @@
+import random
 from sys import exit
 
 import pygame.image
@@ -50,7 +51,7 @@ class GameButtonsMenu(ButtonsMenu):
         for n, y in enumerate(self.sample_world[0]):
             for m, x in enumerate(y):
                 if x == 0:
-                    self.collision.add_block(position=(m * world_sector[0], n * world_sector[1]),
+                    self.collision.add_block(position=(m * world_sector[0] - 960, n * world_sector[1] - 540),
                                              sprite_size=world_sector)
 
     def create_button_objects(self):
@@ -228,9 +229,10 @@ class GameButtonsMenu(ButtonsMenu):
                 pass
 
         if self.other_data['move']:
-            print(self.player.get_position_sp())
             if self.collision.co_co_in(self.player.fake_move()):
-                pass
+                print(self.collision.co_co_in(self.player.fake_move()))
+                # print('collise', random.randint(1, 100))
+                # self.player.player_move('run')
             else:
                 self.player.player_move('run')
         else:
