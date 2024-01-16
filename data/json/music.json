@@ -1,0 +1,11 @@
+{
+  "effect": {
+    "click": "..//..//data//music//click.ogg"
+  },
+  "music": {
+    "cool_piano": "..//..//data//music//cool_piano.ogg",
+    "little_piano": "..//..//data//music//little_piano.ogg",
+    "middle_piano": "..//..//data//music//middle_piano.ogg",
+    "zombie_music": "..//..//data//music//zombie_music.ogg"
+  }
+}

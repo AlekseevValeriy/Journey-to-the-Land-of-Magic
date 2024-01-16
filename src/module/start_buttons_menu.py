@@ -9,13 +9,18 @@ from game_buttons_menu import GameButtonsMenu
 from json_reader import JsonReader
 from world_generator import WorldGenerator
 from player import Player
+from music_manager import MusicManager
+
+
+
 
 
 class StartButtonsMenu(ButtonsMenu):
     def __init__(self, screen, clock, frame_rate, buttons_file_path):
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
         self.add_other_data(background=load("../../data/textures/backgrounds/background.png").convert_alpha(),
-                            volume_flag=False, fps_counter=True, fps_font=SysFont('Comic Sans MS', 30))
+                            volume_flag=False, fps_counter=True, fps_font=SysFont('Comic Sans MS', 30),
+                            music_manager=MusicManager(0.5), present_volume=0)
         self.add_button_bind(exit_button=self.end_program,
                              credits_button=self.change_menu_credits,
                              settings_button=self.change_menu_settings,
@@ -25,6 +30,16 @@ class StartButtonsMenu(ButtonsMenu):
                              fps_30_button=self.set_30_frame_rate,
                              fps_counter_yes_button=self.turn_on_fps_counter,
                              fps_counter_no_button=self.turn_off_fps_counter)
+        self.buttons_data['settings_menu']['volume_trigger'].position[0] = (
+            JsonReader.read_file('../../data/json/settings_data.json'))['volume_trigger_position']
+        self.set_volume((self.buttons_data['settings_menu']['volume_trigger'].position[0]))
+        self.other_data['music_manager'].activate_music('little_piano')
+
+    def click_sound(function):
+        def click(self, *args, **kwargs):
+            function(self, *args, **kwargs)
+            self.other_data['music_manager'].activate_effect('click')
+        return click
 
     def start_menu(self) -> None:
         self.present_menu = 'start_menu'
@@ -52,12 +67,13 @@ class StartButtonsMenu(ButtonsMenu):
                             buttons[button].status = 'passive'
                 if self.other_data['volume_flag']:
                     x = event.pos[0]
-                    if x < 797:
-                        self.buttons_data['settings_menu']['volume_trigger'].position[0] = 797
-                    elif x >= 1080:
-                        self.buttons_data['settings_menu']['volume_trigger'].position[0] = 1080
-                    else:
-                        self.buttons_data['settings_menu']['volume_trigger'].position[0] = x
+                    if x < 816:
+                        x = 816
+                    elif x >= 1100:
+                        x = 1100
+                    self.buttons_data['settings_menu']['volume_trigger'].position[0] = x - 19
+                    self.set_volume(x)
+
             elif event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     buttons = self.buttons_data[self.present_menu]
@@ -65,6 +81,7 @@ class StartButtonsMenu(ButtonsMenu):
                         if event.pos in buttons[button]:
                             if button == 'volume_trigger':
                                 self.other_data['volume_flag'] = True
+                                self.other_data['music_manager'].activate_effect('click')
                             if not buttons[button].status == 'unactive':
                                 if 'world_' in button and not 'title' in button:
                                     self.special_world_work(button)
@@ -76,8 +93,17 @@ class StartButtonsMenu(ButtonsMenu):
                         if self.other_data['volume_flag']:
                             self.other_data['volume_flag'] = False
 
+    def set_volume(self, value):
+        value = (value - 816) * 100 // (1100 - 816) / 100
+        if value > 1:
+            value = 1
+        if value < 0:
+            value = 0
+        self.other_data['music_manager'].set_volume(value)
+
     # ---------сектор действий кнопок меню---------
 
+    @click_sound
     def end_program(self):
         print('program registered end')
         self.menu_process_flag = False
@@ -86,12 +112,15 @@ class StartButtonsMenu(ButtonsMenu):
     def not_found_function(self):
         print('Not found')
 
+    @click_sound
     def change_menu_settings(self):
         self.present_menu = 'settings_menu'
 
+    @click_sound
     def change_menu_credits(self):
         self.present_menu = 'credits'
 
+    @click_sound
     def change_menu_worlds(self):
         self.present_menu = 'worlds'
         self.unactive_inspector()
@@ -110,6 +139,7 @@ class StartButtonsMenu(ButtonsMenu):
                 self.buttons_data[self.present_menu][f'world_create_{n + 1}'].status = 'passive'
                 self.buttons_data[self.present_menu][f'world_delete_{n + 1}'].status = 'unactive'
 
+    @click_sound
     def special_world_work(self, name):
         if 'button' in name:
             self.start_game_process(
@@ -137,12 +167,20 @@ class StartButtonsMenu(ButtonsMenu):
             JsonReader.write_file(data, '../../data/json/units_data.json')
         self.unactive_inspector()
 
+    @click_sound
     def change_menu_back(self):
+        if self.present_menu == 'settings_menu':
+            data = JsonReader.read_file('../../data/json/settings_data.json')
+            data['fps'] = self.frame_rate
+            data['volume_trigger_position'] = self.buttons_data['settings_menu']['volume_trigger'].position[0]
+            JsonReader.write_file(data, '../../data/json/settings_data.json')
         self.present_menu = 'start_menu'
 
+    @click_sound
     def set_60_frame_rate(self):
         self.frame_rate = 60
 
+    @click_sound
     def set_30_frame_rate(self):
         self.frame_rate = 30
 
@@ -170,8 +208,11 @@ class StartButtonsMenu(ButtonsMenu):
         self.other_data['game_process'].start_menu(self.frame_rate)
         self.other_data['game_flag'] = False
 
+
+    @click_sound
     def turn_on_fps_counter(self):
         self.other_data['fps_counter'] = True
 
+    @click_sound
     def turn_off_fps_counter(self):
         self.other_data['fps_counter'] = False

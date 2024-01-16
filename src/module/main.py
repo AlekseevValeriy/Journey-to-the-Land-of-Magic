@@ -1,4 +1,4 @@
-from pygame import init as pg_init
+import pygame
 from pygame.time import Clock
 from pygame.display import set_mode as pg_window
 from start_buttons_menu import StartButtonsMenu
@@ -8,7 +8,6 @@ from screen_effect import ScreenEffect
 
 class Main:
     def __init__(self):
-        pg_init()
         settings_data = JsonReader.read_file('../../data/json/settings_data.json')
         self.SCREEN_SIZE = settings_data['settings_data']
         self.frame_rate = settings_data['frame_rate']
@@ -24,5 +23,9 @@ class Main:
 
 
 if __name__ == '__main__':
+    pygame.mixer.pre_init(44100, -16, 1, 512)
+    pygame.mixer.init()
+    pygame.init()
+
     game = Main()
     game.run()

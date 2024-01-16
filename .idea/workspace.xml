@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfda3d3c-de4e-4e73-89ba-bbb710aa115b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/data/json/music.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/module/music_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/json/settings_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/settings_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/units_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/units_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/game_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/game_buttons_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/ТЗ.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/ТЗ.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/start_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/start_buttons_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module/world_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/test_for.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/test_for.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +156,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="sprite_sheet_maker" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="music_manager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Journey-to-the-Land-of-Magic" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -160,11 +164,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sketches/Version 1" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/module" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sketches/Version 1/sprite_sheet_maker.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/module/music_manager.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -199,8 +203,8 @@
         <item itemvalue="Python.main" />
         <item itemvalue="Python.get_lines_quality" />
         <item itemvalue="Python.test_for" />
+        <item itemvalue="Python.music_manager" />
         <item itemvalue="Python.battle" />
-        <item itemvalue="Python.sprite_sheet_maker" />
       </list>
     </recent_temporary>
   </component>
