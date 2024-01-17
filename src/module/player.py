@@ -1,10 +1,20 @@
 from os import listdir
 
 from pygame.image import load
+from music_manager import MusicManager
+from json_reader import JsonReader
 
 
 class Player:
     def __init__(self, screen, position, person, **personal_data):
+        self.music_manager = MusicManager(0.5)
+        value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (
+                1100 - 816) / 100
+        if value > 1:
+            value = 1
+        if value < 0:
+            value = 0
+        self.music_manager.set_volume(value)
         self.personal_data = personal_data
         self.screen = screen
         self.position: list = list(position)
@@ -107,6 +117,8 @@ class Player:
     def player_move(self, status, where=None):
         self.move_status = status
         if self.move_status == 'run':
+            if int(self.present_texture.split('_')[-1]) in (1, 3):
+                self.music_manager.activate_effect('run')
             if self.face_side == 'up':
                 if where:
                     self.change_position(-1, 1, where)

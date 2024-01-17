@@ -1,6 +1,9 @@
 {
   "effect": {
-    "click": "..//..//data//music//click.ogg"
+    "click": "..//..//data//music//click.ogg",
+    "punch": "..//..//data//music//punch.ogg",
+    "boom": "..//..//data//music//boom.ogg",
+    "run": "..//..//data//music//run.ogg"
   },
   "music": {
     "cool_piano": "..//..//data//music//cool_piano.ogg",

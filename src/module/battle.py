@@ -12,6 +12,9 @@ from threading import Thread, Semaphore
 from sys import exit
 from random import choice, randint
 
+from music_manager import MusicManager
+from json_reader import JsonReader
+
 general_semaphore = Semaphore(1)
 
 def order_for_queue(function):
@@ -28,22 +31,37 @@ class Battle(ButtonsMenu):
         self.add_other_data(background=load("../../data/textures/backgrounds/battle_background.png").convert_alpha(),
                             fps_counter=True, fps_font=SysFont('Comic Sans MS', 30), queue=BattleQueue(),
                             bar_size=self.buttons_data['battle_menu']['hp_bar_right'].size[0], battle_exp=0,
-                            ending_data=None, screen_effect=ScreenEffect(self.screen, self.clock, frame_rate))
+                            ending_data=None, screen_effect=ScreenEffect(self.screen, self.clock, frame_rate),
+                            music_manager=MusicManager(0.5))
         self.add_button_bind(run_button_left=self.end_battle_process,
                              attack_button_left=self.player_attack_move,
                              magic_button_left=self.player_magic_move)
         self.player: Attendee
         self.enemy: Attendee
 
+    def click_sound(function):
+        def click(self, *args, **kwargs):
+            function(self, *args, **kwargs)
+            self.other_data['music_manager'].activate_effect('click')
+        return click
 
     def start_battle(self, player_data, enemy_data):
-        self.player = Attendee(player_data, self.screen, self.clock, self.frame_rate)
+        value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (
+                    1100 - 816) / 100
+        if value > 1:
+            value = 1
+        if value < 0:
+            value = 0
+        self.other_data['music_manager'].set_volume(value)
+        self.other_data['music_manager'].activate_music('cool_piano')
+        self.player = Attendee(self.other_data['music_manager'], player_data, self.screen, self.clock, self.frame_rate)
         enemy_data['level'] = player_data['level']
         enemy_data['fb_level'] = player_data['fb_level']
-        self.enemy = Attendee(enemy_data, self.screen, self.clock, self.frame_rate)
+        self.enemy = Attendee(self.other_data['music_manager'], enemy_data, self.screen, self.clock, self.frame_rate)
         self.update_visual_queue()
 
     def end_battle(self):
+        self.other_data['music_manager'].stop_sound('all')
         self.player = None
         self.enemy = None
         self.menu_process_flag = True
@@ -105,10 +123,10 @@ class Battle(ButtonsMenu):
 
     # ---------сектор действий кнопок меню---------
 
+    @click_sound
     def end_battle_process(self):
         print('battle registered end')
         self.menu_process_flag = False
-        self.reduce_exp(self.player.characteristics['level'])
         self.ending_characteristics()
 
     def not_found_function(self):
@@ -150,9 +168,11 @@ class Battle(ButtonsMenu):
         # self.buttons_data['battle_menu']['mp_bar_right'].position[0] += (
         #             self.enemy.get_max_mp() - self.enemy.get_mp_percent() * self.other_data['bar_size'])
 
+    @click_sound
     def player_attack_move(self):
         self.player_turn('attack')
 
+    @click_sound
     def player_magic_move(self):
         self.player_turn('magic')
 
@@ -160,7 +180,6 @@ class Battle(ButtonsMenu):
         self.player.move_animation(move)
         self.enemy.get_damage(self.player.set_damage(move))
         if not self.enemy.is_alive():
-            print('level', self.player.characteristics['level'])
             self.add_exp(self.player.characteristics['level'])
             self.ending_characteristics()
             Thread(target=self.long_end_battle_process, daemon=True).start()
@@ -203,7 +222,7 @@ class Battle(ButtonsMenu):
     def reduce_exp(self, level):
         self.other_data['battle_exp'] -= self.get_exp(level)
 
-    def get_exp(self, level):
+    def get_exp(self, level=1):
         return 10 * level
 
     def ending_characteristics(self):
@@ -217,7 +236,8 @@ class Battle(ButtonsMenu):
 
 
 class Attendee:
-    def __init__(self, characteristics: dict, *base: tuple[pygame.Surface, pygame.time.Clock, int]):
+    def __init__(self, music_manager,  characteristics: dict, *base: tuple[pygame.Surface, pygame.time.Clock, int]):
+        self.music_manager = music_manager
         self.screen = base[0]
         self.clock = base[1]
         self.frame_rate = base[2]
@@ -279,6 +299,8 @@ class Attendee:
                 self.position[0] += self.steps[1]
                 pygame.time.delay(3)
 
+            self.music_manager.activate_effect('punch')
+
             while self.position[0] >= self.ends[2]:
                 self.position[0] -= self.steps[2]
                 pygame.time.delay(3)
@@ -295,6 +317,8 @@ class Attendee:
             while self.position[0] >= self.ends[1]:
                 self.position[0] += self.steps[1]
                 pygame.time.delay(3)
+
+            self.music_manager.activate_effect('punch')
 
             while self.position[0] <= self.ends[2]:
                 self.position[0] -= self.steps[2]
@@ -333,6 +357,7 @@ class Attendee:
                 self.screen.blit(self.fireball, (position, 540))
                 position += self.steps[4]
                 pygame.time.delay(5)
+            self.music_manager.activate_effect('boom')
         elif self.side == 'right':
             position = 1920 - 150 - self.texture.get_width()
             self.screen: pygame.Surface
@@ -340,6 +365,7 @@ class Attendee:
                 self.screen.blit(self.fireball, (position, 540))
                 position += self.steps[4]
                 pygame.time.delay(5)
+            self.music_manager.activate_effect('boom')
 
     def get_hp_percent(self):
         a = self.characteristics['hp']

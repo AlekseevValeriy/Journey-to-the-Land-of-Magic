@@ -10,9 +10,7 @@ from json_reader import JsonReader
 from world_generator import WorldGenerator
 from player import Player
 from music_manager import MusicManager
-
-
-
+from cellular_automata import CellularAutomata
 
 
 class StartButtonsMenu(ButtonsMenu):
@@ -20,7 +18,7 @@ class StartButtonsMenu(ButtonsMenu):
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
         self.add_other_data(background=load("../../data/textures/backgrounds/background.png").convert_alpha(),
                             volume_flag=False, fps_counter=True, fps_font=SysFont('Comic Sans MS', 30),
-                            music_manager=MusicManager(0.5), present_volume=0)
+                            music_manager=MusicManager(0.5))
         self.add_button_bind(exit_button=self.end_program,
                              credits_button=self.change_menu_credits,
                              settings_button=self.change_menu_settings,
@@ -32,7 +30,7 @@ class StartButtonsMenu(ButtonsMenu):
                              fps_counter_no_button=self.turn_off_fps_counter)
         self.buttons_data['settings_menu']['volume_trigger'].position[0] = (
             JsonReader.read_file('../../data/json/settings_data.json'))['volume_trigger_position']
-        self.set_volume((self.buttons_data['settings_menu']['volume_trigger'].position[0]))
+        self.set_volume(self.buttons_data['settings_menu']['volume_trigger'].position[0])
         self.other_data['music_manager'].activate_music('little_piano')
 
     def click_sound(function):
@@ -93,13 +91,15 @@ class StartButtonsMenu(ButtonsMenu):
                         if self.other_data['volume_flag']:
                             self.other_data['volume_flag'] = False
 
-    def set_volume(self, value):
+    def set_volume(self, value, r=False):
         value = (value - 816) * 100 // (1100 - 816) / 100
         if value > 1:
             value = 1
         if value < 0:
             value = 0
         self.other_data['music_manager'].set_volume(value)
+        if r:
+            return value
 
     # ---------сектор действий кнопок меню---------
 
@@ -155,7 +155,8 @@ class StartButtonsMenu(ButtonsMenu):
                                                   "min_mp": 10,
                                                   "mp": 11, "mp_multiplier": 1.1, "str": 1, "dex": 1, "int": 1,
                                                   "free_points": 0, "fb_get": False, "fb_level": 0,
-                                                  "magic_free_points": 0}
+                                                  "magic_free_points": 0, 'chip_1': False, 'chip_2': False,
+                                                  'chip_3': False, 'chip_4': False}
 
             JsonReader.write_file(data, '../../data/json/units_data.json')
         elif 'create' in name:
@@ -164,6 +165,11 @@ class StartButtonsMenu(ButtonsMenu):
             world.create_world()
             data[f'unit_{name[-1]}']['world'] = world.get_world()
             data[f'unit_{name[-1]}']['position'] = Player.position_as_sp(world.set_random_player_position())
+            doors = world.get_doors()
+            doors_dict = {}
+            for door in doors:
+                doors_dict[''.join(doors[0])] = []
+            data[f'unit_{name[-1]}']['doors'] = None
             JsonReader.write_file(data, '../../data/json/units_data.json')
         self.unactive_inspector()
 
@@ -205,8 +211,13 @@ class StartButtonsMenu(ButtonsMenu):
             data = JsonReader.read_file('../../data/json/units_data.json')[f'unit_{world_number}']['player']
             self.other_data['game_process'].objects_data['game_menu']['sb'].add_data(**data)
             self.other_data['game_process'].other_data['fps_counter'] = self.other_data['fps_counter']
+        self.other_data['music_manager'].stop_sound('all')
+        data = JsonReader.read_file('../../data/json/settings_data.json')
+        data['volume_trigger_position'] = (self.buttons_data['settings_menu']['volume_trigger'].position[0])
+        JsonReader.write_file(data, '../../data/json/settings_data.json')
         self.other_data['game_process'].start_menu(self.frame_rate)
         self.other_data['game_flag'] = False
+        self.other_data['music_manager'].activate_music('little_piano')
 
 
     @click_sound

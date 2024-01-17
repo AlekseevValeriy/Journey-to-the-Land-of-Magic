@@ -10,7 +10,7 @@ class MusicManager:
     ID_MUSICS = (4, 8)
     ID_ALL = (0, 8)
 
-    sound_stack = list()
+    sound_stack = []
 
     paths = JsonReader.read_file("..//..//data//json//music.json")
     music_storage = paths['music']
@@ -18,6 +18,9 @@ class MusicManager:
 
     def __init__(self, volume=1):
         self.volume = volume
+
+        if len(MusicManager.sound_stack) != 0:
+            MusicManager.sound_stack = []
         for n in range(MusicManager.ID_ALL[1]):
             MusicManager.sound_stack.append(Channel(n))
         for key in MusicManager.music_storage:
@@ -26,16 +29,21 @@ class MusicManager:
         for key in MusicManager.effect_storage:
             MusicManager.effect_storage[key] = Sound(MusicManager.effect_storage[key])
 
+
     def set_volume(self, volume):
         self.volume = volume
         for sound in MusicManager.sound_stack:
             sound.set_volume(self.volume)
 
     def stop_sound(self, sound_type):
-        for n in range(*MusicManager.ID_MUSICS if sound_type == 'sound'
-                        else MusicManager.ID_EFFECTS if sound_type == 'effect'
-                        else MusicManager.ID_ALL):
-            MusicManager.sound_stack[n].stop()
+        if sound_type == 'music':
+            sound_range = MusicManager.ID_MUSICS
+        elif sound_type == 'effect':
+            sound_range = MusicManager.ID_EFFECTS
+        else:
+            sound_range = MusicManager.ID_ALL
+
+        _ = [MusicManager.sound_stack[n].stop() for n in range(*sound_range)]
 
     def activate_effect(self, effect_name):
         try:
@@ -45,8 +53,11 @@ class MusicManager:
                 MusicManager.sound_stack[free_id].set_volume(self.volume)
             else:
                 raise FullError
-        except Exception as error:
+        except FullError:
             print(f"Error. Type: Effect. Sound: {effect_name}. message: stack is full.")
+        except Exception as error:
+            print(error)
+            print(error.__class__, error.__traceback__)
 
     def activate_music(self, music_name):
         try:
@@ -56,8 +67,11 @@ class MusicManager:
                 MusicManager.sound_stack[free_id].set_volume(self.volume)
             else:
                 raise FullError
-        except Exception as error:
+        except FullError:
             print(f"Error. Type: Music. Sound: {music_name}. message: stack is full.")
+        except Exception as error:
+            print(error)
+            print(error.__class__, error.__traceback__)
 
     def is_free(self, id_type):
         free = False

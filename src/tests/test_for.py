@@ -1,6 +1,18 @@
-a = (1, 2)
-b = (2, 3)
-d = (3, 4)
+class C:
+    def __init__(self):
+        self._arr = ['y', 'a', 'n', 'd', 'e', 'x']
 
-c = input()
-print(*a if c == 'a' else b if c == 'b' else d)
+    def __iter__(self):
+        return iter(self._arr)
+
+
+class C2:
+    def __iter__(self):
+        i = 10
+        while i < 15:
+            yield i
+            i += 1
+
+
+print(*C())
+print(*C2())

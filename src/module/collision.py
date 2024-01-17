@@ -24,7 +24,7 @@ class Collision:
 
     def co_co_in(self, player_position): # collision_conflict_inspector
         self.set_player_position(player_position)
-        return pygame.sprite.spritecollide(self.player_sprite, blocked_group, False)
+        return pygame.sprite.spritecollideany(self.player_sprite, blocked_group)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, position, sprite_size):

@@ -34,6 +34,10 @@ class StatusBar(ButtonObject):
             if self.data[parameter] < 0:
                 self.data[parameter] = 0
 
+    def get_chips(self):
+        print(self.data)
+        return self.data['chip_1'], self.data['chip_2'], self.data['chip_3'], self.data['chip_4']
+
     def get_weap_and_arm(self):
         return self.data['weapon'], self.data['armor']
 
@@ -116,7 +120,7 @@ class WorldMap(ButtonObject):
         super().__init__(screen, *buttons, **data)
         self.add_data(player_position=(0, 0), world_map=[[]], frame=(0, 0), map_sector=100,
                       map_surface=pygame.Surface((260, 260)),
-                      colors={0: 'black', False: 'black', 1: (51, 51, 51), 2: (102, 102, 102), 3: (128, 128, 128), 4: (153, 153, 153), 5: (179, 179, 179), 6:(204, 204, 204)}, sector_size=10, map_start=(1615, 45),
+                      colors={0: 'black', False: 'black', 1: (51, 51, 51), 2: (102, 102, 102), 3: (128, 128, 128), 4: (153, 153, 153), 5: (179, 179, 179), 6:(204, 204, 204), 12: (220, 220, 220), 13: (135, 135, 135), 10: (110, 110, 110)}, sector_size=10, map_start=(1615, 45),
                       frame_size=140,
                       render_frame_x=(-14, 12), render_frame_y=(-14, 12), camera_position=(0, 0), black=False,
                       other_positions=(), world_size=None)
@@ -150,12 +154,13 @@ class WorldMap(ButtonObject):
             for y in range(*self.data['render_frame_y']):
                 for x in range(*self.data['render_frame_x']):
                     if 0 <= (x_index + x) < self.data['world_size'][0] and 0 <= y_index + y < self.data['world_size'][1]:
-                        color = self.data['colors'][int(self.data['world_map'][z][y_index + y][x_index + x])]
-                        if color:
-                            pygame.draw.rect(surface=self.data['map_surface'], color=color,
-                                             rect=(frame_size + se_si * x + self.data['camera_position'][0],
-                                                   frame_size + se_si * y + self.data['camera_position'][1], se_si,
-                                                   se_si))
+                        if self.data['world_map'][z][y_index + y][x_index + x] != -1:
+                            color = self.data['colors'][int(self.data['world_map'][z][y_index + y][x_index + x])]
+                            if color:
+                                pygame.draw.rect(surface=self.data['map_surface'], color=color,
+                                                 rect=(frame_size + se_si * x + self.data['camera_position'][0],
+                                                       frame_size + se_si * y + self.data['camera_position'][1], se_si,
+                                                       se_si))
                     else:
                         pygame.draw.rect(surface=self.data['map_surface'], color='black',
                                          rect=(frame_size + se_si * x + self.data['camera_position'][0],

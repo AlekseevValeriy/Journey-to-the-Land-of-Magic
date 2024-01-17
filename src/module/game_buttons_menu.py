@@ -3,7 +3,7 @@ from sys import exit
 
 import pygame.image
 from pygame import MOUSEMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP, QUIT, KEYDOWN, KEYUP, K_x, K_u, K_m, K_i, K_s, K_ESCAPE, \
-    K_p
+    K_p, K_r, K_e
 from pygame.display import update
 from pygame.event import get
 
@@ -17,6 +17,7 @@ from custom_object_buttons import StatusBar, WorldMap, SkillUpgrade, MagicUpgrad
 from enemies import Enemies
 from battle import Battle
 from collision import Collision
+from music_manager import MusicManager
 
 class GameButtonsMenu(ButtonsMenu):
     def __init__(self, screen, clock, frame_rate, buttons_file_path, sample_world=None, player_data=None,
@@ -25,7 +26,8 @@ class GameButtonsMenu(ButtonsMenu):
         self.add_other_data(move=False, background=pygame.image.load(
             '../../data/textures/backgrounds/background.png').convert(),
                             pressed_mouse_map=False, fps_counter=True,
-                            fps_font=pygame.font.SysFont('Comic Sans MS', 30))
+                            fps_font=pygame.font.SysFont('Comic Sans MS', 30),
+                            music_manager=MusicManager(0.5))
         self.add_button_bind(back_button=self.end_menu,
                              person_menu_enter_button=self.to_person_menu,
                              map_menu_enter_button=self.to_map_menu,
@@ -45,6 +47,12 @@ class GameButtonsMenu(ButtonsMenu):
         self.battle_thing = Battle(self.screen, self.clock, self.frame_rate, '../../data/json/battle_buttons.json')
         self.create_button_objects()
         self.collision = Collision()
+
+    def click_sound(function):
+        def click(self, *args, **kwargs):
+            function(self, *args, **kwargs)
+            self.other_data['music_manager'].activate_effect('click')
+        return click
 
     def add_collision_blocks(self):
         world_sector = (100, 100)
@@ -101,6 +109,13 @@ class GameButtonsMenu(ButtonsMenu):
             **self.objects_data['game_menu']['sb'].get_magic_data())
         self.objects_data['magic_menu']['mu'].update_points()
         self.enemies_generator = Enemies(self.screen, self.sample_world, enemy_limit=3)
+        value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (1100 - 816) / 100
+        if value > 1:
+            value = 1
+        if value < 0:
+            value = 0
+        self.other_data['music_manager'].set_volume(value)
+        self.other_data['music_manager'].activate_music('middle_piano')
 
         self.add_collision_blocks()
         self.collision.set_player_sprite(self.player.get_position(), (34, 52))
@@ -174,6 +189,19 @@ class GameButtonsMenu(ButtonsMenu):
                             self.end_menu()
                     if event.key == K_p:
                         self.present_menu = 'persons_menu'
+                    if event.key in (K_r, K_e):
+                        position = self.player.get_position_sp()
+                        position = position[0] // 100, position[1] // 100
+                        if event.key == K_r:
+                            if self.sample_world[2][position[1]][position[0]] == 13:
+                                print(self.objects_data['game_menu']['sb'].get_chips())
+                                if all(self.objects_data['game_menu']['sb'].get_chips()):
+                                    pass
+                                    #game_end()
+                        elif event.key == K_e:
+                            if self.sample_world[2][position[1]][position[0]] == 12:
+                #                 self.world = JsonReader.read_file('../../data/json/unit_data.json')[''.join(position)]['layout']
+                                pass
 
                 elif event.type == KEYUP:
                     if event.key == K_s:
@@ -261,15 +289,23 @@ class GameButtonsMenu(ButtonsMenu):
         data[f'unit_{self.world_number}']['player']['fb_get'] = fp
         data[f'unit_{self.world_number}']['player']['fb_level'] = fl
         data[f'unit_{self.world_number}']['player']['magic_free_points'] = mp
+        c_1, c_2, c_3, c_4 = self.objects_data['game_menu']['sb'].get_chips()
+        data[f'unit_{self.world_number}']['player']['chip_1'] = c_1
+        data[f'unit_{self.world_number}']['player']['chip_2'] = c_2
+        data[f'unit_{self.world_number}']['player']['chip_3'] = c_3
+        data[f'unit_{self.world_number}']['player']['chip_4'] = c_4
         JsonReader.write_file(data, '../../data/json/units_data.json')
         self.menu_process_flag = False
         self.other_data['move'] = False
         self.collision.clear()
+        self.other_data['music_manager'].stop_sound('all')
 
+    @click_sound
     def to_person_menu(self):
         self.other_data['move'] = False
         self.present_menu = 'persons_menu'
 
+    @click_sound
     def to_map_menu(self):
         self.present_menu = 'map_menu'
         self.objects_data['map_menu']['bmp'].data['player_position'] = self.player.get_position_fr()
@@ -280,9 +316,11 @@ class GameButtonsMenu(ButtonsMenu):
         self.objects_data['map_menu']['bmp'].set_other_positions(self.enemies_generator.get_positions())
         self.other_data['move'] = False
 
+    @click_sound
     def to_game_menu(self):
         self.present_menu = 'game_menu'
 
+    @click_sound
     def to_upgrade_characteristics(self):
         self.present_menu = 'characteristic_menu'
         self.inspect_add_buttons_ch()
@@ -297,6 +335,7 @@ class GameButtonsMenu(ButtonsMenu):
             self.buttons_data['characteristic_menu']['add_dex'].status = 'unactive'
             self.buttons_data['characteristic_menu']['add_int'].status = 'unactive'
 
+    @click_sound
     def add_fb(self):
         self.objects_data['magic_menu']['mu'].add_point()
         self.inspect_add_buttons_m()
@@ -307,16 +346,20 @@ class GameButtonsMenu(ButtonsMenu):
         else:
             self.buttons_data['magic_menu']['add_fb'].status = 'unactive'
 
+    @click_sound
     def to_upgrade_magic(self):
         self.present_menu = 'magic_menu'
         self.inspect_add_buttons_m()
 
+    @click_sound
     def add_str_point(self):
         self.add_characteristic_point('str')
 
+    @click_sound
     def add_dex_point(self):
         self.add_characteristic_point('dex')
 
+    @click_sound
     def add_int_point(self):
         self.add_characteristic_point('int')
 
@@ -326,6 +369,7 @@ class GameButtonsMenu(ButtonsMenu):
 
     def start_battle(self, enemy):
         if enemy:
+            self.other_data['music_manager'].stop_sound('all')
             self.other_data['move'] = False
             del self.enemies_generator[enemy]
             self.battle_thing.start_menu({'texture': '../../data/textures/player/test/right_run_0.png', 'side': 'left',
@@ -355,3 +399,4 @@ class GameButtonsMenu(ButtonsMenu):
 
                 self.objects_data['characteristic_menu']['cu'].data['free_points'] = sp
                 self.objects_data['characteristic_menu']['cu'].update_points()
+            self.other_data['music_manager'].activate_music('middle_piano')

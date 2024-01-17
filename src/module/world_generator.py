@@ -7,15 +7,17 @@ class WorldGenerator:
     def __init__(self, size=(100, 100)):
         self.world_layout = numpy.array([])
         self.width, self.height = size
-        self.textures = {0: 'empty', 1: 'texture_1', 2: 'texture_2', 3: 'texture_3', 4: 'texture_4', 5: 'texture_5', 10: 'grass'}
-        # 1 -> (51, 51, 51), 2 -> (102, 102, 102), 3 -> (128, 128, 128), 4 -> (153, 153 153), 5 -> (179, 179, 179), 10 -> (204, 204, 204)
+        self.textures = {0: 'empty', 1: 'texture_1', 2: 'texture_2', 3: 'texture_3', 4: 'texture_4', 5: 'texture_5', 10: 'grass', 12: 'door', 13: 'boat'}
+        # 1 -> (51, 51, 51), 2 -> (102, 102, 102), 3 -> (128, 128, 128), 4 -> (153, 153 153), 5 -> (179, 179, 179), 10 -> (204, 204, 204), 12 -> (220, 220, 220), 13 -> (135, 135, 135)
         self.set_textures()
+        self.doors_coordinate = ()
 
     def set_textures(self) -> None:
         texture_name = self.textures
         self.textures = {}
         for name in texture_name:
-            self.textures[name] = load(f"../../data/textures/world/{texture_name[name]}.png").convert_alpha()
+            if texture_name[name]:
+                self.textures[name] = load(f"../../data/textures/world/{texture_name[name]}.png").convert_alpha()
 
     def texturing_process(self, world_element):
         return self.textures.get(world_element, False)
@@ -177,9 +179,10 @@ class WorldGenerator:
         grass = self.world_layout.copy()
         for n, y in enumerate(self.world_layout):
             for m, x in enumerate(y):
-                if x != 6:
-                    if random.choice([0, 1]):
-                        grass[y][x] = value
+                grass[n][m] = -1
+                if x not in (6, 0):
+                    if random.choice((0, 1)):
+                        grass[n][m] = value
         return grass
 
     def set_random_player_position(self):
@@ -221,12 +224,35 @@ class WorldGenerator:
         position = (n * sector_size for n in position)
         return list(position)
 
+    def create_objects(self):
+        objects = self.world_layout.copy()
+        places = {2: [], 3: [], 4: [], 5: [], 6: []}
+
+        for n, y in enumerate(self.world_layout):
+            for m, x in enumerate(y):
+                if x in places:
+                    places[x].append((m, n))
+                objects[n][m] = -1
+        places = ((2, random.choice(places[2])), (2, random.choice(places[3])), (2, random.choice(places[4])),
+                  (2, random.choice(places[5])), (3, random.choice(places[6])))
+        self.doors_coordinate = (places[0][1], places[1][1], places[2][1] ,places[3][1])
+        for key, item in tuple(places):
+            objects[item[1]][item[0]] = key + 10
+
+        return objects
+
+
     def create_world(self) -> None:
         self.create_field()
         plot: numpy.ndarray = self.world_layout.copy()
+
         grass: numpy.ndarray = self.create_grass()
-        self.world_layout = numpy.array([plot, grass]).tolist()
+        objects: numpy.ndarray = self.create_objects()
+        self.world_layout = numpy.array([plot, grass, objects]).tolist()
 
 
     def get_world(self) -> numpy.ndarray:
         return self.world_layout
+
+    def get_doors(self):
+        return self.doors_coordinate
