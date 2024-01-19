@@ -1,23 +1,19 @@
+from random import choice, randint
+from threading import Thread, Semaphore
+
 import pygame
 
 from buttons_menu import ButtonsMenu
+from json_reader import JsonReader
+from music_manager import MusicManager
 from screen_effect import ScreenEffect
 
-from pygame.image import load
-from pygame.font import SysFont
-from pygame import QUIT, MOUSEMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP
-from pygame.event import get
-
-from threading import Thread, Semaphore
-from sys import exit
-from random import choice, randint
-
-from music_manager import MusicManager
-from json_reader import JsonReader
+from typing import Callable
 
 general_semaphore = Semaphore(1)
 
-def order_for_queue(function):
+def order_for_queue(function: Callable):
+    '''Декоратор для работы очереди потоков'''
     def order(self, *args, **kwargs):
         general_semaphore.acquire()
         function(self, *args, **kwargs)
@@ -26,10 +22,11 @@ def order_for_queue(function):
 
 
 class Battle(ButtonsMenu):
-    def __init__(self, screen, clock, frame_rate, buttons_file_path):
+    '''Класс процесса Битвы'''
+    def __init__(self, screen: pygame.Surface, clock:pygame.time.Clock, frame_rate: int, buttons_file_path: str) -> None:
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
-        self.add_other_data(background=load("../../data/textures/backgrounds/battle_background.png").convert_alpha(),
-                            fps_counter=True, fps_font=SysFont('Comic Sans MS', 30), queue=BattleQueue(),
+        self.add_other_data(background=pygame.image.load("../../data/textures/backgrounds/battle_background.png").convert_alpha(),
+                            fps_counter=True, fps_font=pygame.font.SysFont('Comic Sans MS', 30), queue=BattleQueue(),
                             bar_size=self.buttons_data['battle_menu']['hp_bar_right'].size[0], battle_exp=0,
                             ending_data=None, screen_effect=ScreenEffect(self.screen, self.clock, frame_rate),
                             music_manager=MusicManager(0.5))
@@ -39,13 +36,15 @@ class Battle(ButtonsMenu):
         self.player: Attendee
         self.enemy: Attendee
 
-    def click_sound(function):
+    def click_sound(function: Callable):
+        '''Декоратор для добавления звука, при нажатии на кнопки'''
         def click(self, *args, **kwargs):
             function(self, *args, **kwargs)
             self.other_data['music_manager'].activate_effect('click')
         return click
 
-    def start_battle(self, player_data, enemy_data):
+    def start_battle(self, player_data: dict, enemy_data: dict) -> None:
+        '''Метод для настройки и начала процесса битвы'''
         value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (
                     1100 - 816) / 100
         if value > 1:
@@ -60,35 +59,41 @@ class Battle(ButtonsMenu):
         self.enemy = Attendee(self.other_data['music_manager'], enemy_data, self.screen, self.clock, self.frame_rate)
         self.update_visual_queue()
 
-    def end_battle(self):
+    def end_battle(self) -> None:
+        '''Метод для настройки и окончания процесса битвы'''
         self.other_data['music_manager'].stop_sound('all')
         self.player = None
         self.enemy = None
         self.menu_process_flag = True
 
     def start_menu(self, player_data: dict, enemy_data: dict) -> None:
+        '''Метод начала битвы'''
         self.present_menu = 'battle_menu'
         self.start_battle(player_data, enemy_data)
         self.menu_process()
         self.end_battle()
 
     def draw_background(self) -> None:
+        '''Метод отрисовки заднего фона'''
         self.screen.blit(self.other_data['background'], (0, 0))
 
-    def draw_fps(self):
+    def draw_fps(self) -> None:
+        '''Метод отрисовки счётчика fps'''
         if self.other_data['fps_counter']:
             text = self.other_data['fps_font'].render(str(int(self.clock.get_fps())), True, 'gray')
             self.screen.blit(text, (1879, 5))
 
-    def draw_scene(self):
+    def draw_scene(self) -> None:
+        '''Метод рисования сущностей'''
         self.player.draw()
         self.enemy.draw()
 
     def cursor_reader(self) -> None:
-        for event in get():
-            if event.type == QUIT:
+        '''Метод обработки действий'''
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 self.end_battle()
-            elif event.type == MOUSEMOTION:
+            elif event.type == pygame.MOUSEMOTION:
                 buttons = self.buttons_data[self.present_menu]
                 for button in buttons:
                     if event.pos in buttons[button] and not buttons[button].status == 'unactive':
@@ -97,7 +102,7 @@ class Battle(ButtonsMenu):
                     else:
                         if buttons[button].status == 'active':
                             buttons[button].status = 'passive'
-            elif event.type == MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     buttons = self.buttons_data[self.present_menu]
                     for button in buttons:
@@ -106,10 +111,11 @@ class Battle(ButtonsMenu):
                                 if button not in ['turn', 'attack_button_right', 'magic_button_right',
                                                   'run_button_right']:
                                     self.buttons_binds.get(button, self.not_found_function)()
-            elif event.type == MOUSEBUTTONUP:
+            elif event.type == pygame.MOUSEBUTTONUP:
                 pass
 
     def menu_process(self) -> None:
+        '''Метод процесса меню'''
         while self.menu_process_flag:
             self.draw_background()
             self.draw_scene()
@@ -124,15 +130,19 @@ class Battle(ButtonsMenu):
     # ---------сектор действий кнопок меню---------
 
     @click_sound
-    def end_battle_process(self):
-        print('battle registered end')
+    def end_battle_process(self) -> None:
+        '''Метод выхода из меню битвы'''
+        # print('battle registered end')
         self.menu_process_flag = False
         self.ending_characteristics()
 
-    def not_found_function(self):
-        print('Not found')
+    def not_found_function(self) -> None:
+        '''Метод для уведомления об отсутствии действия у кнопки'''
+        # print('Not found')
+        pass
 
-    def update_visual_queue(self):
+    def update_visual_queue(self) -> None:
+        '''Метод очереди ходов у сущностей'''
         if not self.other_data['queue'].get_present_queue():
             self.buttons_data['battle_menu']['attack_button_right'].status = 'unactive'
             self.buttons_data['battle_menu']['magic_button_right'].status = 'unactive'
@@ -161,22 +171,21 @@ class Battle(ButtonsMenu):
             'bar_size']
         self.buttons_data['battle_menu']['hp_bar_right'].size[0] = self.enemy.get_hp_percent() * self.other_data[
             'bar_size']
-        # self.buttons_data['battle_menu']['hp_bar_right'].position[0] += (
-        #             self.enemy.get_max_hp() - self.enemy.get_hp_percent() * self.other_data['bar_size'])
         self.buttons_data['battle_menu']['mp_bar_right'].size[0] = self.enemy.get_mp_percent() * self.other_data[
             'bar_size']
-        # self.buttons_data['battle_menu']['mp_bar_right'].position[0] += (
-        #             self.enemy.get_max_mp() - self.enemy.get_mp_percent() * self.other_data['bar_size'])
 
     @click_sound
-    def player_attack_move(self):
+    def player_attack_move(self) -> None:
+        '''Метод атаки игрока'''
         self.player_turn('attack')
 
     @click_sound
-    def player_magic_move(self):
+    def player_magic_move(self) -> None:
+        '''Метод магии игрока'''
         self.player_turn('magic')
 
-    def player_turn(self, move):
+    def player_turn(self, move) -> None:
+        '''Метод хода игрока'''
         self.player.move_animation(move)
         self.enemy.get_damage(self.player.set_damage(move))
         if not self.enemy.is_alive():
@@ -190,7 +199,8 @@ class Battle(ButtonsMenu):
             Thread(target=self.enemy_turn).start()
 
     @order_for_queue
-    def enemy_turn(self):
+    def enemy_turn(self) -> None:
+        '''Метод хода противника'''
         self.my_sleep()
         if self.enemy.characteristics['fb_level'] > 0:
             move = choice(('attack', 'magic'))
@@ -207,36 +217,44 @@ class Battle(ButtonsMenu):
             self.other_data['queue'].change_queue()
             self.update_visual_queue()
 
-    def my_sleep(self):
+    def my_sleep(self) -> None:
+        '''Метод остановки времени'''
         pygame.time.delay(1000)
 
     @order_for_queue
-    def long_end_battle_process(self):
+    def long_end_battle_process(self) -> None:
+        '''Метод выхода из меню битвы с анимацией'''
         self.update_visual_queue()
         self.my_sleep()
         self.end_battle_process()
 
-    def add_exp(self, level):
+    def add_exp(self, level: int) -> None:
+        '''Метод добавления опыта игроку'''
         self.other_data['battle_exp'] += self.get_exp(level)
 
-    def reduce_exp(self, level):
+    def reduce_exp(self, level: int) -> None:
+        '''Метод уменьшения опыта у игрока'''
         self.other_data['battle_exp'] -= self.get_exp(level)
 
-    def get_exp(self, level=1):
+    def get_exp(self, level=1) -> int:
+        '''Метод получения количества опыта'''
         return 10 * level
 
-    def ending_characteristics(self):
+    def ending_characteristics(self) -> None:
+        '''Метод получения характеристик'''
         self.other_data['ending_data'] = {'hp': self.player.characteristics['hp'],
                 'mp': self.player.characteristics['mp'],
                 'exp': self.other_data['battle_exp']}
 
-    def get_ending_data(self):
+    def get_ending_data(self) -> None:
+        '''Метод получения данных после битвы'''
         return self.other_data['ending_data']
 
 
 
 class Attendee:
-    def __init__(self, music_manager,  characteristics: dict, *base: tuple[pygame.Surface, pygame.time.Clock, int]):
+    '''Метод сущности'''
+    def __init__(self, music_manager: MusicManager,  characteristics: dict, *base: tuple[pygame.Surface, pygame.time.Clock, int]) -> None:
         self.music_manager = music_manager
         self.screen = base[0]
         self.clock = base[1]
@@ -274,22 +292,26 @@ class Attendee:
             self.steps = [-15, -3, -3, -15, -15]
             self.ends = [150 + 75, 150 + 50, 150 + 75, 1920 - 150 - self.texture.get_width(), 150 + 50]
 
-    def draw(self):
+    def draw(self) -> None:
+        '''Метод отрисовки сущности'''
         self.screen.blit(self.texture, self.position)
 
-    def is_alive(self):
+    def is_alive(self) -> bool:
+        '''Метод проверки жизни сущности'''
         if self.characteristics['hp'] <= 0:
             return False
         return True
 
-    def move_animation(self, move):
+    def move_animation(self, move: str) -> None:
+        '''Метод анимации действия сущности'''
         if move == 'attack':
             Thread(target=self.attack_animation, daemon=True).start()
         elif move == 'magic':
             Thread(target=self.magic_animation, daemon=True).start()
 
     @order_for_queue
-    def attack_animation(self):
+    def attack_animation(self) -> None:
+        '''Метод анимации атаки'''
         if self.side == 'left':
             while self.position[0] <= self.ends[0]:
                 self.position[0] += self.steps[0]
@@ -328,19 +350,23 @@ class Attendee:
                 self.position[0] -= self.steps[3]
                 pygame.time.delay(3)
 
-    def attack(self):
+    def attack(self) -> int:
+        '''Метод получения урона от атаки'''
         return 10 * self.characteristics['str'] * self.characteristics['dex'] + randint(1, 5) - randint(1, 5)
 
-    def magic(self):
+    def magic(self) -> int:
+        '''Метод получения урона от магии'''
         self.characteristics['mp'] -= self.characteristics['int'] * 2 + 2
         return 15 * self.characteristics['int'] + randint(1, 10) - randint(1, 10)
 
-    def get_damage(self, damage):
+    def get_damage(self, damage: int) -> None:
+        '''Метод получения урона'''
         if damage < 0:
             damage = 0
         self.characteristics['hp'] -= damage
 
-    def set_damage(self, move):
+    def set_damage(self, move: str) -> int:
+        '''Метод нанесения урона'''
         if move == 'attack':
             return self.attack()
         elif move == 'magic':
@@ -349,7 +375,8 @@ class Attendee:
         return 0
 
     @order_for_queue
-    def magic_animation(self):
+    def magic_animation(self) -> None:
+        '''Метод анимации магии'''
         if self.side == 'left':
             position = 150
             self.screen: pygame.Surface
@@ -367,37 +394,44 @@ class Attendee:
                 pygame.time.delay(5)
             self.music_manager.activate_effect('boom')
 
-    def get_hp_percent(self):
-        a = self.characteristics['hp']
+    def get_hp_percent(self) -> float:
+        '''Метод получения количества жизни в процентах'''
         return self.characteristics['hp'] * 100 / self.get_max_hp() / 100
 
-    def get_mp_percent(self):
-        a = self.characteristics['mp']
+    def get_mp_percent(self) -> float:
+        '''Метод получения маны в процентах'''
         return self.characteristics['mp'] * 100 / self.get_max_mp() / 100
 
-    def get_max_hp(self):
+    def get_max_hp(self) -> float:
+        '''Метод получения предельной жизни'''
         return self.characteristics['max_hp']
 
-    def get_max_mp(self):
+    def get_max_mp(self) -> float:
+        '''Метод получения предельной маны'''
         return self.characteristics['max_mp']
 
 
 class BattleQueue:
-    def __init__(self):
-        self.present_attendee = 0  # 0 - player, 1 - enemy
+    '''Метод очереди битвы'''
+    def __init__(self) -> None:
+        self.present_attendee = False  # False - player, True - enemy
 
-    def is_player_queue(self):
+    def is_player_queue(self) -> bool:
+        '''Метод получения очереди игрока'''
         if self.present_attendee:
             return False
         return True
 
-    def is_enemy_queue(self):
+    def is_enemy_queue(self) -> bool:
+        '''Метод получения очереди противника'''
         if self.present_attendee:
             return True
         return False
 
-    def change_queue(self):
+    def change_queue(self) -> None:
+        '''Метод передачи очереди'''
         self.present_attendee = not self.present_attendee
 
-    def get_present_queue(self):
+    def get_present_queue(self) -> bool:
+        '''Метод получения очереди'''
         return self.present_attendee

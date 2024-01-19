@@ -1,14 +1,15 @@
-import random
-import numpy
+from random import random, choice
+from numpy import array, ndarray
 
 
 class CellularAutomata:
+    '''Класс генерации подземелья'''
     FLOOR = 1
     WALL = 0
-    WOOD = 2
+    WOOD = 20
     EMPTY = -1
 
-    def __init__(self, width, height):
+    def __init__(self, width: int, height: int) -> None:
         self.width = width
         self.height = height
 
@@ -24,16 +25,17 @@ class CellularAutomata:
         for step in range(self.number_of_steps):
             self.grid = self.do_simulation_step()
 
-    def create_grid(self):
+
+    def create_grid(self) -> list:
         return [[CellularAutomata.WALL for _x in range(self.width)] for _y in range(self.height)]
 
-    def initialize_grid(self):
+    def initialize_grid(self) -> None:
         for row in range(self.height):
             for column in range(self.width):
-                if random.random() <= self.chance_to_start_alive:
+                if random() <= self.chance_to_start_alive:
                     self.grid[row][column] = CellularAutomata.FLOOR
 
-    def count_alive_neighbors(self, x, y):
+    def count_alive_neighbors(self, x: int, y: int) -> int:
         alive_count = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
@@ -47,7 +49,7 @@ class CellularAutomata:
                     alive_count += 1
         return alive_count
 
-    def do_simulation_step(self):
+    def do_simulation_step(self) -> list:
         new_grid = self.create_grid()
         for x in range(self.width):
             for y in range(self.height):
@@ -64,32 +66,27 @@ class CellularAutomata:
                         new_grid[y][x] = CellularAutomata.WALL
         return new_grid
 
-    def set_item(self):
-        layout = self.grid.copy()
+    def set_item(self) -> list:
+        layout = []
         places = []
-        for n, line in enumerate(layout):
+        for n, line in enumerate(self.grid):
+            layout.append([])
             for m, element in enumerate(line):
                 if not element:
-                    places.append((n, m))
-                layout[n][m] = CellularAutomata.EMPTY
-        place = random.choice(places)
+                    places.append((m, n))
+                layout[n].append(CellularAutomata.EMPTY)
+        place = choice(places)
         layout[place[1]][place[0]] = CellularAutomata.WOOD
 
         return layout
 
-    def get_map(self):
-        return numpy.array([self.grid, self.set_item()])
+    def get_map(self) -> ndarray:
+        return array([self.grid, self.set_item()])
 
     def __str__(self):
         return '\n'.join((''.join(tuple(map(str, line))) for line in self.grid))
 
     def __iter__(self):
-        for line in self.grid:
-            yield ' '.join(tuple(map(str, line))) + '\n'
-
-
-if __name__ == '__main__':
-    generator = CellularAutomata(50, 25)
-    print(generator)
-
-    print(*generator)
+        for layer in self.grid:
+            for line in layer:
+                yield ' '.join(tuple(map(str, line))) + '\n'

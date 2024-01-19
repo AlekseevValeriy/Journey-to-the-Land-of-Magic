@@ -5,21 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfda3d3c-de4e-4e73-89ba-bbb710aa115b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/json/music.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/music.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/json/game_buttons_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/game_buttons_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/settings_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/settings_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/units_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/units_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/ТЗ.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/ТЗ.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/Презентация - None.pptx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/battle.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/battle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/buttons_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/cellular_automata.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/cellular_automata.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/collision.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/collision.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/custom_object_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/custom_object_buttons.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/enemies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/game_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/game_buttons_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/line_drawer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/line_drawer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/music_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/music_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/screen_effect.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/screen_effect.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/start_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/start_buttons_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/world.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/world_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/world_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/test_for.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/test_for.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +84,7 @@
       <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.cellular_automata (1)">
+  <component name="RunManager" selected="Python.main">
     <configuration name="cellular_automata (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Journey-to-the-Land-of-Magic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -206,10 +213,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.cellular_automata (1)" />
-        <item itemvalue="Python.get_lines_quality" />
-        <item itemvalue="Python.test_for" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.get_lines_quality" />
+        <item itemvalue="Python.cellular_automata (1)" />
+        <item itemvalue="Python.test_for" />
         <item itemvalue="Python.cellular_automata" />
       </list>
     </recent_temporary>

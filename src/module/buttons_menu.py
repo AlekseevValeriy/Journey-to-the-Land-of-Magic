@@ -24,16 +24,19 @@ class ButtonsMenu:
         self.present_menu: str = ''
 
     def add_other_data(self, **data: {T: T}) -> None:
+        '''Метод добавления данных'''
         self.other_data = {**self.other_data, **data}
 
     def add_button_bind(self, **data: {str: Callable}) -> None:
+        '''Метод установки действия на кнопку'''
         self.buttons_binds = {**self.buttons_binds, **data}
 
-    def draw_fps(self):
+    def draw_fps(self) -> None:
+        '''Метод отрисовки fps'''
         pass
 
     def start_menu(self) -> None:
-        """Функция для запуска процесса меню"""
+        """Метод для запуска процесса меню"""
         # self.present_menu = 'start_menu' # set_present_menu_name
         self.menu_process()
 
@@ -49,24 +52,26 @@ class ButtonsMenu:
                 self.clock.tick(self.frame_rate)
 
     def draw_background(self) -> None:
+        '''Метод отрисовки заднего фона'''
         pass
 
     def draw_buttons(self, menu_name: str) -> None:
-        """Функции для отрисовки кнопок"""
+        """Метод для отрисовки кнопок"""
 
-        def draw_button(button_name):
+        def draw_button(button_name: str) -> None:
             self.buttons_data[menu_name][button_name].draw()
 
         tuple(map(draw_button, self.buttons_data[menu_name]))
 
-    def draw_objects(self, menu_name):
+    def draw_objects(self, menu_name: str) -> None:
+        '''Метод отрисовки совокупностей кнопок'''
         # tuple(map(lambda object: self.objects_data[menu_name][object].draw(), self.objects_data[menu_name]))
         if menu_name in self.objects_data:
             tuple(map(lambda object: self.objects_data[menu_name][object].draw() if type(
                 self.objects_data[menu_name][object]) != dict else False, self.objects_data[menu_name]))
 
     def cursor_reader(self) -> None:
-        """Функция для обработки действий курсора: перемещение, нажатия"""
+        """Метод для обработки действий курсора: перемещение, нажатия"""
         for event in get():
             if event.type == QUIT:
                 self.end_program()
@@ -84,7 +89,7 @@ class ButtonsMenu:
                 pass
 
     def create_buttons(self, data: dict[Any]) -> tuple[dict[dict[str, dict]], dict[dict[dict[str, dict]]]]:
-        """Функция для создания классов кнопок из информации json файла"""
+        """Метод для создания классов кнопок из информации json файла"""
         buttons = {}
         objects = {}
         for menu_name in data:
@@ -126,12 +131,15 @@ class ButtonsMenu:
         return buttons, objects
 
     def create_objects(self) -> None:
+        '''Метод создания совокупностей кнопок'''
         pass
 
     def end_menu(self) -> None:
-        print('program registered end')
+        '''Метод выхода из меню'''
+        # print('program registered end')
         self.menu_process_flag = False
-        # exit()
 
     def not_found_function(self):
-        print('Not found')
+        '''Метод для уведомления об отсутствии действия у кнопки'''
+        # print('Not found')
+        pass

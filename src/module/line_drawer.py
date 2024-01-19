@@ -1,15 +1,14 @@
 from random import choice
-
-"""
-Класс, который работает над заполнением матрицы от координат [x1, y1] до [x2, y2] "линией"
-"""
+from typing import Callable
 
 
 class LineDrawer:
-    def __init__(self):
+    '''Класс рисования линии в листе'''
+    def __init__(self) -> None:
         self.add_length = 0
 
-    def bresenham_line(self, x1=0, y1=0, x2=0, y2=0):
+    def bresenham_line(self, x1=0, y1=0, x2=0, y2=0) -> list:
+        '''Метод рисование линии по алгоритму Бресенхама'''
         coordinates = []
         dx = x2 - x1
         dy = y2 - y1
@@ -41,7 +40,8 @@ class LineDrawer:
             coordinates.append([x, y])
         return coordinates
 
-    def mandatory_cleaning(func):
+    def mandatory_cleaning(func: Callable):
+        '''Декоратор очистки длины'''
         def fun(self, *args, **kwargs):
             self.add_length = 0
             func(self, *args, **kwargs)
@@ -49,7 +49,8 @@ class LineDrawer:
         return fun
 
     @mandatory_cleaning
-    def ant_line(self, matrix, start, finish, side, inverse=False, to_edge=2, symbol=1, markup_symbol=-1):
+    def ant_line(self, matrix, start, finish, side, inverse=False, to_edge=2, symbol=1, markup_symbol=-1) -> None:
+        '''Метод рисования кривой линии на листе'''
         def line_change():
             self.add_length += choice([-1, 1])
             self.add_length = to_edge if self.add_length > to_edge else self.add_length
@@ -68,9 +69,3 @@ class LineDrawer:
                     matrix[start[1] + i][start[0] + j] = temporary_symbol
                 else:
                     matrix[start[1] + j][start[0] + i] = temporary_symbol
-
-if __name__ == '__main__':
-    b = []
-    line_dr = LineDrawer(b)
-    line_dr.ant_line()
-

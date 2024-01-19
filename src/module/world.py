@@ -1,17 +1,20 @@
 import numpy
 from pygame.image import load
+from pygame import Surface
 
 
 class World:
-    def __init__(self, screen, world):
+    '''Класс для хранения и обработки карты'''
+    def __init__(self, screen: Surface, world: numpy.ndarray) -> None:
         self.screen = screen
-        self.world: numpy.ndarray = world  # first layer is flagman, second layer is another..., last layer maybe objects
+        self.world = world  # first layer is flagman, second layer is another..., last layer maybe objects
         self.world_sector_size = (100, 100)  # maybe a different size, I'll have more ideas in the final
         self.world_size = (len(self.world[0]), len(self.world[0][0]))
         self.present_world: numpy.ndarray = numpy.array([])
         self.empty = load(f"../../data/textures/world/empty.png").convert_alpha()
 
     def screen_world_cut(self, player_position: list) -> tuple:
+        '''Метод для обрезания визуализации карты под размер экрана'''
         screen_size = self.screen.get_size()
         row = player_position[0] // self.world_sector_size[0]
         col = player_position[1] // self.world_sector_size[1]
@@ -21,6 +24,7 @@ class World:
         return (row + l_r, row + r_r + scsi_row), (col + u_c, col + d_c + scsi_col)
 
     def draw_world(self, player_position: list) -> None:
+        '''Метод для рисовки мира'''
         draw_setting = self.screen_world_cut(player_position=player_position)
         for layer in self.world:
             for line in range(*draw_setting[1]):
@@ -35,5 +39,11 @@ class World:
                                          (element * self.world_sector_size[0] - player_position[0],
                                           line * self.world_sector_size[1] - player_position[1]))
 
-    def get_world(self):
+    def get_world(self) -> numpy.ndarray:
+        '''Метод для получения мира'''
         return self.world
+
+    def set_world(self, world) -> None:
+        '''Метод для установки мира'''
+        self.world = world
+        self.world_size = (len(self.world[0][0]), len(self.world[0]))

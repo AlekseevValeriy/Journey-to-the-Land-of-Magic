@@ -1,68 +1,75 @@
-import random
+from random import choices
 from sys import exit
+from typing import Callable
 
 import pygame.image
 from pygame import MOUSEMOTION, MOUSEBUTTONDOWN, MOUSEBUTTONUP, QUIT, KEYDOWN, KEYUP, K_x, K_u, K_m, K_i, K_s, K_ESCAPE, \
-    K_p, K_r, K_e
+    K_p, K_r, K_e, K_t, K_q, Surface
 from pygame.display import update
 from pygame.event import get
+from pygame.time import Clock
 
-from random import choices
-
-from json_reader import JsonReader
+from battle import Battle
 from buttons_menu import ButtonsMenu
-from player import Player
-from world import World
+from collision import Collision
 from custom_object_buttons import StatusBar, WorldMap, SkillUpgrade, MagicUpgrade, BigMap
 from enemies import Enemies
-from battle import Battle
-from collision import Collision
+from json_reader import JsonReader
 from music_manager import MusicManager
+from player import Player
+from world import World
+from world_generator import WorldGenerator
+
 
 class GameButtonsMenu(ButtonsMenu):
-    def __init__(self, screen, clock, frame_rate, buttons_file_path, sample_world=None, player_data=None,
-                 world_number=None):
+    '''Класс игрового меню'''
+
+    def __init__(self, screen: Surface, clock: Clock, frame_rate: int, buttons_file_path: str, sample_world=None,
+                 player_data=None, world_number=None):
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
-        self.add_other_data(move=False, background=pygame.image.load(
-            '../../data/textures/backgrounds/background.png').convert(),
+        self.add_other_data(move=False,
+                            background=pygame.image.load('../../data/textures/backgrounds/background.png').convert(),
                             pressed_mouse_map=False, fps_counter=True,
-                            fps_font=pygame.font.SysFont('Comic Sans MS', 30),
-                            music_manager=MusicManager(0.5))
-        self.add_button_bind(back_button=self.end_menu,
-                             person_menu_enter_button=self.to_person_menu,
-                             map_menu_enter_button=self.to_map_menu,
-                             back_to_game=self.to_game_menu,
+                            fps_font=pygame.font.SysFont('Comic Sans MS', 30), music_manager=MusicManager(0.5),
+                            generator=WorldGenerator())
+        self.add_button_bind(back_button=self.end_menu, person_menu_enter_button=self.to_person_menu,
+                             map_menu_enter_button=self.to_map_menu, back_to_game=self.to_game_menu,
                              to_upgrade_characteristics=self.to_upgrade_characteristics,
-                             to_upgrade_magic=self.to_upgrade_magic,
-                             add_str=self.add_str_point,
-                             add_dex=self.add_dex_point,
-                             add_int=self.add_int_point,
-                             add_fb=self.add_fb)
+                             to_upgrade_magic=self.to_upgrade_magic, add_str=self.add_str_point,
+                             add_dex=self.add_dex_point, add_int=self.add_int_point, add_fb=self.add_fb)
         self.keys_dict = {1073741903: 'right', 1073741904: 'left', 1073741906: 'up', 1073741905: 'down'}
         self.world = None
         self.player = None
+        self.doors = None
         self.sample_world = sample_world
         self.player_data = player_data
         self.world_number = world_number
         self.battle_thing = Battle(self.screen, self.clock, self.frame_rate, '../../data/json/battle_buttons.json')
         self.create_button_objects()
         self.collision = Collision()
+        self.number = -1
+        self.door_layout = None
 
-    def click_sound(function):
+    def click_sound(function: Callable):
+        '''Декоратор звука нажатия'''
+
         def click(self, *args, **kwargs):
             function(self, *args, **kwargs)
             self.other_data['music_manager'].activate_effect('click')
+
         return click
 
-    def add_collision_blocks(self):
+    def add_collision_blocks(self, world: list) -> None:
+        '''Метод добавления коллизии'''
         world_sector = (100, 100)
-        for n, y in enumerate(self.sample_world[0]):
+        for n, y in enumerate(world):
             for m, x in enumerate(y):
                 if x == 0:
                     self.collision.add_block(position=(m * world_sector[0] - 960, n * world_sector[1] - 540),
                                              sprite_size=world_sector)
 
-    def create_button_objects(self):
+    def create_button_objects(self) -> None:
+        '''Метод создания объектов'''
         objects_sb = self.objects_data['game_menu']['sb']
         self.objects_data['game_menu']['sb'] = StatusBar(self.screen,
                                                          *tuple(map(lambda name: objects_sb[name], objects_sb)))
@@ -70,9 +77,8 @@ class GameButtonsMenu(ButtonsMenu):
         self.objects_data['game_menu']['mp'] = WorldMap(self.screen,
                                                         *tuple(map(lambda name: objects_mp[name], objects_mp)))
         objects_cu = self.objects_data['characteristic_menu']['cu']
-        self.objects_data['characteristic_menu']['cu'] = SkillUpgrade(self.screen,
-                                                                      *tuple(map(lambda name: objects_cu[name],
-                                                                                 objects_cu)))
+        self.objects_data['characteristic_menu']['cu'] = SkillUpgrade(self.screen, *tuple(
+            map(lambda name: objects_cu[name], objects_cu)))
 
         objects_mu = self.objects_data['magic_menu']['mu']
         self.objects_data['magic_menu']['mu'] = MagicUpgrade(self.screen,
@@ -81,23 +87,27 @@ class GameButtonsMenu(ButtonsMenu):
         self.objects_data['map_menu'] = {}
         self.objects_data['map_menu']['bmp'] = BigMap(self.screen)
 
-    def create_world(self, world):
+    def create_world(self, world: list) -> None:
+        '''Метод создания мира'''
         self.world = World(self.screen, world)
 
-    def create_player(self, person, position):
+    def create_player(self, person: str, position: tuple) -> None:
+        '''Метод создания игрока'''
         self.player = Player(self.screen, position, person)
         self.player.set_size((34, 50))
 
         self.objects_data['game_menu']['sb'].born()
 
-    def start_menu(self, frame_rate) -> None:
+    def start_menu(self, frame_rate: int) -> None:
+        '''Метод старта игрового процесса'''
         self.frame_rate = frame_rate
         self.objects_data['game_menu']['mp'].set_world_map(self.sample_world)
         self.objects_data['game_menu']['mp'].set_frame(self.player.get_frame())
         self.objects_data['game_menu']['mp'].set_player_position(self.player.get_position())
         self.objects_data['map_menu']['bmp'].data['world_map'] = (
-        self.objects_data['game_menu']['mp'].data['world_map'])
-        self.objects_data['map_menu']['bmp'].data['world_size'] = self.objects_data['game_menu']['mp'].data['world_size']
+            self.objects_data['game_menu']['mp'].data['world_map'])
+        self.objects_data['map_menu']['bmp'].data['world_size'] = self.objects_data['game_menu']['mp'].data[
+            'world_size']
         self.player.change_animation_under_fps(self.frame_rate)
         self.objects_data['game_menu']['sb'].add_data(**self.player_data)
         self.objects_data['characteristic_menu']['cu'].add_data(
@@ -105,11 +115,11 @@ class GameButtonsMenu(ButtonsMenu):
         self.objects_data['characteristic_menu']['cu'].add_data(
             **self.objects_data['game_menu']['sb'].get_characteristics())
         self.objects_data['characteristic_menu']['cu'].update_points()
-        self.objects_data['magic_menu']['mu'].add_data(
-            **self.objects_data['game_menu']['sb'].get_magic_data())
+        self.objects_data['magic_menu']['mu'].add_data(**self.objects_data['game_menu']['sb'].get_magic_data())
         self.objects_data['magic_menu']['mu'].update_points()
         self.enemies_generator = Enemies(self.screen, self.sample_world, enemy_limit=3)
-        value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (1100 - 816) / 100
+        value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (
+                1100 - 816) / 100
         if value > 1:
             value = 1
         if value < 0:
@@ -117,7 +127,7 @@ class GameButtonsMenu(ButtonsMenu):
         self.other_data['music_manager'].set_volume(value)
         self.other_data['music_manager'].activate_music('middle_piano')
 
-        self.add_collision_blocks()
+        self.add_collision_blocks(self.sample_world)
         self.collision.set_player_sprite(self.player.get_position(), (34, 52))
 
         self.menu_process_flag = True
@@ -125,6 +135,7 @@ class GameButtonsMenu(ButtonsMenu):
         self.menu_process()
 
     def menu_process(self) -> None:
+        '''Метод игрового меню'''
         while self.menu_process_flag:
             if self.present_menu == 'game_menu':
                 self.game_unit()
@@ -146,19 +157,23 @@ class GameButtonsMenu(ButtonsMenu):
                 self.clock.tick(self.frame_rate)
 
     def draw_background(self) -> None:
+        '''Метод отрисовки заднего фона'''
         self.screen.blit(self.other_data['background'], (0, 0))
 
     def game_unit(self) -> None:
+        '''Метод отрисовки вещей во время нахождения в мире'''
         self.screen.fill('white')
         self.world.draw_world(self.player.get_position())
         self.player.draw_player()
 
-    def draw_fps(self):
+    def draw_fps(self) -> None:
+        '''Метод отрисовки счётчика fps'''
         if self.other_data['fps_counter']:
             text = self.other_data['fps_font'].render(str(int(self.clock.get_fps())), True, 'gray')
             self.screen.blit(text, (1879, 5))
 
     def cursor_reader(self) -> None:
+        '''Метод обработки действий'''
         for event in get():
             if event.type == QUIT:
                 self.menu_process_flag = False
@@ -189,19 +204,41 @@ class GameButtonsMenu(ButtonsMenu):
                             self.end_menu()
                     if event.key == K_p:
                         self.present_menu = 'persons_menu'
-                    if event.key in (K_r, K_e):
+                    if event.key in (K_r, K_e, K_t):
                         position = self.player.get_position_sp()
                         position = position[0] // 100, position[1] // 100
                         if event.key == K_r:
                             if self.sample_world[2][position[1]][position[0]] == 13:
                                 print(self.objects_data['game_menu']['sb'].get_chips())
                                 if all(self.objects_data['game_menu']['sb'].get_chips()):
-                                    pass
-                                    #game_end()
+                                    self.game_end()
                         elif event.key == K_e:
+                            print(self.sample_world[2][position[1]][position[0]])
                             if self.sample_world[2][position[1]][position[0]] == 12:
-                #                 self.world = JsonReader.read_file('../../data/json/unit_data.json')[''.join(position)]['layout']
-                                pass
+                                self.enter_in_door(str(position[0]) + str(position[1]))
+                        elif event.key == K_t:
+                            data = JsonReader.read_file('../../data/json/units_data.json')
+                            door = data[f'unit_{self.world_number}']['doors'][self.number]
+                            if door[1][position[1]][position[0]] == 20:
+                                if self.number != -1:
+                                    door[1][position[1]][position[0]] = -1
+                                    data[f'unit_{self.world_number}']['doors'][self.number] = door
+                                    JsonReader.write_file(data, '../../data/json/units_data.json')
+
+                                    self.objects_data['game_menu']['mp'].set_world_map(
+                                        JsonReader.read_file('../../data/json/units_data.json')[
+                                            f'unit_{self.world_number}']['doors'][self.number])
+                                    self.objects_data['map_menu']['bmp'].data['world_map'] = (
+                                        self.objects_data['game_menu']['mp'].data['world_map'])
+                                    self.objects_data['map_menu']['bmp'].data['world_size'] = \
+                                        self.objects_data['game_menu']['mp'].data['world_size']
+
+                                    self.world.set_world(self.other_data['generator'].texturing(door))
+
+                                    self.add_chip()
+                    if event.key == K_q:
+                        if self.door_layout or self.doors or self.number:
+                            self.enter_in_world()
 
                 elif event.type == KEYUP:
                     if event.key == K_s:
@@ -213,6 +250,7 @@ class GameButtonsMenu(ButtonsMenu):
                         self.stand_action()
                 if self.enemies_generator.can_create():
                     if choices([0, 1], weights=(0, 1)):
+                        print(self.player.get_position())
                         self.enemies_generator.create_enemy(self.player.get_position())
             if self.present_menu == 'map_menu':
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -258,25 +296,36 @@ class GameButtonsMenu(ButtonsMenu):
 
         if self.other_data['move']:
             if self.collision.co_co_in(self.player.fake_move()):
-                print(self.collision.co_co_in(self.player.fake_move()))
-                # print('collise', random.randint(1, 100))
-                # self.player.player_move('run')
+                print(self.collision.co_co_in(
+                    self.player.fake_move()))  # print('collise', random.randint(1, 100))  # self.player.player_move('run')
             else:
                 self.player.player_move('run')
         else:
             self.player.player_move('stand')
 
+    def add_chip(self) -> None:
+        '''Метод добавления осколка'''
+        chips = (
+            self.objects_data['game_menu']['sb'].data['chip_1'], self.objects_data['game_menu']['sb'].data['chip_2'],
+            self.objects_data['game_menu']['sb'].data['chip_3'], self.objects_data['game_menu']['sb'].data['chip_4'])
+        for n, chip in enumerate(chips):
+            if not chip:
+                self.objects_data['game_menu']['sb'].data[f'chip_{n + 1}'] = True
+                break
 
-    def run_action(self, side):
+    def run_action(self, side: str) -> None:
+        '''Метод бега'''
         self.other_data['move'] = True
         self.player.set_face_side(side)
 
     def stand_action(self):
+        '''Метод бездействия'''
         self.other_data['move'] = False
 
     # ---------сектор действий кнопок меню---------
 
     def end_menu(self) -> None:
+        '''Метод выхода из игрового меню'''
         data = JsonReader.read_file('../../data/json/units_data.json')
         data[f'unit_{self.world_number}']['position'] = self.player.get_position_fr()
         data[f'unit_{self.world_number}']['player'] = self.objects_data['game_menu']['sb'].get_player_data()
@@ -299,14 +348,28 @@ class GameButtonsMenu(ButtonsMenu):
         self.other_data['move'] = False
         self.collision.clear()
         self.other_data['music_manager'].stop_sound('all')
+        if self.present_menu == 'end_game_menu':
+            data = JsonReader.read_file('../../data/json/units_data.json')
+            data[f'unit_{self.world_number}']['world'] = []
+            data[f'unit_{self.world_number}']['position'] = [0, 0]
+            data[f'unit_{self.world_number}']['player'] = {"alive": 0, "level": 1, "max_level": 20, "exp": 0,
+                                                           "exp_multiplier": 1.3, "min_hp": 100, "hp": 140,
+                                                           "hp_multiplier": 1.4, "min_mp": 10, "mp": 11,
+                                                           "mp_multiplier": 1.1, "str": 1, "dex": 1, "int": 1,
+                                                           "free_points": 0, "fb_get": False, "fb_level": 0,
+                                                           "magic_free_points": 0, 'chip_1': False, 'chip_2': False,
+                                                           'chip_3': False, 'chip_4': False}
+            JsonReader.write_file(data, '../../data/json/units_data.json')
 
     @click_sound
-    def to_person_menu(self):
+    def to_person_menu(self) -> None:
+        '''Метод перехода в меню персоны'''
         self.other_data['move'] = False
         self.present_menu = 'persons_menu'
 
     @click_sound
-    def to_map_menu(self):
+    def to_map_menu(self) -> None:
+        '''Метод переход в меню карты'''
         self.present_menu = 'map_menu'
         self.objects_data['map_menu']['bmp'].data['player_position'] = self.player.get_position_fr()
         self.objects_data['map_menu']['bmp'].data['camera_position'] = (0, 0)
@@ -317,15 +380,18 @@ class GameButtonsMenu(ButtonsMenu):
         self.other_data['move'] = False
 
     @click_sound
-    def to_game_menu(self):
+    def to_game_menu(self) -> None:
+        '''Метод перехода в игровое меню'''
         self.present_menu = 'game_menu'
 
     @click_sound
-    def to_upgrade_characteristics(self):
+    def to_upgrade_characteristics(self) -> None:
+        '''Метод перехода в меню улучшений'''
         self.present_menu = 'characteristic_menu'
         self.inspect_add_buttons_ch()
 
-    def inspect_add_buttons_ch(self):
+    def inspect_add_buttons_ch(self) -> None:
+        '''Метод проверки статусов кнопок'''
         if self.objects_data['characteristic_menu']['cu'].is_upgradeable():
             self.buttons_data['characteristic_menu']['add_str'].status = 'passive'
             self.buttons_data['characteristic_menu']['add_dex'].status = 'passive'
@@ -336,38 +402,46 @@ class GameButtonsMenu(ButtonsMenu):
             self.buttons_data['characteristic_menu']['add_int'].status = 'unactive'
 
     @click_sound
-    def add_fb(self):
+    def add_fb(self) -> None:
+        '''Метод улучшения магии'''
         self.objects_data['magic_menu']['mu'].add_point()
         self.inspect_add_buttons_m()
 
-    def inspect_add_buttons_m(self):
+    def inspect_add_buttons_m(self) -> None:
+        '''Метод проверки статусов магии'''
         if self.objects_data['magic_menu']['mu'].is_upgradeable():
             self.buttons_data['magic_menu']['add_fb'].status = 'passive'
         else:
             self.buttons_data['magic_menu']['add_fb'].status = 'unactive'
 
     @click_sound
-    def to_upgrade_magic(self):
+    def to_upgrade_magic(self) -> None:
+        '''Метод перехода в меню улучшения магии'''
         self.present_menu = 'magic_menu'
         self.inspect_add_buttons_m()
 
     @click_sound
-    def add_str_point(self):
+    def add_str_point(self) -> None:
+        '''Метод добавления очка сила'''
         self.add_characteristic_point('str')
 
     @click_sound
-    def add_dex_point(self):
+    def add_dex_point(self) -> None:
+        '''Метод добавления очка ловкости'''
         self.add_characteristic_point('dex')
 
     @click_sound
-    def add_int_point(self):
+    def add_int_point(self) -> None:
+        '''Метод добавления очка интеллекта'''
         self.add_characteristic_point('int')
 
-    def add_characteristic_point(self, characteristic):
+    def add_characteristic_point(self, characteristic) -> None:
+        '''Метод добавления характеристики'''
         self.objects_data['characteristic_menu']['cu'].add_point(characteristic)
         self.inspect_add_buttons_ch()
 
-    def start_battle(self, enemy):
+    def start_battle(self, enemy) -> None:
+        '''Метод старта битвы'''
         if enemy:
             self.other_data['music_manager'].stop_sound('all')
             self.other_data['move'] = False
@@ -386,7 +460,6 @@ class GameButtonsMenu(ButtonsMenu):
             characteristics = self.battle_thing.get_ending_data()
             self.objects_data['game_menu']['sb'].data['hp'] = characteristics['hp']
             self.objects_data['game_menu']['sb'].data['mp'] = characteristics['mp']
-            print(characteristics['exp'])
             self.objects_data['game_menu']['sb'].data['exp'] += characteristics['exp']
             self.objects_data['game_menu']['sb'].dead_check()
             if self.objects_data['game_menu']['sb'].data['persona_status']:
@@ -400,3 +473,63 @@ class GameButtonsMenu(ButtonsMenu):
                 self.objects_data['characteristic_menu']['cu'].data['free_points'] = sp
                 self.objects_data['characteristic_menu']['cu'].update_points()
             self.other_data['music_manager'].activate_music('middle_piano')
+
+    def enter_in_door(self, number: str) -> None:
+        '''Метод входа в подземелье'''
+        self.door_layout = self.doors[number]
+        self.number = number
+        self.enemies_generator.clear()
+        self.enemies_generator.set_world(self.door_layout)
+        data = JsonReader.read_file('../../data/json/units_data.json')
+        data[f'unit_{self.world_number}']['position'] = self.player.get_position_fr()
+        JsonReader.write_file(data, '../../data/json/units_data.json')
+        self.player.position = [100, 100]
+        self.collision.clear_blocks()
+
+        # self.add_collision_blocks(self.door_layout[0])
+
+        self.objects_data['game_menu']['mp'].set_world_map(
+            JsonReader.read_file('../../data/json/units_data.json')[f'unit_{self.world_number}']['doors'][number])
+        self.objects_data['game_menu']['mp'].set_player_position(self.player.position)
+        self.objects_data['map_menu']['bmp'].data['world_map'] = (
+            self.objects_data['game_menu']['mp'].data['world_map'])
+        self.objects_data['map_menu']['bmp'].data['world_size'] = self.objects_data['game_menu']['mp'].data[
+            'world_size']
+        self.world.set_world(self.other_data['generator'].texturing(
+            JsonReader.read_file('../../data/json/units_data.json')[f'unit_{self.world_number}']['doors'][number]))
+
+    def enter_in_world(self) -> None:
+        '''Метод входа в мир'''
+        self.enemies_generator.clear()
+        self.enemies_generator.set_world(self.sample_world)
+        self.player.position = JsonReader.read_file('../../data/json/units_data.json')[f'unit_{self.world_number}'][
+            'position']
+
+        self.collision.clear_blocks()
+        #
+        # self.add_collision_blocks(self.sample_world[0])
+
+        self.objects_data['game_menu']['mp'].set_world_map(self.sample_world)
+        self.objects_data['game_menu']['mp'].set_player_position(self.player.position)
+        self.objects_data['map_menu']['bmp'].data['world_map'] = (
+            self.objects_data['game_menu']['mp'].data['world_map'])
+        self.objects_data['map_menu']['bmp'].data['world_size'] = self.objects_data['game_menu']['mp'].data[
+            'world_size']
+
+        self.world.set_world(self.other_data['generator'].texturing(
+            JsonReader.read_file('../../data/json/units_data.json')[f'unit_{self.world_number}']['world']))
+
+    def game_end(self) -> None:
+        '''Метод окончания игры'''
+        self.other_data['move'] = False
+        self.present_menu = 'end_game_menu'
+        charact = [self.objects_data['game_menu']['sb'].data['level'],
+                   self.objects_data['characteristic_menu']['cu'].data['str_points'],
+                   self.objects_data['characteristic_menu']['cu'].data['dex_points'],
+                   self.objects_data['characteristic_menu']['cu'].data['int_points'],
+                   self.objects_data['magic_menu']['mu'].data['fb_level']]
+        self.buttons_data['end_game_menu']['level_up'].text = f'level: {charact[0]}'
+        self.buttons_data['end_game_menu']['str_up'].text = f'str: {charact[1]}'
+        self.buttons_data['end_game_menu']['dex_up'].text = f"dex: {charact[2]}"
+        self.buttons_data['end_game_menu']['int_up'].text = f'int: {charact[3]}'
+        self.buttons_data['end_game_menu']['magic_up'].text = f"magic: {charact[4]}"

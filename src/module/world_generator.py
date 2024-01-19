@@ -1,29 +1,37 @@
+import pygame
+
 from line_drawer import LineDrawer
 import numpy
 from pygame.image import load
 import random
+from cellular_automata import CellularAutomata
 
 class WorldGenerator:
-    def __init__(self, size=(100, 100)):
+    '''Класс генератора мира'''
+    def __init__(self, size=(100, 100)) -> None:
         self.world_layout = numpy.array([])
         self.width, self.height = size
-        self.textures = {0: 'empty', 1: 'texture_1', 2: 'texture_2', 3: 'texture_3', 4: 'texture_4', 5: 'texture_5', 10: 'grass', 12: 'door', 13: 'boat'}
-        # 1 -> (51, 51, 51), 2 -> (102, 102, 102), 3 -> (128, 128, 128), 4 -> (153, 153 153), 5 -> (179, 179, 179), 10 -> (204, 204, 204), 12 -> (220, 220, 220), 13 -> (135, 135, 135)
+        self.textures = {0: 'empty', 1: 'texture_1', 2: 'texture_2', 3: 'texture_3', 4: 'texture_4',
+                         5: 'texture_5', 10: 'grass', 12: 'door', 13: 'boat', 20: 'sphere'}
+        # 1 -> (51, 51, 51), 2 -> (102, 102, 102), 3 -> (128, 128, 128), 4 -> (153, 153 153),
+        # 5 -> (179, 179, 179), 10 -> (204, 204, 204), 12 -> (220, 220, 220), 13 -> (135, 135, 135)
         self.set_textures()
         self.doors_coordinate = ()
 
     def set_textures(self) -> None:
+        '''Метод для установки текстур'''
         texture_name = self.textures
         self.textures = {}
         for name in texture_name:
             if texture_name[name]:
                 self.textures[name] = load(f"../../data/textures/world/{texture_name[name]}.png").convert_alpha()
 
-    def texturing_process(self, world_element):
+    def texturing_process(self, world_element: int) -> pygame.Surface:
+        '''Метод процесса установки текстур'''
         return self.textures.get(world_element, False)
 
     def texturing(self, world: numpy.ndarray) -> numpy.ndarray:
-        # a = numpy.vectorize(self.texturing_process)(numpy.array(world))
+        '''Метод для текстурирования'''
         a = world[:]
         for r, z in enumerate(world):
             for n, y in enumerate(z):
@@ -31,8 +39,8 @@ class WorldGenerator:
                     a[r][n][m] = self.textures.get(x, False)
         return a
 
-    def create_field(self, world_frame=10, external_frame=8,
-                     regions=[2, 3, 4, 5]) -> numpy.ndarray:
+    def create_field(self, world_frame=10, external_frame=8, regions=[2, 3, 4, 5]) -> numpy.ndarray:
+        '''Метод для создания земли'''
         regions = [2, 3, 4, 5]
         door_step_ocean = 3
         world_layout = numpy.zeros((world_frame * 2 + self.height, world_frame * 2 + self.width), dtype='int32')
@@ -176,6 +184,7 @@ class WorldGenerator:
         self.world_layout = world_layout
 
     def create_grass(self, value = 10):
+        '''Метод для создания земли'''
         grass = self.world_layout.copy()
         for n, y in enumerate(self.world_layout):
             for m, x in enumerate(y):
@@ -185,7 +194,8 @@ class WorldGenerator:
                         grass[n][m] = value
         return grass
 
-    def set_random_player_position(self):
+    def set_random_player_position(self) -> list:
+        '''Метод для определения позиции игрока'''
         world_max = (len(self.world_layout[0][0]) - 1, len(self.world_layout[0]) - 1)
         side = random.choice(('vertical', 'gorizontal'))
         if side == 'left':
@@ -224,7 +234,8 @@ class WorldGenerator:
         position = (n * sector_size for n in position)
         return list(position)
 
-    def create_objects(self):
+    def create_objects(self) -> numpy.ndarray:
+        '''Метод для создания люков'''
         objects = self.world_layout.copy()
         places = {2: [], 3: [], 4: [], 5: [], 6: []}
 
@@ -241,8 +252,18 @@ class WorldGenerator:
 
         return objects
 
+    def create_doors(self) -> tuple:
+        '''Метод для создания подземелий'''
+        door_1 = CellularAutomata(random.randint(40, 60), random.randint(40, 60)).get_map().tolist()
+        door_2 = CellularAutomata(random.randint(40, 60), random.randint(40, 60)).get_map().tolist()
+        door_3 = CellularAutomata(random.randint(40, 60), random.randint(40, 60)).get_map().tolist()
+        door_4 = CellularAutomata(random.randint(40, 60), random.randint(40, 60)).get_map().tolist()
+
+        return door_1, door_2, door_3, door_4
+
 
     def create_world(self) -> None:
+        '''Метод для создания мира'''
         self.create_field()
         plot: numpy.ndarray = self.world_layout.copy()
 
@@ -252,7 +273,15 @@ class WorldGenerator:
 
 
     def get_world(self) -> numpy.ndarray:
+        '''Метод, возвращающий мир'''
         return self.world_layout
 
-    def get_doors(self):
-        return self.doors_coordinate
+
+
+    def get_doors(self) -> dict:
+        '''Метод, возвращающий подземелья'''
+        doors = self.create_doors()
+        doors_dict = {}
+        for position, door in zip(self.doors_coordinate, doors):
+            doors_dict[str(position[0]) + str(position[1])] = door
+        return doors_dict

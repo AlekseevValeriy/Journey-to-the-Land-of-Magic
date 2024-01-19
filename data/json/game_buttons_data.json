@@ -775,5 +775,197 @@
         50
       ]
     }
+  },
+  "end_game_menu": {
+    "back_button": {
+      "button_class": "button + text",
+      "texture": {
+        "passive": "..//..//data//textures//buttons//button.png",
+        "active": "..//..//data//textures//buttons//button_active.png"
+      },
+      "text": "Выйти",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          168,
+          168,
+          168
+        ]
+      },
+      "status": "passive",
+      "position": [
+        50,
+        50
+      ]
+    },
+    "celebration": {
+      "button_class": "text",
+      "text": "Поздравляю! Вы прошли игру",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        960,
+        100
+      ]
+    },
+    "celebration_2": {
+      "button_class": "text",
+      "text": "За это путешествие вы стали сильнее:",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        960,
+        200
+      ]
+    },
+    "level_up": {
+      "button_class": "text",
+      "text": "level: 0",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        960,
+        300
+      ]
+    },
+    "str_up":
+            {
+      "button_class": "text",
+      "text": "str: 0",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        960,
+        400
+      ]
+    },
+    "int_up" : {
+      "button_class": "text",
+      "text": "int: 0",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        960,
+        500
+      ]
+    },
+    "dex_up": {
+      "button_class": "text",
+      "text": "dex: 0",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        960,
+        600
+      ]
+    },
+    "magic_up": {
+      "button_class": "text",
+      "text": "magic: 0",
+      "font_family": "..//..//data//fonts//better-vcr-5.2(for eng).ttf",
+      "font_size": 30,
+      "font_color": {
+        "passive": [
+          144,
+          144,
+          144
+        ],
+        "active": [
+          144,
+          144,
+          144
+        ]
+      },
+      "status": "passive",
+      "position": [
+        960,
+        700
+      ]
+    }
   }
+
 }

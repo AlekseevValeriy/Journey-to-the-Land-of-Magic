@@ -3,12 +3,14 @@ from time import sleep
 
 
 class ScreenEffect:
-    def __init__(self, screen, clock, frame_rate):
-        self.screen: pygame.Surface = screen
+    '''Класс для специальных движений'''
+    def __init__(self, screen: pygame.Surface, clock: pygame.time.Clock, frame_rate: int) -> None:
+        self.screen = screen
         self.clock = clock
         self.frame_rate = frame_rate
 
-    def game_intro(self):
+    def game_intro(self) -> None:
+        '''Метод визуализации интро игры'''
         logo = EffectElement(self.screen, pygame.image.load("../../data/textures/Game_Logo.png").convert_alpha(),
                              (960, 540), -70)
         text = pygame.font.Font('..//..//data//fonts//Book Antiqua.ttf', 18).render('Команда VaTi представляет', True,
@@ -39,7 +41,8 @@ class ScreenEffect:
             pygame.display.update()
             self.clock.tick(self.frame_rate)
 
-    def battle_end_animation(self, exodus):
+    def battle_end_animation(self, exodus: str) -> None:
+        '''Метод для визуализации интро окончания битвы'''
         font = pygame.font.Font('..//..//data//fonts//better-vcr-5.2(for eng).ttf', 100)
         text = font.render(exodus, True, 'white')
         text.set_alpha(6)
@@ -66,9 +69,10 @@ class ScreenEffect:
 
 
 class EffectElement:
-    def __init__(self, screen, surface, position, alpha):
+    '''Класс элементов визуализации'''
+    def __init__(self, screen: pygame.Surface, surface: pygame.time.Clock, position: tuple, alpha: int):
         self.screen = screen
-        self.surface: pygame.Surface = surface
+        self.surface = surface
         self.alpha = alpha
         self.surface.set_alpha(self.alpha)
         self.position = list(position)
@@ -76,12 +80,15 @@ class EffectElement:
         self.position[1] -= self.surface.get_height() / 2
 
     def draw(self):
+        '''Метод отрисовки эффекта'''
         self.surface.set_alpha(self.alpha)
         self.screen.blit(source=self.surface, dest=(self.position, self.surface.get_size()))
 
     def add_alpha(self, alpha):
+        '''Метод установки альфа канала'''
         if 0 <= self.surface.get_alpha() <= 255:
             self.alpha = self.surface.get_alpha() + alpha
 
     def get_alpha(self):
+        '''Метод получения альфа канала'''
         return self.surface.get_alpha()
