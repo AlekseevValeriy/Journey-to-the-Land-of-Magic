@@ -3,7 +3,7 @@ from os import listdir
 
 # .py files
 print(f'python files WITHOUT space and #"' + "'")
-my_excepts = ['__pycache__', 'get_lines_quality.py', '__init__.py']
+my_excepts = ['__pycache__', 'get_lines_quality.py', '__init__.py', 'resizer.py']
 lines_quality = 0
 
 for file in listdir():

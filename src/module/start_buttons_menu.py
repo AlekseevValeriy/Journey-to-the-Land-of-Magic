@@ -1,22 +1,23 @@
-from pygame.font import SysFont
-from pygame import MOUSEBUTTONUP, MOUSEBUTTONDOWN, MOUSEMOTION, QUIT, Surface
-from pygame.event import get
-from pygame.image import load
-from pygame.time import Clock
 from sys import exit
 from typing import Callable
+
+from pygame import MOUSEBUTTONUP, MOUSEBUTTONDOWN, MOUSEMOTION, QUIT, Surface
+from pygame.event import get
+from pygame.font import SysFont
+from pygame.image import load
+from pygame.time import Clock
 
 from buttons_menu import ButtonsMenu
 from game_buttons_menu import GameButtonsMenu
 from json_reader import JsonReader
-from world_generator import WorldGenerator
-from player import Player
 from music_manager import MusicManager
-
+from player import Player
+from world_generator import WorldGenerator
 
 
 class StartButtonsMenu(ButtonsMenu):
     '''Метод главного меню игры'''
+
     def __init__(self, screen: Surface, clock: Clock, frame_rate: int, buttons_file_path: str) -> None:
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
         self.add_other_data(background=load("../../data/textures/backgrounds/background.png").convert_alpha(),
@@ -38,9 +39,11 @@ class StartButtonsMenu(ButtonsMenu):
 
     def click_sound(function: Callable):
         '''Декоратор для запуска звука нажатия'''
+
         def click(self, *args, **kwargs):
             function(self, *args, **kwargs)
             self.other_data['music_manager'].activate_effect('click')
+
         return click
 
     def start_menu(self) -> None:
@@ -221,7 +224,8 @@ class StartButtonsMenu(ButtonsMenu):
             self.create_game_process()
         if 'game_flag' in self.other_data and not self.other_data['game_flag']:
             generator = WorldGenerator()
-            self.other_data['game_process'].sample_world = JsonReader.read_file('../../data/json/units_data.json')[f'unit_{world_number}']['world']
+            self.other_data['game_process'].sample_world = \
+            JsonReader.read_file('../../data/json/units_data.json')[f'unit_{world_number}']['world']
             self.other_data['game_process'].player_data = player_data
             self.other_data['game_process'].world_number = world_number
             self.other_data['game_process'].doors = doors
@@ -240,7 +244,6 @@ class StartButtonsMenu(ButtonsMenu):
         self.other_data['game_process'].start_menu(self.frame_rate)
         self.other_data['game_flag'] = False
         self.other_data['music_manager'].activate_music('little_piano')
-
 
     @click_sound
     def turn_on_fps_counter(self) -> None:

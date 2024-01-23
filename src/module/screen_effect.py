@@ -1,9 +1,11 @@
-import pygame
 from time import sleep
+
+import pygame
 
 
 class ScreenEffect:
     '''Класс для специальных движений'''
+
     def __init__(self, screen: pygame.Surface, clock: pygame.time.Clock, frame_rate: int) -> None:
         self.screen = screen
         self.clock = clock
@@ -13,8 +15,8 @@ class ScreenEffect:
         '''Метод визуализации интро игры'''
         logo = EffectElement(self.screen, pygame.image.load("../../data/textures/Game_Logo.png").convert_alpha(),
                              (960, 540), -70)
-        text = pygame.font.Font('..//..//data//fonts//Book Antiqua.ttf', 18).render('Команда VaTi представляет', True,
-                                                                                    'white')
+        text = pygame.font.Font('..//..//data//fonts//Book Antiqua.ttf', 18).render(
+            'Команда VaTi представляет', True,'white')
         text = EffectElement(self.screen, text,
                              (960, 650), 0)
         effects_flags = [False, False]
@@ -70,6 +72,7 @@ class ScreenEffect:
 
 class EffectElement:
     '''Класс элементов визуализации'''
+
     def __init__(self, screen: pygame.Surface, surface: pygame.time.Clock, position: tuple, alpha: int):
         self.screen = screen
         self.surface = surface

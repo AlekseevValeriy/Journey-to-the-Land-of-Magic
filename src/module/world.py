@@ -1,14 +1,15 @@
 import numpy
-from pygame.image import load
 from pygame import Surface
+from pygame.image import load
 
 
 class World:
     '''Класс для хранения и обработки карты'''
+
     def __init__(self, screen: Surface, world: numpy.ndarray) -> None:
         self.screen = screen
-        self.world = world  # first layer is flagman, second layer is another..., last layer maybe objects
-        self.world_sector_size = (100, 100)  # maybe a different size, I'll have more ideas in the final
+        self.world = world
+        self.world_sector_size = (100, 100)
         self.world_size = (len(self.world[0]), len(self.world[0][0]))
         self.present_world: numpy.ndarray = numpy.array([])
         self.empty = load(f"../../data/textures/world/empty.png").convert_alpha()

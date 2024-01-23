@@ -5,12 +5,96 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfda3d3c-de4e-4e73-89ba-bbb710aa115b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/module/resizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Journey-to-the-Land-of-Magic.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Journey-to-the-Land-of-Magic.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/json/game_buttons_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/game_buttons_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/settings_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/settings_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/json/units_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/json/units_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/Презентация - None.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/Game_Logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/Game_Logo.png.kra" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/backgrounds/backgorund.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/back_line_bar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/button_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/button_setting.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/button_setting_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/create.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/create_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/create_custom.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/create_custom_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/create_custom_passive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/create_passive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/delete.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/delete_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/delete_passive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/enter_bag_menu_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/enter_bag_menu_button_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/enter_map_menu_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/enter_map_menu_button_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/enter_person_menu_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/enter_person_menu_button_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/exp_line_bar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/frame_rate.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/hp_line_bar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/menu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/menu_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/mp_line_bar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/test_items_list.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/test_map_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/test_status_bar_frame.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/volume.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/buttons/volume_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/down_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/down_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/down_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/down_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/left_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/left_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/left_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/left_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/right_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/right_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/right_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/right_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/up_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/up_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/up_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/enemies/test_enemy/up_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/icon/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/icon/icon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/icon/thing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/dead_frame_face.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/down_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/down_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/down_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/down_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/frame_face.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/left_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/left_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/left_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/left_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/person_full_size.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/right_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/right_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/right_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/right_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/up_run_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/up_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/up_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/player/test/up_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/world/empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/world/grass_place.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/old_textures/world/sand_place.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/grass_place.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/grass_place.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/sphere.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/sphere.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/texture_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/texture_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/texture_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/texture_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/texture_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/texture_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/texture_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/texture_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/textures/world/texture_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/textures/world/texture_5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documents/Презентация.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/Презентация.pptx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/battle.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/battle.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/button.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/buttons_menu.py" afterDir="false" />
@@ -19,6 +103,7 @@
       <change beforePath="$PROJECT_DIR$/src/module/custom_object_buttons.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/custom_object_buttons.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/enemies.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/enemies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/game_buttons_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/game_buttons_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module/get_lines_quality.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/get_lines_quality.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/line_drawer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/line_drawer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/module/music_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/module/music_manager.py" afterDir="false" />
@@ -65,7 +150,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Zver/Documents/GitHub/Journey-to-the-Land-of-Magic/src/module&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;cn.yiiguxing.plugin.translate&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -77,14 +162,14 @@
       <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\data\textures" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\data\textures\enemies" />
+      <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\sketches\Version 2\auxiliary tools" />
+      <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\sketches\Version 2" />
       <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\src\module" />
       <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\data\textures\player\test" />
-      <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\sketches\Version 1\Scripts" />
-      <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic" />
-      <recent name="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.get_lines_quality">
     <configuration name="cellular_automata (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Journey-to-the-Land-of-Magic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -98,27 +183,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/module/cellular_automata.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="cellular_automata" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Journey-to-the-Land-of-Magic" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Zver\Documents\GitHub\Journey-to-the-Land-of-Magic\src\module\cellular_automata.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -190,6 +254,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="resizer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Journey-to-the-Land-of-Magic" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/sketches/Version 2/auxiliary tools" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sketches/Version 2/auxiliary tools/resizer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="test_for" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Journey-to-the-Land-of-Magic" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -213,11 +298,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.get_lines_quality" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.resizer" />
         <item itemvalue="Python.cellular_automata (1)" />
         <item itemvalue="Python.test_for" />
-        <item itemvalue="Python.cellular_automata" />
       </list>
     </recent_temporary>
   </component>

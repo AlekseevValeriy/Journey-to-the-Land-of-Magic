@@ -1,6 +1,6 @@
+from pygame import Surface
 from pygame.font import Font  # pygame.font.Font imported and bound as Font
 from pygame.image import load  # pygame.image.load imported and bound as load
-from pygame import Surface
 
 
 class ButtonMethods:
@@ -79,6 +79,7 @@ class ButtonCp(ButtonMethods):
 
 class ButtonObject:
     '''Класс, объединяющий кнопки в один элемент'''
+
     def __init__(self, screen: Surface, *buttons, **data) -> None:
         self.screen = screen
         self.buttons = list(buttons)

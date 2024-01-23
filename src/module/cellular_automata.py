@@ -1,11 +1,12 @@
 from random import random, choice
+
 from numpy import array, ndarray
 
 
 class CellularAutomata:
     '''Класс генерации подземелья'''
-    FLOOR = 1
-    WALL = 0
+    FLOOR = 0
+    WALL = 1
     WOOD = 20
     EMPTY = -1
 
@@ -24,7 +25,6 @@ class CellularAutomata:
         self.initialize_grid()
         for step in range(self.number_of_steps):
             self.grid = self.do_simulation_step()
-
 
     def create_grid(self) -> list:
         return [[CellularAutomata.WALL for _x in range(self.width)] for _y in range(self.height)]
@@ -72,7 +72,7 @@ class CellularAutomata:
         for n, line in enumerate(self.grid):
             layout.append([])
             for m, element in enumerate(line):
-                if not element:
+                if element == CellularAutomata.WALL:
                     places.append((m, n))
                 layout[n].append(CellularAutomata.EMPTY)
         place = choice(places)

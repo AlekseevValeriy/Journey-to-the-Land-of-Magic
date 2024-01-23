@@ -2,12 +2,14 @@ from os import listdir
 
 from pygame import Surface
 from pygame.image import load
-from music_manager import MusicManager
+
 from json_reader import JsonReader
+from music_manager import MusicManager
 
 
 class Player:
     '''Класс персонажа'''
+
     def __init__(self, screen: Surface, position: tuple, person: str, **personal_data) -> None:
         self.music_manager = MusicManager(0.5)
         value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (
@@ -41,7 +43,6 @@ class Player:
         self.last_move = [0, 0]
         self.fake_pos = None
 
-
     def get_personal_data(self) -> dict:
         '''Метод получения данных'''
         return self.personal_data
@@ -50,7 +51,7 @@ class Player:
         '''Метод смены позиции персонажа'''
         if where:
             self.fake_pos = list(self.get_position_sp())
-            self.fake_pos[axis] = self.position[axis] + self.frame_inspector(axis, self.present_step * sign)
+            self.fake_pos[axis] += self.present_step * sign
         else:
             self.position[axis] = self.position[axis] + self.frame_inspector(axis, self.present_step * sign)
             self.set_last_move(axis=axis, step=self.position[axis] + self.present_step * sign)
@@ -58,7 +59,6 @@ class Player:
     def sample_change_position(self, sign: int, axis: int) -> None:
         '''Метод смены положения'''
         self.position[axis] = self.position[axis] + self.present_step * sign
-
 
     def change_animation_under_fps(self, frame_rate: int) -> None:
         '''Метод настройки данных под данный fps'''

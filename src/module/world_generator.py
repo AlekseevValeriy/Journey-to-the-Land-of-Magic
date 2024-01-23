@@ -1,13 +1,16 @@
-import pygame
-
-from line_drawer import LineDrawer
-import numpy
-from pygame.image import load
 import random
+
+import numpy
+import pygame
+from pygame.image import load
+
 from cellular_automata import CellularAutomata
+from line_drawer import LineDrawer
+
 
 class WorldGenerator:
     '''Класс генератора мира'''
+
     def __init__(self, size=(100, 100)) -> None:
         self.world_layout = numpy.array([])
         self.width, self.height = size
@@ -166,7 +169,7 @@ class WorldGenerator:
                     world_frame - external_frame + j + self.width // 2]
                 if position in [1, one_x] and rh_sector[i][j]:
                     world_layout[world_frame - external_frame + i][world_frame - external_frame + j + self.width // 2] = \
-                    rh_sector[i][j]
+                        rh_sector[i][j]
 
         for i in range(external_frame * 2 + self.height // 3):
             for j in range(external_frame * 2 + self.width // 3):
@@ -183,7 +186,7 @@ class WorldGenerator:
                     world_layout[world_frame - external_frame + i][world_frame - external_frame + j] = 6
         self.world_layout = world_layout
 
-    def create_grass(self, value = 10):
+    def create_grass(self, value=10):
         '''Метод для создания земли'''
         grass = self.world_layout.copy()
         for n, y in enumerate(self.world_layout):
@@ -196,42 +199,14 @@ class WorldGenerator:
 
     def set_random_player_position(self) -> list:
         '''Метод для определения позиции игрока'''
-        world_max = (len(self.world_layout[0][0]) - 1, len(self.world_layout[0]) - 1)
-        side = random.choice(('vertical', 'gorizontal'))
-        if side == 'left':
-            position = (0, random.randint(0, len(self.world_layout[0]) - 1))
-        elif side == 'right':
-            position = (len(self.world_layout[0][0]) - 1, random.randint(0, len(self.world_layout[0]) - 1))
-        elif side == 'up':
-            position = (random.randint(0, len(self.world_layout[0][0]) - 1), 0)
-        elif side == 'down':
-            position = (random.randint(0, len(self.world_layout[0][0]) - 1), len(self.world_layout[0]) - 1)
-
-        if side == 'gorizontal':
-            position = (0, random.randint(30, len(self.world_layout[0]) - 30))
-        elif side == 'vertical':
-            position = (random.randint(30, len(self.world_layout[0][0]) - 30), 0)
-        position = list(position)
         points = []
-        if side == 'gorizontal':
-            while True:
-                position[0] += 1
-                if position[0] < world_max[0]:
-                    if self.world_layout[0][position[1]][position[0]] != 0:
-                        points.append((position[0], position[1]))
-                else:
-                    break
-        if side  == 'vertical':
-            while True:
-                position[1] += 1
-                if position[1] < world_max[1]:
-                    if self.world_layout[0][position[1]][position[0]] != 0:
-                        points.append((position[0], position[1]))
-                else:
-                    break
+        for n, line in enumerate(self.world_layout[0]):
+            for m, element in enumerate(line):
+                if element not in (0, 6):
+                    points.append((m, n))
         sector_size = 100
         position = random.choice(points)
-        position = (n * sector_size for n in position)
+        position = (position[0] * sector_size - 960, position[1] * sector_size - 540)
         return list(position)
 
     def create_objects(self) -> numpy.ndarray:
@@ -246,7 +221,7 @@ class WorldGenerator:
                 objects[n][m] = -1
         places = ((2, random.choice(places[2])), (2, random.choice(places[3])), (2, random.choice(places[4])),
                   (2, random.choice(places[5])), (3, random.choice(places[6])))
-        self.doors_coordinate = (places[0][1], places[1][1], places[2][1] ,places[3][1])
+        self.doors_coordinate = (places[0][1], places[1][1], places[2][1], places[3][1])
         for key, item in tuple(places):
             objects[item[1]][item[0]] = key + 10
 
@@ -261,7 +236,6 @@ class WorldGenerator:
 
         return door_1, door_2, door_3, door_4
 
-
     def create_world(self) -> None:
         '''Метод для создания мира'''
         self.create_field()
@@ -271,12 +245,9 @@ class WorldGenerator:
         objects: numpy.ndarray = self.create_objects()
         self.world_layout = numpy.array([plot, grass, objects]).tolist()
 
-
     def get_world(self) -> numpy.ndarray:
         '''Метод, возвращающий мир'''
         return self.world_layout
-
-
 
     def get_doors(self) -> dict:
         '''Метод, возвращающий подземелья'''

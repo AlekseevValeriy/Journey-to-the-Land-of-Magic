@@ -5,6 +5,7 @@ from button import ButtonObject
 
 class StatusBar(ButtonObject):
     '''Класс панели персонажа'''
+
     def __init__(self, screen: pygame.Surface, *buttons, **data) -> None:
         super().__init__(screen, *buttons, **data)
         self.add_data(exp=0, hp=0, mp=0, level=0,
@@ -132,11 +133,15 @@ class StatusBar(ButtonObject):
 
 class WorldMap(ButtonObject):
     '''Класс мини-карты'''
+
     def __init__(self, screen: pygame.Surface, *buttons, **data):
         super().__init__(screen, *buttons, **data)
         self.add_data(player_position=(0, 0), world_map=[[]], frame=(0, 0), map_sector=100,
                       map_surface=pygame.Surface((260, 260)),
-                      colors={0: 'black', False: 'black', 1: (51, 51, 51), 2: (102, 102, 102), 3: (128, 128, 128), 4: (153, 153, 153), 5: (179, 179, 179), 6:(204, 204, 204), 12: (220, 220, 220), 13: (135, 135, 135), 10: (110, 110, 110), 20: (230, 230, 230)}, sector_size=10, map_start=(1615, 45),
+                      colors={0: 'black', False: 'black', 1: (51, 51, 51), 2: (102, 102, 102), 3: (128, 128, 128),
+                              4: (153, 153, 153), 5: (179, 179, 179), 6: (204, 204, 204), 12: (220, 220, 220),
+                              13: (135, 135, 135), 10: (110, 110, 110), 20: (230, 230, 230)}, sector_size=10,
+                      map_start=(1615, 45),
                       frame_size=140,
                       render_frame_x=(-14, 12), render_frame_y=(-14, 12), camera_position=(0, 0), black=False,
                       other_positions=(), world_size=None)
@@ -175,7 +180,8 @@ class WorldMap(ButtonObject):
         for z in range(len(self.data['world_map'])):
             for y in range(*self.data['render_frame_y']):
                 for x in range(*self.data['render_frame_x']):
-                    if 0 <= (x_index + x) < self.data['world_size'][0] and 0 <= (y_index + y) < self.data['world_size'][1]:
+                    if 0 <= (x_index + x) < self.data['world_size'][0] and 0 <= (y_index + y) < self.data['world_size'][
+                        1]:
                         if self.data['world_map'][z][y_index + y][x_index + x] != -1:
                             color = self.data['colors'][int(self.data['world_map'][z][y_index + y][x_index + x])]
                             if color:
@@ -190,17 +196,17 @@ class WorldMap(ButtonObject):
 
         pygame.draw.rect(surface=self.data['map_surface'], color=(128, 128, 128),
                          rect=(
-                         frame_size + self.data['camera_position'][0], frame_size + self.data['camera_position'][1],
-                         se_si,
-                         se_si))
+                             frame_size + self.data['camera_position'][0], frame_size + self.data['camera_position'][1],
+                             se_si,
+                             se_si))
         # TODO улучшить точность карты и добавить врагов на мини-карту
         if self.data['other_positions']:
             for x, y in self.data['other_positions']:
                 pygame.draw.rect(surface=self.data['map_surface'], color=(128, 128, 128),
                                  rect=(frame_size + se_si * (
-                                             (x - self.data['player_position'][0]) // self.data['map_sector']) +
+                                         (x - self.data['player_position'][0]) // self.data['map_sector']) +
                                        self.data['camera_position'][0], frame_size + se_si * (
-                                                   (y - self.data['player_position'][1]) // self.data['map_sector']) +
+                                               (y - self.data['player_position'][1]) // self.data['map_sector']) +
                                        self.data['camera_position'][1], se_si, se_si))
 
         self.screen.blit(self.data['map_surface'], self.data['map_start'])
@@ -208,6 +214,7 @@ class WorldMap(ButtonObject):
 
 class SkillUpgrade(ButtonObject):
     '''Класс элементов улучшения персонажа'''
+
     def __init__(self, screen: pygame.Surface, *buttons, **data) -> None:
         super().__init__(screen, *buttons, **data)
         self.add_data(free_points=0, str_points=0, dex_points=0, int_points=0)
@@ -239,6 +246,7 @@ class SkillUpgrade(ButtonObject):
 
 class MagicUpgrade(ButtonObject):
     '''Класс элементов магического улучшения персонажа'''
+
     def __init__(self, screen: pygame.Surface, *buttons, **data) -> None:
         super().__init__(screen, *buttons, **data)
         self.add_data(free_points=0, fb_get=False, fb_level=0)
@@ -274,10 +282,9 @@ class MagicUpgrade(ButtonObject):
         self.buttons[1].text = str(self.data['free_points'])
 
 
-
-
 class BigMap(WorldMap):
     '''Класс большой карты'''
+
     def __init__(self, screen: pygame.Surface, *buttons, **data) -> None:
         super().__init__(screen, *buttons, **data)
         self.add_data(start_sector_size=10, sector_size=10, camera_position=(0, 0), sector_size_multiplier=1,

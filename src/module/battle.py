@@ -1,5 +1,6 @@
 from random import choice, randint
 from threading import Thread, Semaphore
+from typing import Callable
 
 import pygame
 
@@ -8,28 +9,32 @@ from json_reader import JsonReader
 from music_manager import MusicManager
 from screen_effect import ScreenEffect
 
-from typing import Callable
-
 general_semaphore = Semaphore(1)
+
 
 def order_for_queue(function: Callable):
     '''Декоратор для работы очереди потоков'''
+
     def order(self, *args, **kwargs):
         general_semaphore.acquire()
         function(self, *args, **kwargs)
         general_semaphore.release()
+
     return order
 
 
 class Battle(ButtonsMenu):
     '''Класс процесса Битвы'''
-    def __init__(self, screen: pygame.Surface, clock:pygame.time.Clock, frame_rate: int, buttons_file_path: str) -> None:
+
+    def __init__(self, screen: pygame.Surface, clock: pygame.time.Clock, frame_rate: int,
+                 buttons_file_path: str) -> None:
         super().__init__(screen=screen, clock=clock, frame_rate=frame_rate, buttons_file_path=buttons_file_path)
-        self.add_other_data(background=pygame.image.load("../../data/textures/backgrounds/battle_background.png").convert_alpha(),
-                            fps_counter=True, fps_font=pygame.font.SysFont('Comic Sans MS', 30), queue=BattleQueue(),
-                            bar_size=self.buttons_data['battle_menu']['hp_bar_right'].size[0], battle_exp=0,
-                            ending_data=None, screen_effect=ScreenEffect(self.screen, self.clock, frame_rate),
-                            music_manager=MusicManager(0.5))
+        self.add_other_data(
+            background=pygame.image.load("../../data/textures/backgrounds/battle_background.png").convert_alpha(),
+            fps_counter=True, fps_font=pygame.font.SysFont('Comic Sans MS', 30), queue=BattleQueue(),
+            bar_size=self.buttons_data['battle_menu']['hp_bar_right'].size[0], battle_exp=0,
+            ending_data=None, screen_effect=ScreenEffect(self.screen, self.clock, frame_rate),
+            music_manager=MusicManager(0.5))
         self.add_button_bind(run_button_left=self.end_battle_process,
                              attack_button_left=self.player_attack_move,
                              magic_button_left=self.player_magic_move)
@@ -38,25 +43,29 @@ class Battle(ButtonsMenu):
 
     def click_sound(function: Callable):
         '''Декоратор для добавления звука, при нажатии на кнопки'''
+
         def click(self, *args, **kwargs):
             function(self, *args, **kwargs)
             self.other_data['music_manager'].activate_effect('click')
+
         return click
 
     def start_battle(self, player_data: dict, enemy_data: dict) -> None:
         '''Метод для настройки и начала процесса битвы'''
         value = (JsonReader.read_file('../../data/json/settings_data.json')['volume_trigger_position'] - 816) * 100 // (
-                    1100 - 816) / 100
+                1100 - 816) / 100
         if value > 1:
             value = 1
         if value < 0:
             value = 0
         self.other_data['music_manager'].set_volume(value)
         self.other_data['music_manager'].activate_music('cool_piano')
-        self.player = Attendee(self.other_data['music_manager'], player_data, self.screen, self.clock, self.frame_rate)
+        self.player = Attendee(self.other_data['music_manager'], player_data,
+                               self.screen, self.clock, self.frame_rate)
         enemy_data['level'] = player_data['level']
         enemy_data['fb_level'] = player_data['fb_level']
-        self.enemy = Attendee(self.other_data['music_manager'], enemy_data, self.screen, self.clock, self.frame_rate)
+        self.enemy = Attendee(self.other_data['music_manager'], enemy_data,
+                              self.screen, self.clock, self.frame_rate)
         self.update_visual_queue()
 
     def end_battle(self) -> None:
@@ -243,18 +252,19 @@ class Battle(ButtonsMenu):
     def ending_characteristics(self) -> None:
         '''Метод получения характеристик'''
         self.other_data['ending_data'] = {'hp': self.player.characteristics['hp'],
-                'mp': self.player.characteristics['mp'],
-                'exp': self.other_data['battle_exp']}
+                                          'mp': self.player.characteristics['mp'],
+                                          'exp': self.other_data['battle_exp']}
 
     def get_ending_data(self) -> None:
         '''Метод получения данных после битвы'''
         return self.other_data['ending_data']
 
 
-
 class Attendee:
     '''Метод сущности'''
-    def __init__(self, music_manager: MusicManager,  characteristics: dict, *base: tuple[pygame.Surface, pygame.time.Clock, int]) -> None:
+
+    def __init__(self, music_manager: MusicManager, characteristics: dict,
+                 *base: tuple[pygame.Surface, pygame.time.Clock, int]) -> None:
         self.music_manager = music_manager
         self.screen = base[0]
         self.clock = base[1]
@@ -413,6 +423,7 @@ class Attendee:
 
 class BattleQueue:
     '''Метод очереди битвы'''
+
     def __init__(self) -> None:
         self.present_attendee = False  # False - player, True - enemy
 

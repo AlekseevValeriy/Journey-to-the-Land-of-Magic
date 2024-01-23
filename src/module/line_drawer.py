@@ -4,6 +4,7 @@ from typing import Callable
 
 class LineDrawer:
     '''Класс рисования линии в листе'''
+
     def __init__(self) -> None:
         self.add_length = 0
 
@@ -42,15 +43,18 @@ class LineDrawer:
 
     def mandatory_cleaning(func: Callable):
         '''Декоратор очистки длины'''
+
         def fun(self, *args, **kwargs):
             self.add_length = 0
             func(self, *args, **kwargs)
             self.add_length = 0
+
         return fun
 
     @mandatory_cleaning
     def ant_line(self, matrix, start, finish, side, inverse=False, to_edge=2, symbol=1, markup_symbol=-1) -> None:
         '''Метод рисования кривой линии на листе'''
+
         def line_change():
             self.add_length += choice([-1, 1])
             self.add_length = to_edge if self.add_length > to_edge else self.add_length

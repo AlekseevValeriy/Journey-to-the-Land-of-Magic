@@ -1,10 +1,14 @@
 from pygame.mixer import Sound, Channel
+
 from json_reader import JsonReader
+
 
 class FullError(Exception):
     '''Класс ошибки переполнения стака каналов'''
+
     def __init__(self):
         pass
+
 
 class MusicManager:
     '''Класс менеджера музыки'''
@@ -30,7 +34,6 @@ class MusicManager:
 
         for key in MusicManager.effect_storage:
             MusicManager.effect_storage[key] = Sound(MusicManager.effect_storage[key])
-
 
     def set_volume(self, volume: int) -> None:
         '''Метод установки громкости для эффектов и музыки'''
