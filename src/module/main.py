@@ -3,6 +3,7 @@ from pygame.time import Clock
 
 from json_reader import JsonReader
 from start_buttons_menu import StartButtonsMenu
+from screen_effect import ScreenEffect
 
 
 class Main:
@@ -18,7 +19,7 @@ class Main:
 
     def run(self) -> None:
         '''Метод запуска игрового процесса'''
-        # ScreenEffect(self.screen, self.clock, self.frame_rate).game_intro()
+        ScreenEffect(self.screen, self.clock, self.frame_rate).game_intro()
         game_menu = StartButtonsMenu(self.screen, self.clock, self.frame_rate,
                                      '../../data/json/start_buttons_data.json')
         game_menu.start_menu()

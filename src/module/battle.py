@@ -79,6 +79,7 @@ class Battle(ButtonsMenu):
         '''Метод начала битвы'''
         self.present_menu = 'battle_menu'
         self.start_battle(player_data, enemy_data)
+        self.buttons_data['battle_menu']['enemy_text'].text = enemy_data['name']
         self.menu_process()
         self.end_battle()
 

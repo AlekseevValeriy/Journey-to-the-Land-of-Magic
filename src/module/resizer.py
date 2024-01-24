@@ -25,6 +25,6 @@ class Resizer:
         pass
 
 if __name__ == '__main__':
-    resizer = Resizer(2, 'shroomish')
+    resizer = Resizer(2, '../../data/textures/enemies/psyduck')
     resizer.magnifier()
 

@@ -492,7 +492,7 @@ class GameButtonsMenu(ButtonsMenu):
                     places.append((m, n))
         self.number = number
         self.enemies_generator.clear()
-        self.enemies_generator.set_world(self.door_layout)
+        self.enemies_generator.set_world(self.door_layout[0])
         data = JsonReader.read_file('../../data/json/units_data.json')
         data[f'unit_{self.world_number}']['position'] = self.player.get_position()
         JsonReader.write_file(data, '../../data/json/units_data.json')

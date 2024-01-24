@@ -31,15 +31,15 @@ class Enemies:
         if position_sector == 0:
             pass
         elif position_sector == 1:
-            enemies_list = [ShroomishEnemy]  # лес - гусеница, растение
+            enemies_list = [ShroomishEnemy]
         elif position_sector == 2:
-            enemies_list = [TorchikEnemy]  # пустыня - червяк, коршун
+            enemies_list = [TorchikEnemy]
         elif position_sector == 3:
-            enemies_list = [PachirisuEnemy]  # ледяная пустыня - белый медведь, тюлень
+            enemies_list = [PachirisuEnemy]
         elif position_sector == 4:
-            enemies_list = [TestEnemy]  # багрянец - паук, зомби
+            enemies_list = [UmbreonEnemy]
         elif position_sector == 5:
-            enemies_list = [TestEnemy]  # болото - динозавр, травяной монстр
+            enemies_list = [Psyduck]
         elif position_sector == 6:
             pass  # пляж - ничего
 
@@ -90,7 +90,7 @@ class Enemies:
     def set_world(self, world: list) -> None:
         '''Метод установки мира'''
         self.world_map = world
-        self.world_size = (len(self.world_map), len(self.world_map[0]))
+        self.world_size = (len(self.world_map[0]), len(self.world_map))
 
 
 class Enemy(Player):
@@ -105,6 +105,7 @@ class Enemy(Player):
         self.action_counter = 0
         self.actions_dict = {15: 'up', 30: 'right', 45: 'down', 60: 'left'}
         self.set_size((34, 50))
+        self.name = ''
 
     def set_textures(self) -> None:
         '''Метод установки текстур'''
@@ -134,7 +135,7 @@ class Enemy(Player):
 
     def battle_preparing(self) -> dict:
         '''Метод подготовки к битве'''
-        return {'texture': self.textures['left_run_0'], "side": 'right'}
+        return {'texture': self.textures['left_run_0'], "side": 'right', 'name': self.name}
 
 
 class TestEnemy(Enemy):
@@ -144,6 +145,7 @@ class TestEnemy(Enemy):
         super().__init__(screen=screen, position=position, person=None, **personal_data)
         self.person = person
         self.set_textures()
+        self.name = 'None'
 
 class TorchikEnemy(Enemy):
     '''Класс врага Торчик'''
@@ -152,6 +154,7 @@ class TorchikEnemy(Enemy):
         super().__init__(screen=screen, position=position, person=None, **personal_data)
         self.person = person
         self.set_textures()
+        self.name = 'Торчик'
 
 class PachirisuEnemy(Enemy):
     '''Класс врага Пачирису'''
@@ -160,6 +163,7 @@ class PachirisuEnemy(Enemy):
         super().__init__(screen=screen, position=position, person=None, **personal_data)
         self.person = person
         self.set_textures()
+        self.name = 'Пачирису'
 
 class ShroomishEnemy(Enemy):
     '''Класс врага Шрумиш'''
@@ -167,3 +171,19 @@ class ShroomishEnemy(Enemy):
         super().__init__(screen=screen, position=position, person=None, **personal_data)
         self.person = person
         self.set_textures()
+        self.name = 'Шрумиш'
+
+class UmbreonEnemy(Enemy):
+    '''Класс врага Амбреон'''
+    def __init__(self, screen: pygame.Surface, position: tuple, person: str='umbreon', **personal_data) -> None:
+        super().__init__(screen=screen, position=position, person=None, **personal_data)
+        self.person = person
+        self.set_textures()
+        self.name = 'Амбреон'
+
+class Psyduck(Enemy):
+    def __init__(self, screen: pygame.Surface, position: tuple, person: str='psyduck', **personal_data) -> None:
+        super().__init__(screen=screen, position=position, person=None, **personal_data)
+        self.person = person
+        self.set_textures()
+        self.name = 'Псидак'
