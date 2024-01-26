@@ -15,7 +15,8 @@ class Main:
         self.frame_rate = settings_data['frame_rate']
         self.player = 'player'
         self.clock = Clock()
-        self.screen = pg_window(self.SCREEN_SIZE)
+        flags = pygame.DOUBLEBUF | pygame.FULLSCREEN
+        self.screen = pg_window(self.SCREEN_SIZE, flags)
 
     def run(self) -> None:
         '''Метод запуска игрового процесса'''
